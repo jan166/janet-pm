@@ -1,0 +1,544 @@
+{
+  "nav": {
+    "work": {
+      "en": "Work",
+      "ko": "프로젝트",
+      "ja": "プロジェクト",
+      "es": "Trabajo"
+    },
+    "about": {
+      "en": "About",
+      "ko": "소개",
+      "ja": "自己紹介",
+      "es": "Sobre mí"
+    },
+    "toolkit": {
+      "en": "Toolkit",
+      "ko": "역량",
+      "ja": "ツールキット",
+      "es": "Herramientas"
+    },
+    "contact": {
+      "en": "Contact",
+      "ko": "연락처",
+      "ja": "お問い合わせ",
+      "es": "Contacto"
+    }
+  },
+  "hero": {
+    "title_html": {
+      "en": "AI products that<br/><em>move revenue.</em>",
+      "ko": "매출을 움직이는<br/><em>AI 프로덕트</em>를 만듭니다.",
+      "ja": "売上を動かす<br/><em>AIプロダクト。</em>",
+      "es": "Productos de IA que<br/><em>mueven ingresos.</em>"
+    },
+    "sub": {
+      "en": "Product Manager at NAVER. 30M+ users shipped · $25M+ revenue unlocked · KRW 30B Olympic sell-out · NIST FRVT world #6.",
+      "ko": "네이버 프로덕트 매니저. 3천만 유저가 쓰는 AI 프로덕트를 만들고, 매출 $25M+ · 밀라노 올림픽 300억 원 완판 · NIST FRVT 세계 6위의 성과를 기록했습니다.",
+      "ja": "NAVERプロダクトマネージャー。3,000万人のユーザー · 売上$25M+ · ミラノ五輪300億ウォン完売 · NIST FRVT世界6位。",
+      "es": "Product Manager en NAVER. 30M+ usuarios · $25M+ en ingresos · 30 000M KRW en los JJ.OO. de Milán · 6.º mundial en NIST FRVT."
+    },
+    "role": {
+      "en": "AI Product Manager",
+      "ko": "AI 프로덕트 매니저",
+      "ja": "AIプロダクトマネージャー",
+      "es": "Product Manager de IA"
+    },
+    "location": {
+      "en": "NAVER, Seoul",
+      "ko": "네이버 · 서울",
+      "ja": "NAVER · ソウル",
+      "es": "NAVER, Seúl"
+    }
+  },
+  "filters": {
+    "all": {
+      "en": "All work",
+      "ko": "전체 프로젝트",
+      "ja": "すべて",
+      "es": "Todo"
+    },
+    "ai": {
+      "en": "AI products",
+      "ko": "AI 프로덕트",
+      "ja": "AIプロダクト",
+      "es": "Productos de IA"
+    },
+    "sales": {
+      "en": "Ad sales",
+      "ko": "광고 세일즈",
+      "ja": "広告セールス",
+      "es": "Ventas de publicidad"
+    },
+    "growth": {
+      "en": "Growth",
+      "ko": "그로스",
+      "ja": "グロース",
+      "es": "Crecimiento"
+    },
+    "events": {
+      "en": "Events",
+      "ko": "이벤트",
+      "ja": "イベント",
+      "es": "Eventos"
+    }
+  },
+  "masthead": {
+    "volume": {
+      "en": "— Volume 04 · Portfolio —",
+      "ko": "— Volume 04 · 포트폴리오 —",
+      "ja": "— Volume 04 · Portfolio —",
+      "es": "— Volumen 04 · Portafolio —"
+    },
+    "issue": {
+      "en": "Spring 2026",
+      "ko": "Spring 2026",
+      "ja": "Spring 2026",
+      "es": "Primavera 2026"
+    },
+    "right": {
+      "en": "— selected work, 2021 — 2026 —",
+      "ko": "— selected work, 2021 — 2026 —",
+      "ja": "— selected work, 2021 — 2026 —",
+      "es": "— trabajo seleccionado, 2021 — 2026 —"
+    }
+  },
+  "folio": {
+    "left": {
+      "en": "— folio recto · 04 —",
+      "ko": "— folio recto · 04 —",
+      "ja": "— folio recto · 04 —",
+      "es": "— folio recto · 04 —"
+    },
+    "right": {
+      "en": "— folio verso · 05 —",
+      "ko": "— folio verso · 05 —",
+      "ja": "— folio verso · 05 —",
+      "es": "— folio verso · 05 —"
+    }
+  },
+  "blocks": {
+    "eyed": {
+      "kicker": {
+        "en": "Flagship",
+        "ko": "대표 프로젝트",
+        "ja": "代表作",
+        "es": "Proyecto insignia"
+      },
+      "title": {
+        "en": "Clova EyeD — ¥319M revenue, NIST FRVT world #6.",
+        "ko": "Clova EyeD — 매출 ¥319M, NIST FRVT 세계 6위.",
+        "ja": "Clova EyeD — 売上¥319M · NIST FRVT世界6位。",
+        "es": "Clova EyeD — ¥319M en ingresos, 6.º en NIST FRVT."
+      },
+      "lead": {
+        "en": "The eKYC SDK behind Japan's top payments apps. 165% of FY25 budget. Adopted by PayPay, LINE Pay, Liquid, DNP, and 15+ enterprise clients.",
+        "ko": "일본 주요 결제 앱의 eKYC 엔진이 된 얼굴 인식 SDK. FY25 예산 대비 165%를 달성했고, PayPay · LINE Pay · Liquid · DNP 등 엔터프라이즈 15곳 이상에 도입되었습니다.",
+        "ja": "日本の主要決済アプリのeKYCを支える顔認識SDK。FY25予算165%達成。PayPay · LINE Pay · Liquid · DNPなどエンタープライズ15社が導入。",
+        "es": "El SDK de eKYC detrás de las principales apps de pagos de Japón. 165% del presupuesto FY25. Adoptado por PayPay, LINE Pay, Liquid, DNP y 15+ clientes empresariales."
+      },
+      "stat1": {
+        "en": "FY24 Revenue",
+        "ko": "FY24 매출",
+        "ja": "FY24 売上",
+        "es": "Ingresos FY24"
+      },
+      "stat2": {
+        "en": "FY25 vs. Budget",
+        "ko": "FY25 달성률",
+        "ja": "FY25 達成率",
+        "es": "FY25 vs. Presupuesto"
+      },
+      "stat3": {
+        "en": "NIST FRVT",
+        "ko": "세계 순위",
+        "ja": "世界順位",
+        "es": "NIST FRVT"
+      },
+      "caption": {
+        "en": "Clova EyeD · Vision AI SDK, 2021—2023",
+        "ko": "Clova EyeD · Vision AI SDK, 2021—2023",
+        "ja": "Clova EyeD · Vision AI SDK, 2021—2023",
+        "es": "Clova EyeD · Vision AI SDK, 2021—2023"
+      }
+    },
+    "rag": {
+      "kicker": {
+        "en": "In development",
+        "ko": "진행 중",
+        "ja": "開発中",
+        "es": "En desarrollo"
+      },
+      "title": {
+        "en": "RAG Platform — NCP's enterprise RAG PaaS.",
+        "ko": "RAG Platform — NCP향 엔터프라이즈 RAG PaaS.",
+        "ja": "RAG Platform — NCP向けエンタープライズRAG PaaS。",
+        "es": "RAG Platform — RAG PaaS empresarial de NCP."
+      },
+      "body": {
+        "en": "5-service pipeline (Document · Retrieval · Orchestration · Evaluation · Console). Benched 15+ global competitors (Mindbreeze, Lucidworks, Elastic, Kendra, Vertex AI). Ran A/B qualitative eval on 18 queries — new orchestrator won 9 to 1.",
+        "ko": "Document · Retrieval · Orchestration · Evaluation · Console 5개 서비스로 구성된 파이프라인을 설계했습니다. 글로벌 경쟁사 15곳(Mindbreeze · Lucidworks · Elastic · Kendra · Vertex AI)을 매트릭스로 분석하고, 18개 쿼리 A/B 정성 평가에서 신규 오케스트레이터가 9:1로 우위를 보이며 v1.0 로드맵을 확정했습니다.",
+        "ja": "Document · Retrieval · Orchestration · Evaluation · Consoleの5サービスパイプライン。グローバル競合15社（Mindbreeze · Lucidworks · Elastic · Kendra · Vertex AI）をマトリックス分析。18クエリのA/B定性評価で新オーケストレーターが9対1で勝利。",
+        "es": "Pipeline de 5 servicios (Document · Retrieval · Orchestration · Evaluation · Console). Benchmark de 15+ competidores globales (Mindbreeze, Lucidworks, Elastic, Kendra, Vertex AI). Evaluación A/B cualitativa en 18 consultas — el nuevo orquestador ganó 9 a 1."
+      },
+      "stat1": {
+        "en": "Services",
+        "ko": "서비스 수",
+        "ja": "サービス数",
+        "es": "Servicios"
+      },
+      "stat2": {
+        "en": "Competitors benched",
+        "ko": "조사한 경쟁사",
+        "ja": "調査した競合",
+        "es": "Competidores evaluados"
+      },
+      "stat3": {
+        "en": "MM invested",
+        "ko": "투입 MM",
+        "ja": "投入MM",
+        "es": "MM invertidos"
+      }
+    },
+    "launcher": {
+      "kicker": {
+        "en": "New",
+        "ko": "신규",
+        "ja": "新規",
+        "es": "Nuevo"
+      },
+      "title": {
+        "en": "Launcher (shook) — ⌘+E → every workplace answer.",
+        "ko": "Launcher (shook) — ⌘+E로 업무의 모든 답을 찾다.",
+        "ja": "Launcher (shook) — ⌘+Eで業務の全ての答え。",
+        "es": "Launcher (shook) — ⌘+E → cualquier respuesta laboral."
+      },
+      "body": {
+        "en": "Desktop AI assistant. One shortcut searches files, Slack, Wiki, Connect, HR. HCX handles grounded questions. v0.5 shipped 5-source search. v0.6 added HCX. v1.0 wires RAG Platform for enterprise-grade grounding.",
+        "ko": "데스크탑 AI 어시스턴트. 단축키 하나로 파일 · 슬랙 · 위키 · 커넥트 · 사원정보를 통합 검색하고, HCX로 출처가 있는 답변을 받습니다. v0.5에서 5개 소스 통합 검색, v0.6에서 HCX 연결을 출시했고, v1.0에서 RAG Platform 연동을 통해 엔터프라이즈급 그라운딩을 붙입니다.",
+        "ja": "デスクトップAIアシスタント。ショートカット一つでファイル · Slack · Wiki · Connect · 社員情報を検索、HCXが根拠のある回答を生成。v0.5で統合検索（5ソース）、v0.6でHCX接続、v1.0でRAG Platform連携によるエンタープライズグラウンディング。",
+        "es": "Asistente de IA de escritorio. Un atajo busca archivos, Slack, Wiki, Connect y RR. HH.; HCX responde preguntas con fundamento. v0.5 lanzó búsqueda integrada (5 fuentes). v0.6 añadió HCX. v1.0 conectará RAG Platform para grounding empresarial."
+      },
+      "caption": {
+        "en": "Launcher (shook) · ⌘+E desktop assistant",
+        "ko": "Launcher (shook) · ⌘+E 데스크탑 어시스턴트",
+        "ja": "Launcher (shook) · ⌘+Eデスクトップアシスタント",
+        "es": "Launcher (shook) · asistente de escritorio ⌘+E"
+      }
+    },
+    "milan": {
+      "kicker": {
+        "en": "Cover story",
+        "ko": "커버 스토리",
+        "ja": "表紙の記事",
+        "es": "Portada"
+      },
+      "title": {
+        "en": "Milan 2026 — KRW 30B sold in one window.",
+        "ko": "밀라노 2026 — 한 시즌에 300억 원을 완판한 올림픽 세일즈.",
+        "ja": "ミラノ2026 — 1シーズンで300億ウォン完売。",
+        "es": "Milán 2026 — 30 000M KRW vendidos en una ventana."
+      },
+      "lead": {
+        "en": "22 advertisers · NAVER × JTBC · Olympic inventory.",
+        "ko": "광고주 22곳 · 네이버 × JTBC · 올림픽 공식 인벤토리.",
+        "ja": "広告主22社 · NAVER × JTBC · 五輪公式枠。",
+        "es": "22 anunciantes · NAVER × JTBC · inventario olímpico."
+      },
+      "body": {
+        "en": "Led the joint sales package for the Milano–Cortina Winter Games. Built pricing ladders, discount logic, and the end-to-end exception playbook. Sell-out landed around KRW 30B (~$23M).",
+        "ko": "밀라노-코르티나 동계올림픽 공동 세일즈 패키지를 주도했습니다. 가격 계단, 할인 로직, 후반부 예외 케이스까지 모두 정리해 최종 약 300억 원(~$23M) 규모로 완판했습니다.",
+        "ja": "ミラノ · コルティナ冬季五輪の共同セールスパッケージを主導。価格階層、ディスカウントロジック、終盤の例外ケースまで整理。最終的に約300億ウォン（約$23M）で完売。",
+        "es": "Lideré el paquete de venta conjunta para los Juegos de Invierno de Milán–Cortina. Armé las escalas de precios, la lógica de descuentos y el playbook de excepciones. Sell-out ~30 000M KRW (~$23M)."
+      },
+      "stat1": {
+        "en": "Advertisers",
+        "ko": "광고주",
+        "ja": "広告主",
+        "es": "Anunciantes"
+      },
+      "stat2": {
+        "en": "Sell-out",
+        "ko": "완판 규모",
+        "ja": "完売規模",
+        "es": "Venta total"
+      },
+      "stat3": {
+        "en": "Role",
+        "ko": "역할",
+        "ja": "役割",
+        "es": "Rol"
+      },
+      "caption": {
+        "en": "Milano–Cortina 2026",
+        "ko": "밀라노–코르티나 2026",
+        "ja": "ミラノ–コルティナ 2026",
+        "es": "Milán–Cortina 2026"
+      },
+      "also": {
+        "en": "Also available:",
+        "ko": "함께 보기:",
+        "ja": "あわせて見る:",
+        "es": "También disponible:"
+      },
+      "contrib": {
+        "en": "individual contribution report →",
+        "ko": "개인 기여 리포트 →",
+        "ja": "個人寄与レポート →",
+        "es": "informe de contribución individual →"
+      }
+    },
+    "shop": {
+      "kicker": {
+        "en": "Growth",
+        "ko": "그로스 프로그램",
+        "ja": "グロース",
+        "es": "Crecimiento"
+      },
+      "title": {
+        "en": "Shopping sellers — 4% → 11% apply rate.",
+        "ko": "쇼핑 셀러 — 신청율 4%에서 11%로.",
+        "ja": "Shoppingセラー — 申請率4% → 11%。",
+        "es": "Vendedores de Shopping — 4% → 11% de postulación."
+      },
+      "body": {
+        "en": "0→1 onboarding for 3,000+ NAVER Shopping sellers. Multi-channel funnel, data-led messaging rewrites. 2.75× lift in end-to-end conversion.",
+        "ko": "네이버 쇼핑 셀러 3,000명 이상을 대상으로 한 0→1 온보딩 프로그램. 멀티채널 퍼널을 설계하고 데이터 기반으로 메시징을 다시 쓰는 방식으로 end-to-end 전환률을 2.75배 끌어올렸습니다.",
+        "ja": "NAVER Shoppingセラー3,000社以上を対象にした0→1オンボーディング。マルチチャネルファネルとデータ駆動のメッセージング改善で、エンドツーエンドCVR 2.75倍。",
+        "es": "Onboarding 0→1 para 3.000+ vendedores de NAVER Shopping. Embudo multicanal, mensajes reescritos con datos. 2,75× de aumento en conversión end-to-end."
+      },
+      "caption": {
+        "en": "NAVER Shopping · Seller onboarding",
+        "ko": "네이버 쇼핑 · 셀러 온보딩",
+        "ja": "NAVER Shopping · セラーオンボーディング",
+        "es": "NAVER Shopping · Onboarding de vendedores"
+      }
+    },
+    "dan": {
+      "kicker": {
+        "en": "Event",
+        "ko": "이벤트",
+        "ja": "イベント",
+        "es": "Evento"
+      },
+      "title": {
+        "en": "DAN25 Biz Lounge — 200 partners, 90 minutes.",
+        "ko": "DAN25 Biz Lounge — 파트너 200명, 90분.",
+        "ja": "DAN25 Biz Lounge — パートナー200名、90分。",
+        "es": "DAN25 Biz Lounge — 200 socios, 90 minutos."
+      },
+      "body": {
+        "en": "Partner event rebuilt in 4 months with a 20-person ops crew. Two core messages, three teams, one run-of-show that held end to end.",
+        "ko": "4개월에 걸쳐 다시 설계한 파트너 이벤트. 오퍼레이션 크루 20명과 함께 핵심 메시지 2개, 협업 팀 3곳으로 구성된 런오브쇼를 운영해 90분 내내 흔들림 없이 마무리했습니다.",
+        "ja": "4か月かけて再設計したパートナーイベント。20名のオペレーションクルー、2つのコアメッセージ、3チーム、最後まで崩れなかった進行表。",
+        "es": "Evento para socios reconstruido en 4 meses con un equipo operativo de 20 personas. Dos mensajes clave, tres equipos, un run of show que se sostuvo de principio a fin."
+      },
+      "caption": {
+        "en": "DAN25 · Biz Lounge, Seoul",
+        "ko": "DAN25 · Biz Lounge, 서울",
+        "ja": "DAN25 · Biz Lounge, ソウル",
+        "es": "DAN25 · Biz Lounge, Seúl"
+      }
+    }
+  },
+  "booknav": {
+    "pdf": {
+      "en": "PDF",
+      "ko": "이력서",
+      "ja": "履歴書",
+      "es": "CV"
+    }
+  },
+  "about": {
+    "title_html": {
+      "en": "About me — <em>AI PM with a revenue lens.</em>",
+      "ko": "<em>소개</em> — 매출을 보는 AI PM.",
+      "ja": "自己紹介 <em>— 売上を見るAI PM。</em>",
+      "es": "Sobre mí — <em>PM de IA con ojo comercial.</em>"
+    },
+    "p1": {
+      "en": "Product Manager at NAVER, at the intersection of advertising strategy and applied AI. Four years at NAVER CLOUD shipping computer vision SDKs and enterprise RAG platforms to 30M+ users.",
+      "ko": "네이버의 프로덕트 매니저로, 광고 전략과 응용 AI의 접점에서 일하고 있습니다. 그 전 4년간은 NAVER CLOUD에서 컴퓨터 비전 SDK와 엔터프라이즈 RAG 플랫폼을 3천만 명 이상의 유저에게 배포했습니다.",
+      "ja": "NAVERプロダクトマネージャー。広告戦略と応用AIの交差点で働いています。その前の4年間はNAVER CLOUDで、コンピュータビジョンSDKとエンタープライズRAGプラットフォームを3,000万人以上のユーザーに届けました。",
+      "es": "Product Manager en NAVER, en la intersección entre estrategia publicitaria e IA aplicada. Cuatro años previos en NAVER CLOUD entregando SDKs de visión por computadora y plataformas RAG empresariales a 30M+ usuarios."
+    },
+    "p2": {
+      "en": "I ship products that move business metrics — revenue, retention, market share — and obsess over the operational craft behind them. Korean · English · Japanese · Spanish. Worked in KR, JP, MX, ES, DO.",
+      "ko": "매출 · 리텐션 · 시장 점유율 같은 비즈니스 숫자를 움직이는 프로덕트, 그리고 그 뒤에서 돌아가는 오퍼레이션의 디테일을 중요하게 생각합니다. 한국어 · 영어 · 일본어 · 스페인어를 사용하며, 한국 · 일본 · 멕시코 · 스페인 · 도미니카공화국에서 일한 경험이 있습니다.",
+      "ja": "売上 · リテンション · マーケットシェアといったビジネス数値を実際に動かすプロダクトと、その裏側のオペレーションを大切にしています。韓国語 · 英語 · 日本語 · スペイン語。韓国 · 日本 · メキシコ · スペイン · ドミニカ共和国で働いた経験あり。",
+      "es": "Envío productos que mueven métricas de negocio — ingresos, retención, cuota de mercado — y cuido la artesanía operativa detrás. Coreano · inglés · japonés · español. Experiencia en KR, JP, MX, ES, DO."
+    },
+    "tag": {
+      "rev": {
+        "en": "Revenue Diagnostics",
+        "ko": "매출 진단",
+        "ja": "売上診断",
+        "es": "Diagnóstico de ingresos"
+      },
+      "cohort": {
+        "en": "Cohort Analysis",
+        "ko": "코호트 분석",
+        "ja": "コホート分析",
+        "es": "Análisis de cohortes"
+      },
+      "sales": {
+        "en": "Enterprise Sales",
+        "ko": "엔터프라이즈 세일즈",
+        "ja": "エンタープライズセールス",
+        "es": "Ventas empresariales"
+      },
+      "cross": {
+        "en": "Cross-cultural",
+        "ko": "다국가 협업",
+        "ja": "多文化協働",
+        "es": "Intercultural"
+      }
+    }
+  },
+  "toolkit": {
+    "head": {
+      "en": "— the working kit —",
+      "ko": "— 보유 역량 —",
+      "ja": "— ワーキングキット —",
+      "es": "— el kit de trabajo —"
+    },
+    "c1": {
+      "h": {
+        "en": "Product & Planning",
+        "ko": "프로덕트 & 기획",
+        "ja": "プロダクト & 企画",
+        "es": "Producto & Planificación"
+      },
+      "p": {
+        "en": "Roadmap shaping · User journey mapping · Competitive matrix · Pricing strategy · Go-to-market · PRD & spec writing",
+        "ko": "로드맵 설계 · User Journey 매핑 · 경쟁사 매트릭스 · 프라이싱 전략 · GTM · PRD/스펙 작성",
+        "ja": "ロードマップ設計 · User Journeyマッピング · 競合マトリックス · プライシング戦略 · GTM · PRD/仕様策定",
+        "es": "Roadmap · User journey mapping · Matriz competitiva · Estrategia de precios · GTM · PRD y redacción de especificaciones"
+      }
+    },
+    "c2": {
+      "h": {
+        "en": "AI & Data",
+        "ko": "AI & 데이터",
+        "ja": "AI & データ",
+        "es": "IA & Datos"
+      },
+      "p": {
+        "en": "RAG pipelines · Prompt engineering · LLM evaluation (A/B qualitative) · HCX / OpenAI / Claude · Dataset planning & QA",
+        "ko": "RAG 파이프라인 · 프롬프트 엔지니어링 · LLM 정성 A/B 평가 · HCX / OpenAI / Claude · 데이터셋 설계 및 QA",
+        "ja": "RAGパイプライン · プロンプトエンジニアリング · LLM定性A/B評価 · HCX / OpenAI / Claude · データセット設計とQA",
+        "es": "Pipelines RAG · Prompt engineering · Evaluación A/B cualitativa de LLM · HCX / OpenAI / Claude · Diseño de datasets y QA"
+      }
+    },
+    "c3": {
+      "h": {
+        "en": "Commercial",
+        "ko": "비즈니스",
+        "ja": "コマーシャル",
+        "es": "Comercial"
+      },
+      "p": {
+        "en": "Revenue diagnostics · Cohort analysis · Enterprise B2B sales · Vendor & contract negotiation · Joint sales packaging",
+        "ko": "매출 진단 · 코호트 분석 · 엔터프라이즈 B2B 세일즈 · 외주/계약 협상 · 공동 세일즈 패키징",
+        "ja": "売上診断 · コホート分析 · エンタープライズB2Bセールス · ベンダー/契約交渉 · 共同セールスパッケージング",
+        "es": "Diagnóstico de ingresos · Análisis de cohortes · Ventas B2B empresariales · Negociación con proveedores/contratos · Paquetes de venta conjunta"
+      }
+    },
+    "c4": {
+      "h": {
+        "en": "Craft",
+        "ko": "툴 & 언어",
+        "ja": "ツール & 言語",
+        "es": "Herramientas & Idiomas"
+      },
+      "p": {
+        "en": "SQL · Figma · Tableau · Notion · Confluence · Cross-cultural storytelling (KR · EN · ES · JA)",
+        "ko": "SQL · Figma · Tableau · Notion · Confluence · 다국어 커뮤니케이션 (KR · EN · ES · JA)",
+        "ja": "SQL · Figma · Tableau · Notion · Confluence · 多言語ストーリーテリング (KR · EN · ES · JA)",
+        "es": "SQL · Figma · Tableau · Notion · Confluence · Storytelling intercultural (KR · EN · ES · JA)"
+      }
+    }
+  },
+  "footer": {
+    "brand": {
+      "en": "Made with care in Seoul, 2026",
+      "ko": "서울에서 정성껏 · 2026",
+      "ja": "ソウルで丁寧に · 2026",
+      "es": "Hecho con cuidado en Seúl, 2026"
+    },
+    "menu": {
+      "en": "Menu",
+      "ko": "메뉴",
+      "ja": "メニュー",
+      "es": "Menú"
+    },
+    "work": {
+      "en": "Selected work",
+      "ko": "프로젝트",
+      "ja": "プロジェクト",
+      "es": "Trabajo"
+    },
+    "about": {
+      "en": "About",
+      "ko": "소개",
+      "ja": "自己紹介",
+      "es": "Sobre mí"
+    },
+    "toolkit": {
+      "en": "Toolkit",
+      "ko": "역량",
+      "ja": "ツールキット",
+      "es": "Herramientas"
+    },
+    "contact": {
+      "en": "Contact",
+      "ko": "연락처",
+      "ja": "お問い合わせ",
+      "es": "Contacto"
+    },
+    "elsewhere": {
+      "en": "Elsewhere",
+      "ko": "다른 곳에서",
+      "ja": "他の場所で",
+      "es": "En otros lugares"
+    },
+    "resume": {
+      "en": "Résumé (PDF)",
+      "ko": "이력서 (PDF)",
+      "ja": "履歴書 (PDF)",
+      "es": "CV (PDF)"
+    },
+    "cta": {
+      "h": {
+        "en": "More work, shipping soon.",
+        "ko": "새 프로젝트, 곧 공개됩니다.",
+        "ja": "新しい仕事、まもなく公開。",
+        "es": "Más trabajo, llegando pronto."
+      },
+      "p": {
+        "en": "Drop an email to be first when new reports go live.",
+        "ko": "이메일을 남겨주시면 새 리포트가 공개될 때 가장 먼저 알려드리겠습니다.",
+        "ja": "メールをいただければ、新しいレポート公開をいち早くお知らせします。",
+        "es": "Deja tu correo para ver los nuevos reportes antes que nadie."
+      },
+      "placeholder": {
+        "en": "your@email.com",
+        "ko": "your@email.com",
+        "ja": "your@email.com",
+        "es": "tu@email.com"
+      },
+      "thanks": {
+        "en": "Thanks — talk soon ✿",
+        "ko": "감사합니다 — 곧 연락드리겠습니다 ✿",
+        "ja": "ありがとうございます — すぐにご連絡します ✿",
+        "es": "Gracias — hablamos pronto ✿"
+      }
+    },
+    "copy": {
+      "en": "© 2026 Hyoju Cheong · All rights reserved.",
+      "ko": "© 2026 정효주 · All rights reserved.",
+      "ja": "© 2026 Hyoju Cheong · All rights reserved.",
+      "es": "© 2026 Hyoju Cheong · Todos los derechos reservados."
+    }
+  }
+}

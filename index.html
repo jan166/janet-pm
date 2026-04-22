@@ -121,7 +121,7 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .page { max-width: 1180px; margin: 0 auto; padding: 20px 24px 0; }
+  .page { max-width: 1320px; margin: 0 auto; padding: 20px 24px 0; }
 
   /* ============ NAV ============ */
   .nav {
@@ -311,7 +311,7 @@
 
   /* ============ BOOK SPREAD ============ */
   .book-wrap {
-    max-width: 1120px;
+    max-width: 1260px;
     margin: 0 auto;
     padding: 10px 12px 18px;
     position: relative;
@@ -407,10 +407,10 @@
   }
 
   .book-page {
-    padding: 40px 42px 48px;
+    padding: 32px 44px 38px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 26px 24px;
+    gap: 20px 22px;
     grid-auto-rows: min-content;
     align-content: start;
     position: relative;
@@ -705,7 +705,7 @@
 
   /* ============ MAGAZINE NAV BAR ============ */
   .booknav {
-    max-width: 1100px;
+    max-width: 1240px;
     margin: 28px auto 0;
     display: flex;
     justify-content: space-between;
@@ -1313,346 +1313,26 @@
 </div>
 
 <script>
-  // ============ i18n dictionaries ============
-  const I18N = {
-    en: {
-      nav: { work: 'Work', about: 'About', toolkit: 'Toolkit', contact: 'Contact' },
-      hero: {
-        title: 'AI products that<br/><em>move revenue.</em>',
-        sub: 'Product Manager at NAVER. 30M+ users shipped · $25M+ revenue unlocked · KRW 30B Olympic sell-out · NIST FRVT world #6.',
-        role: 'AI Product Manager',
-        location: 'NAVER, Seoul'
-      },
-      filters: { all: 'All work', ai: 'AI products', sales: 'Ad sales', growth: 'Growth', events: 'Events' },
-      masthead: { volume: '— Volume 04 · Portfolio —', issue: 'Spring 2026', right: '— selected work, 2021 — 2026 —' },
-      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
-      blocks: {
-        eyed: {
-          kicker: 'Flagship',
-          title: 'Clova EyeD — ¥319M revenue, NIST FRVT world #6.',
-          lead: "The eKYC SDK behind Japan's top payments apps. 165% of FY25 budget. Adopted by PayPay, LINE Pay, Liquid, DNP, and 15+ enterprise clients.",
-          stat1: 'FY24 Revenue', stat2: 'FY25 vs. Budget', stat3: 'NIST FRVT',
-          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
-        },
-        rag: {
-          kicker: 'In development',
-          title: "RAG Platform — NCP's enterprise RAG PaaS.",
-          body: '5-service pipeline (Document · Retrieval · Orchestration · Evaluation · Console). Benched 15+ global competitors (Mindbreeze, Lucidworks, Elastic, Kendra, Vertex AI). Ran A/B qualitative eval on 18 queries — new orchestrator won 9 to 1.',
-          stat1: 'Services', stat2: 'Competitors benched', stat3: 'MM invested'
-        },
-        launcher: {
-          kicker: 'New',
-          title: 'Launcher (shook) — ⌘+E → every workplace answer.',
-          body: 'Desktop AI assistant. One shortcut searches files, Slack, Wiki, Connect, HR. HCX handles grounded questions. v0.5 shipped 5-source search. v0.6 added HCX. v1.0 wires RAG Platform for enterprise-grade grounding.',
-          caption: 'Launcher (shook) · ⌘+E desktop assistant'
-        },
-        milan: {
-          kicker: 'Cover story',
-          title: 'Milan 2026 — KRW 30B sold in one window.',
-          lead: '22 advertisers · NAVER × JTBC · Olympic inventory.',
-          body: 'Led the joint sales package for the Milano–Cortina Winter Games. Built pricing ladders, discount logic, and the end-to-end exception playbook. Sell-out landed around KRW 30B (~$23M).',
-          stat1: 'Advertisers', stat2: 'Sell-out', stat3: 'Role',
-          caption: 'Milano–Cortina 2026',
-          also: 'Also available:', contrib: 'individual contribution report →'
-        },
-        shop: {
-          kicker: 'Growth',
-          title: 'Shopping sellers — 4% → 11% apply rate.',
-          body: '0→1 onboarding for 3,000+ NAVER Shopping sellers. Multi-channel funnel, data-led messaging rewrites. 2.75× lift in end-to-end conversion.',
-          caption: 'NAVER Shopping · Seller onboarding'
-        },
-        dan: {
-          kicker: 'Event',
-          title: 'DAN25 Biz Lounge — 200 partners, 90 minutes.',
-          body: 'Partner event rebuilt in 4 months with a 20-person ops crew. Two core messages, three teams, one run-of-show that held end to end.',
-          caption: 'DAN25 · Biz Lounge, Seoul'
-        }
-      },
-      legend: { hint: 'tap any chapter to open the full report ·', pages: 'Pages 04 — 05 / 22' },
-      booknav: { pdf: 'PDF' },
-      about: {
-        title: 'About me — <em>AI PM with a revenue lens.</em>',
-        p1: 'Product Manager at NAVER, at the intersection of advertising strategy and applied AI. Four years at NAVER CLOUD shipping computer vision SDKs and enterprise RAG platforms to 30M+ users.',
-        p2: 'I ship products that move business metrics — revenue, retention, market share — and obsess over the operational craft behind them. Korean · English · Japanese · Spanish. Worked in KR, JP, MX, ES, DO.',
-        tag: { rev: 'Revenue Diagnostics', cohort: 'Cohort Analysis', sales: 'Enterprise Sales', cross: 'Cross-cultural' }
-      },
-      toolkit: {
-        head: '— the working kit —',
-        c1: { h: 'Product & Planning', p: 'Roadmap shaping · User journey mapping · Competitive matrix · Pricing strategy · Go-to-market · PRD & spec writing' },
-        c2: { h: 'AI & Data', p: 'RAG pipelines · Prompt engineering · LLM evaluation (A/B qualitative) · HCX / OpenAI / Claude · Dataset planning & QA' },
-        c3: { h: 'Commercial', p: 'Revenue diagnostics · Cohort analysis · Enterprise B2B sales · Vendor & contract negotiation · Joint sales packaging' },
-        c4: { h: 'Craft', p: 'SQL · Figma · Tableau · Notion · Confluence · Cross-cultural storytelling (KR · EN · ES · JA)' }
-      },
-      footer: {
-        brand: 'Made with care in Seoul, 2026',
-        menu: 'Menu', work: 'Selected work', about: 'About', toolkit: 'Toolkit', contact: 'Contact',
-        elsewhere: 'Elsewhere', resume: 'Résumé (PDF)',
-        cta: {
-          h: 'More work, shipping soon.',
-          p: 'Drop an email to be first when new reports go live.',
-          placeholder: 'your@email.com', thanks: 'Thanks — talk soon ✿'
-        },
-        copy: '© 2026 Hyoju Cheong · All rights reserved.'
-      }
-    },
+  // ============ Content (key-first, languages nested) ============
+  // Loaded async from content/main.json. CMS-editable.
+  let CONTENT = null;
+  const SUPPORTED_LANGS = ['en', 'ko', 'ja', 'es'];
 
-    ko: {
-      nav: { work: '프로젝트', about: '소개', toolkit: '역량', contact: '연락처' },
-      hero: {
-        title: '매출을 움직이는<br/><em>AI 프로덕트</em>를 만듭니다.',
-        sub: '네이버 프로덕트 매니저. 3천만 유저가 쓰는 AI 프로덕트를 만들고, 매출 $25M+ · 밀라노 올림픽 300억 원 완판 · NIST FRVT 세계 6위의 성과를 기록했습니다.',
-        role: 'AI 프로덕트 매니저',
-        location: '네이버 · 서울'
-      },
-      filters: { all: '전체 프로젝트', ai: 'AI 프로덕트', sales: '광고 세일즈', growth: '그로스', events: '이벤트' },
-      masthead: { volume: '— Volume 04 · 포트폴리오 —', issue: 'Spring 2026', right: '— selected work, 2021 — 2026 —' },
-      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
-      blocks: {
-        eyed: {
-          kicker: '대표 프로젝트',
-          title: 'Clova EyeD — 매출 ¥319M, NIST FRVT 세계 6위.',
-          lead: '일본 주요 결제 앱의 eKYC 엔진이 된 얼굴 인식 SDK. FY25 예산 대비 165%를 달성했고, PayPay · LINE Pay · Liquid · DNP 등 엔터프라이즈 15곳 이상에 도입되었습니다.',
-          stat1: 'FY24 매출', stat2: 'FY25 달성률', stat3: '세계 순위',
-          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
-        },
-        rag: {
-          kicker: '진행 중',
-          title: 'RAG Platform — NCP향 엔터프라이즈 RAG PaaS.',
-          body: 'Document · Retrieval · Orchestration · Evaluation · Console 5개 서비스로 구성된 파이프라인을 설계했습니다. 글로벌 경쟁사 15곳(Mindbreeze · Lucidworks · Elastic · Kendra · Vertex AI)을 매트릭스로 분석하고, 18개 쿼리 A/B 정성 평가에서 신규 오케스트레이터가 9:1로 우위를 보이며 v1.0 로드맵을 확정했습니다.',
-          stat1: '서비스 수', stat2: '조사한 경쟁사', stat3: '투입 MM'
-        },
-        launcher: {
-          kicker: '신규',
-          title: 'Launcher (shook) — ⌘+E로 업무의 모든 답을 찾다.',
-          body: '데스크탑 AI 어시스턴트. 단축키 하나로 파일 · 슬랙 · 위키 · 커넥트 · 사원정보를 통합 검색하고, HCX로 출처가 있는 답변을 받습니다. v0.5에서 5개 소스 통합 검색, v0.6에서 HCX 연결을 출시했고, v1.0에서 RAG Platform 연동을 통해 엔터프라이즈급 그라운딩을 붙입니다.',
-          caption: 'Launcher (shook) · ⌘+E 데스크탑 어시스턴트'
-        },
-        milan: {
-          kicker: '커버 스토리',
-          title: '밀라노 2026 — 한 시즌에 300억 원을 완판한 올림픽 세일즈.',
-          lead: '광고주 22곳 · 네이버 × JTBC · 올림픽 공식 인벤토리.',
-          body: '밀라노-코르티나 동계올림픽 공동 세일즈 패키지를 주도했습니다. 가격 계단, 할인 로직, 후반부 예외 케이스까지 모두 정리해 최종 약 300억 원(~$23M) 규모로 완판했습니다.',
-          stat1: '광고주', stat2: '완판 규모', stat3: '역할',
-          caption: '밀라노–코르티나 2026',
-          also: '함께 보기:', contrib: '개인 기여 리포트 →'
-        },
-        shop: {
-          kicker: '그로스 프로그램',
-          title: '쇼핑 셀러 — 신청율 4%에서 11%로.',
-          body: '네이버 쇼핑 셀러 3,000명 이상을 대상으로 한 0→1 온보딩 프로그램. 멀티채널 퍼널을 설계하고 데이터 기반으로 메시징을 다시 쓰는 방식으로 end-to-end 전환률을 2.75배 끌어올렸습니다.',
-          caption: '네이버 쇼핑 · 셀러 온보딩'
-        },
-        dan: {
-          kicker: '이벤트',
-          title: 'DAN25 Biz Lounge — 파트너 200명, 90분.',
-          body: '4개월에 걸쳐 다시 설계한 파트너 이벤트. 오퍼레이션 크루 20명과 함께 핵심 메시지 2개, 협업 팀 3곳으로 구성된 런오브쇼를 운영해 90분 내내 흔들림 없이 마무리했습니다.',
-          caption: 'DAN25 · Biz Lounge, 서울'
-        }
-      },
-      legend: { hint: '각 챕터를 누르면 상세 리포트가 열립니다 ·', pages: 'Pages 04 — 05 / 22' },
-      booknav: { pdf: '이력서' },
-      about: {
-        title: '<em>소개</em> — 매출을 보는 AI PM.',
-        p1: '네이버의 프로덕트 매니저로, 광고 전략과 응용 AI의 접점에서 일하고 있습니다. 그 전 4년간은 NAVER CLOUD에서 컴퓨터 비전 SDK와 엔터프라이즈 RAG 플랫폼을 3천만 명 이상의 유저에게 배포했습니다.',
-        p2: '매출 · 리텐션 · 시장 점유율 같은 비즈니스 숫자를 움직이는 프로덕트, 그리고 그 뒤에서 돌아가는 오퍼레이션의 디테일을 중요하게 생각합니다. 한국어 · 영어 · 일본어 · 스페인어를 사용하며, 한국 · 일본 · 멕시코 · 스페인 · 도미니카공화국에서 일한 경험이 있습니다.',
-        tag: { rev: '매출 진단', cohort: '코호트 분석', sales: '엔터프라이즈 세일즈', cross: '다국가 협업' }
-      },
-      toolkit: {
-        head: '— 보유 역량 —',
-        c1: { h: '프로덕트 & 기획', p: '로드맵 설계 · User Journey 매핑 · 경쟁사 매트릭스 · 프라이싱 전략 · GTM · PRD/스펙 작성' },
-        c2: { h: 'AI & 데이터', p: 'RAG 파이프라인 · 프롬프트 엔지니어링 · LLM 정성 A/B 평가 · HCX / OpenAI / Claude · 데이터셋 설계 및 QA' },
-        c3: { h: '비즈니스', p: '매출 진단 · 코호트 분석 · 엔터프라이즈 B2B 세일즈 · 외주/계약 협상 · 공동 세일즈 패키징' },
-        c4: { h: '툴 & 언어', p: 'SQL · Figma · Tableau · Notion · Confluence · 다국어 커뮤니케이션 (KR · EN · ES · JA)' }
-      },
-      footer: {
-        brand: '서울에서 정성껏 · 2026',
-        menu: '메뉴', work: '프로젝트', about: '소개', toolkit: '역량', contact: '연락처',
-        elsewhere: '다른 곳에서', resume: '이력서 (PDF)',
-        cta: {
-          h: '새 프로젝트, 곧 공개됩니다.',
-          p: '이메일을 남겨주시면 새 리포트가 공개될 때 가장 먼저 알려드리겠습니다.',
-          placeholder: 'your@email.com', thanks: '감사합니다 — 곧 연락드리겠습니다 ✿'
-        },
-        copy: '© 2026 정효주 · All rights reserved.'
-      }
-    },
-
-    ja: {
-      nav: { work: 'プロジェクト', about: '自己紹介', toolkit: 'ツールキット', contact: 'お問い合わせ' },
-      hero: {
-        title: '売上を動かす<br/><em>AIプロダクト。</em>',
-        sub: 'NAVERプロダクトマネージャー。3,000万人のユーザー · 売上$25M+ · ミラノ五輪300億ウォン完売 · NIST FRVT世界6位。',
-        role: 'AIプロダクトマネージャー',
-        location: 'NAVER · ソウル'
-      },
-      filters: { all: 'すべて', ai: 'AIプロダクト', sales: '広告セールス', growth: 'グロース', events: 'イベント' },
-      masthead: { volume: '— Volume 04 · Portfolio —', issue: 'Spring 2026', right: '— selected work, 2021 — 2026 —' },
-      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
-      blocks: {
-        eyed: {
-          kicker: '代表作',
-          title: 'Clova EyeD — 売上¥319M · NIST FRVT世界6位。',
-          lead: '日本の主要決済アプリのeKYCを支える顔認識SDK。FY25予算165%達成。PayPay · LINE Pay · Liquid · DNPなどエンタープライズ15社が導入。',
-          stat1: 'FY24 売上', stat2: 'FY25 達成率', stat3: '世界順位',
-          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
-        },
-        rag: {
-          kicker: '開発中',
-          title: 'RAG Platform — NCP向けエンタープライズRAG PaaS。',
-          body: 'Document・Retrieval・Orchestration・Evaluation・Consoleの5サービスパイプライン。グローバル競合15社（Mindbreeze・Lucidworks・Elastic・Kendra・Vertex AI）をマトリックス分析。18クエリのA/B定性評価で新オーケストレーターが9対1で勝利。',
-          stat1: 'サービス数', stat2: '調査した競合', stat3: '投入MM'
-        },
-        launcher: {
-          kicker: '新規',
-          title: 'Launcher (shook) — ⌘+Eで業務の全ての答え。',
-          body: 'デスクトップAIアシスタント。ショートカット一つでファイル・Slack・Wiki・Connect・社員情報を検索、HCXが根拠のある回答を生成。v0.5で統合検索（5ソース）、v0.6でHCX接続、v1.0でRAG Platform連携によるエンタープライズグラウンディング。',
-          caption: 'Launcher (shook) · ⌘+Eデスクトップアシスタント'
-        },
-        milan: {
-          kicker: '表紙の記事',
-          title: 'ミラノ2026 — 1シーズンで300億ウォン完売。',
-          lead: '広告主22社 · NAVER × JTBC · 五輪公式枠。',
-          body: 'ミラノ・コルティナ冬季五輪の共同セールスパッケージを主導。価格階層、ディスカウントロジック、終盤の例外ケースまで整理。最終的に約300億ウォン（約$23M）で完売。',
-          stat1: '広告主', stat2: '完売規模', stat3: '役割',
-          caption: 'ミラノ–コルティナ 2026',
-          also: 'あわせて見る:', contrib: '個人寄与レポート →'
-        },
-        shop: {
-          kicker: 'グロース',
-          title: 'Shoppingセラー — 申請率4% → 11%。',
-          body: 'NAVER Shoppingセラー3,000社以上を対象にした0→1オンボーディング。マルチチャネルファネルとデータ駆動のメッセージング改善で、エンドツーエンドCVR 2.75倍。',
-          caption: 'NAVER Shopping · セラーオンボーディング'
-        },
-        dan: {
-          kicker: 'イベント',
-          title: 'DAN25 Biz Lounge — パートナー200名、90分。',
-          body: '4か月かけて再設計したパートナーイベント。20名のオペレーションクルー、2つのコアメッセージ、3チーム、最後まで崩れなかった進行表。',
-          caption: 'DAN25 · Biz Lounge, ソウル'
-        }
-      },
-      legend: { hint: '各チャプターをタップすると詳細レポートが開きます ·', pages: 'Pages 04 — 05 / 22' },
-      booknav: { pdf: '履歴書' },
-      about: {
-        title: '自己紹介 <em>— 売上を見るAI PM。</em>',
-        p1: 'NAVERプロダクトマネージャー。広告戦略と応用AIの交差点で働いています。その前の4年間はNAVER CLOUDで、コンピュータビジョンSDKとエンタープライズRAGプラットフォームを3,000万人以上のユーザーに届けました。',
-        p2: '売上 · リテンション · マーケットシェアといったビジネス数値を実際に動かすプロダクトと、その裏側のオペレーションを大切にしています。韓国語・英語・日本語・スペイン語。韓国・日本・メキシコ・スペイン・ドミニカ共和国で働いた経験あり。',
-        tag: { rev: '売上診断', cohort: 'コホート分析', sales: 'エンタープライズセールス', cross: '多文化協働' }
-      },
-      toolkit: {
-        head: '— ワーキングキット —',
-        c1: { h: 'プロダクト & 企画', p: 'ロードマップ設計 · User Journeyマッピング · 競合マトリックス · プライシング戦略 · GTM · PRD/仕様策定' },
-        c2: { h: 'AI & データ', p: 'RAGパイプライン · プロンプトエンジニアリング · LLM定性A/B評価 · HCX / OpenAI / Claude · データセット設計とQA' },
-        c3: { h: 'コマーシャル', p: '売上診断 · コホート分析 · エンタープライズB2Bセールス · ベンダー/契約交渉 · 共同セールスパッケージング' },
-        c4: { h: 'ツール & 言語', p: 'SQL · Figma · Tableau · Notion · Confluence · 多言語ストーリーテリング (KR · EN · ES · JA)' }
-      },
-      footer: {
-        brand: 'ソウルで丁寧に · 2026',
-        menu: 'メニュー', work: 'プロジェクト', about: '自己紹介', toolkit: 'ツールキット', contact: 'お問い合わせ',
-        elsewhere: '他の場所で', resume: '履歴書 (PDF)',
-        cta: {
-          h: '新しい仕事、まもなく公開。',
-          p: 'メールをいただければ、新しいレポート公開をいち早くお知らせします。',
-          placeholder: 'your@email.com', thanks: 'ありがとうございます — すぐにご連絡します ✿'
-        },
-        copy: '© 2026 Hyoju Cheong · All rights reserved.'
-      }
-    },
-
-    es: {
-      nav: { work: 'Trabajo', about: 'Sobre mí', toolkit: 'Herramientas', contact: 'Contacto' },
-      hero: {
-        title: 'Productos de IA que<br/><em>mueven ingresos.</em>',
-        sub: 'Product Manager en NAVER. 30M+ usuarios · $25M+ en ingresos · 30 000M KRW en los JJ.OO. de Milán · 6.º mundial en NIST FRVT.',
-        role: 'Product Manager de IA',
-        location: 'NAVER, Seúl'
-      },
-      filters: { all: 'Todo', ai: 'Productos de IA', sales: 'Ventas de publicidad', growth: 'Crecimiento', events: 'Eventos' },
-      masthead: { volume: '— Volumen 04 · Portafolio —', issue: 'Primavera 2026', right: '— trabajo seleccionado, 2021 — 2026 —' },
-      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
-      blocks: {
-        eyed: {
-          kicker: 'Proyecto insignia',
-          title: 'Clova EyeD — ¥319M en ingresos · 6.º en NIST FRVT.',
-          lead: 'El SDK de eKYC detrás de las principales apps de pagos de Japón. 165% del presupuesto FY25. Adoptado por PayPay, LINE Pay, Liquid, DNP y 15+ clientes empresariales.',
-          stat1: 'Ingresos FY24', stat2: 'FY25 vs. Presupuesto', stat3: 'NIST FRVT',
-          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
-        },
-        rag: {
-          kicker: 'En desarrollo',
-          title: 'RAG Platform — RAG PaaS empresarial de NCP.',
-          body: 'Pipeline de 5 servicios (Document · Retrieval · Orchestration · Evaluation · Console). Benchmark de 15+ competidores globales (Mindbreeze, Lucidworks, Elastic, Kendra, Vertex AI). Evaluación A/B cualitativa en 18 consultas — el nuevo orquestador ganó 9 a 1.',
-          stat1: 'Servicios', stat2: 'Competidores evaluados', stat3: 'MM invertidos'
-        },
-        launcher: {
-          kicker: 'Nuevo',
-          title: 'Launcher (shook) — ⌘+E → cualquier respuesta laboral.',
-          body: 'Asistente de IA de escritorio. Un atajo busca archivos, Slack, Wiki, Connect y RR. HH.; HCX responde preguntas con fundamento. v0.5 lanzó búsqueda integrada (5 fuentes). v0.6 añadió HCX. v1.0 conectará RAG Platform para grounding empresarial.',
-          caption: 'Launcher (shook) · asistente de escritorio ⌘+E'
-        },
-        milan: {
-          kicker: 'Portada',
-          title: 'Milán 2026 — 30 000M KRW vendidos en una ventana.',
-          lead: '22 anunciantes · NAVER × JTBC · inventario olímpico.',
-          body: 'Lideré el paquete de venta conjunta para los Juegos de Invierno de Milán–Cortina. Armé las escalas de precios, la lógica de descuentos y el playbook de excepciones. Sell-out ~30 000M KRW (~$23M).',
-          stat1: 'Anunciantes', stat2: 'Venta total', stat3: 'Rol',
-          caption: 'Milán–Cortina 2026',
-          also: 'También disponible:', contrib: 'informe de contribución individual →'
-        },
-        shop: {
-          kicker: 'Crecimiento',
-          title: 'Vendedores de Shopping — 4% → 11% de postulación.',
-          body: 'Onboarding 0→1 para 3.000+ vendedores de NAVER Shopping. Embudo multicanal, mensajes reescritos con datos. 2,75× de aumento en conversión end-to-end.',
-          caption: 'NAVER Shopping · Onboarding de vendedores'
-        },
-        dan: {
-          kicker: 'Evento',
-          title: 'DAN25 Biz Lounge — 200 socios, 90 minutos.',
-          body: 'Evento para socios reconstruido en 4 meses con un equipo operativo de 20 personas. Dos mensajes clave, tres equipos, un run of show que se sostuvo de principio a fin.',
-          caption: 'DAN25 · Biz Lounge, Seúl'
-        }
-      },
-      legend: { hint: 'toca cualquier capítulo para leer el informe completo ·', pages: 'Páginas 04 — 05 / 22' },
-      booknav: { pdf: 'CV' },
-      about: {
-        title: 'Sobre mí — <em>PM de IA con ojo comercial.</em>',
-        p1: 'Product Manager en NAVER, en la intersección entre estrategia publicitaria e IA aplicada. Cuatro años previos en NAVER CLOUD entregando SDKs de visión por computadora y plataformas RAG empresariales a 30M+ usuarios.',
-        p2: 'Envío productos que mueven métricas de negocio — ingresos, retención, cuota de mercado — y cuido la artesanía operativa detrás. Coreano · inglés · japonés · español. Experiencia en KR, JP, MX, ES, DO.',
-        tag: { rev: 'Diagnóstico de ingresos', cohort: 'Análisis de cohortes', sales: 'Ventas empresariales', cross: 'Intercultural' }
-      },
-      toolkit: {
-        head: '— el kit de trabajo —',
-        c1: { h: 'Producto & Planificación', p: 'Roadmap · User journey mapping · Matriz competitiva · Estrategia de precios · GTM · PRD y redacción de especificaciones' },
-        c2: { h: 'IA & Datos', p: 'Pipelines RAG · Prompt engineering · Evaluación A/B cualitativa de LLM · HCX / OpenAI / Claude · Diseño de datasets y QA' },
-        c3: { h: 'Comercial', p: 'Diagnóstico de ingresos · Análisis de cohortes · Ventas B2B empresariales · Negociación con proveedores/contratos · Paquetes de venta conjunta' },
-        c4: { h: 'Herramientas & Idiomas', p: 'SQL · Figma · Tableau · Notion · Confluence · Storytelling intercultural (KR · EN · ES · JA)' }
-      },
-      footer: {
-        brand: 'Hecho con cuidado en Seúl, 2026',
-        menu: 'Menú', work: 'Trabajo', about: 'Sobre mí', toolkit: 'Herramientas', contact: 'Contacto',
-        elsewhere: 'En otros lugares', resume: 'CV (PDF)',
-        cta: {
-          h: 'Más trabajo, llegando pronto.',
-          p: 'Deja tu correo para ver los nuevos reportes antes que nadie.',
-          placeholder: 'tu@email.com', thanks: 'Gracias — hablamos pronto ✿'
-        },
-        copy: '© 2026 Hyoju Cheong · Todos los derechos reservados.'
-      }
-    }
-  };
-
-  // ============ Filter categories (per-language) ============
-  function categoriesFor(lang) {
-    const f = I18N[lang].filters;
-    return [
-      { id: 'all',    label: f.all },
-      { id: 'ai',     label: f.ai },
-      { id: 'sales',  label: f.sales },
-      { id: 'growth', label: f.growth },
-      { id: 'events', label: f.events }
-    ];
-  }
   let activeCategory = 'all';
   let activeLang = 'en';
+
+  // ============ Filter categories ============
+  function categoriesFor(lang) {
+    const f = (CONTENT && CONTENT.filters) || {};
+    const get = k => (f[k] && (f[k][lang] || f[k].en)) || k;
+    return [
+      { id: 'all',    label: get('all') },
+      { id: 'ai',     label: get('ai') },
+      { id: 'sales',  label: get('sales') },
+      { id: 'growth', label: get('growth') },
+      { id: 'events', label: get('events') }
+    ];
+  }
 
   function getBlocks() { return Array.from(document.querySelectorAll('.block')); }
 
@@ -1672,7 +1352,9 @@
         applyFilter();
       });
     });
+    updatePageCounter();
   }
+
   function applyFilter() {
     getBlocks().forEach(b => {
       if (activeCategory === 'all' || b.dataset.category === activeCategory) {
@@ -1690,31 +1372,40 @@
     });
   });
 
-  // ============ i18n apply ============
+  // ============ i18n apply (key-first: path → {en,ko,ja,es}) ============
   function resolvePath(obj, path) {
     return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+  }
+  function t(path, lang) {
+    if (!CONTENT) return null;
+    const node = resolvePath(CONTENT, path);
+    if (!node || typeof node !== 'object') return null;
+    return node[lang] || node.en || null;
   }
 
   function applyLang(lang) {
     activeLang = lang;
-    const dict = I18N[lang] || I18N.en;
-    window.__i18n = dict;
     document.documentElement.lang = lang;
+    if (!CONTENT) return;
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
-      const v = resolvePath(dict, el.getAttribute('data-i18n'));
+      const v = t(el.getAttribute('data-i18n'), lang);
       if (typeof v === 'string') el.textContent = v;
     });
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      const v = resolvePath(dict, el.getAttribute('data-i18n-html'));
+      const v = t(el.getAttribute('data-i18n-html'), lang);
       if (typeof v === 'string') el.innerHTML = v;
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const v = resolvePath(dict, el.getAttribute('data-i18n-placeholder'));
+      const v = t(el.getAttribute('data-i18n-placeholder'), lang);
       if (typeof v === 'string') el.placeholder = v;
     });
 
-    // Language picker label
+    // For the newsletter form success message
+    window.__i18n = {
+      footer: { cta: { thanks: t('footer.cta.thanks', lang) || 'Thanks — talk soon ✿' } }
+    };
+
     document.getElementById('langCurrent').textContent = lang.toUpperCase();
     document.querySelectorAll('.lang-menu button').forEach(b => {
       b.classList.toggle('current', b.dataset.lang === lang);
@@ -1749,16 +1440,13 @@
     });
   });
 
-  // ============ Language auto-detect (IP-based with fallback) ============
+  // ============ Auto-detect (IP → navigator.language → en) ============
   const SPANISH_COUNTRIES = new Set([
     'ES','MX','AR','CL','CO','PE','VE','UY','PY','BO','EC','GT','HN','NI','CR','PA','DO','CU','SV','PR'
   ]);
-
   async function detectLanguage() {
     const stored = localStorage.getItem('hyoju.lang');
-    if (stored && I18N[stored]) return stored;
-
-    // Try IP geolocation
+    if (stored && SUPPORTED_LANGS.includes(stored)) return stored;
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 2500);
@@ -1772,21 +1460,16 @@
         if (SPANISH_COUNTRIES.has(cc)) return 'es';
         if (cc) return 'en';
       }
-    } catch (_) { /* ignore — fall through */ }
-
-    // Fallback to navigator.language
+    } catch (_) { /* fall through */ }
     const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
-    if (nav === 'ko') return 'ko';
-    if (nav === 'ja') return 'ja';
-    if (nav === 'es') return 'es';
+    if (SUPPORTED_LANGS.includes(nav)) return nav;
     return 'en';
   }
 
-  // ============ Magazine page nav — cycles through filter categories ============
+  // ============ Magazine page nav ============
   const pageCurrent = document.getElementById('pageCurrent');
   const pagePrev = document.getElementById('pagePrev');
   const pageNext = document.getElementById('pageNext');
-
   function updatePageCounter() {
     const order = ['all', 'ai', 'sales', 'growth', 'events'];
     const idx = order.indexOf(activeCategory);
@@ -1796,31 +1479,30 @@
   function cycleCategory(dir) {
     const order = ['all', 'ai', 'sales', 'growth', 'events'];
     const idx = order.indexOf(activeCategory);
-    const next = (idx + dir + order.length) % order.length;
-    activeCategory = order[next];
+    activeCategory = order[(idx + dir + order.length) % order.length];
     renderFilters();
     applyFilter();
-    updatePageCounter();
   }
   if (pagePrev) pagePrev.addEventListener('click', () => cycleCategory(-1));
   if (pageNext) pageNext.addEventListener('click', () => cycleCategory(1));
 
-  // Wrap renderFilters to also update page counter
-  const _origRenderFilters = renderFilters;
-  renderFilters = function() {
-    _origRenderFilters();
-    // Re-bind chip clicks to also update page counter
-    document.querySelectorAll('#filters .chip').forEach(btn => {
-      btn.addEventListener('click', () => setTimeout(updatePageCounter, 0));
-    });
+  // ============ Bootstrap ============
+  async function boot() {
+    try {
+      const res = await fetch('content/main.json');
+      if (!res.ok) throw new Error('content fetch failed: ' + res.status);
+      CONTENT = await res.json();
+    } catch (e) {
+      console.error('Failed to load content/main.json', e);
+      CONTENT = {};
+    }
+    applyLang('en');
+    applyFilter();
     updatePageCounter();
-  };
-
-  // Initial render + detect
-  applyLang('en');
-  applyFilter();
-  updatePageCounter();
-  detectLanguage().then(lang => { if (lang !== activeLang) applyLang(lang); });
+    const lang = await detectLanguage();
+    if (lang !== activeLang) applyLang(lang);
+  }
+  boot();
 </script>
 </body>
 </html>

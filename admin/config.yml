@@ -1,0 +1,233 @@
+backend:
+  name: github
+  repo: jan166/janet-pm
+  branch: main
+  # base_url must point to your deployed OAuth proxy.
+  # After you deploy the Cloudflare Worker (see CLOUDFLARE_SETUP.md),
+  # replace the URL below with your worker's origin, e.g.
+  #   https://janet-pm-auth.<your-subdomain>.workers.dev
+  base_url: https://REPLACE-WITH-YOUR-WORKER.workers.dev
+  auth_endpoint: auth
+
+# Save commits in English by default
+publish_mode: simple
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+# i18n: all four locales in the same JSON file, key-first nested
+i18n:
+  structure: single_file
+  locales: [en, ko, ja, es]
+  default_locale: en
+
+collections:
+  - name: "main"
+    label: "Main Page"
+    description: "Hero, blocks, about, toolkit and footer text on the landing page."
+    i18n: true
+    files:
+      - name: "main"
+        label: "Landing page content"
+        file: "content/main.json"
+        format: "json"
+        i18n: true
+        fields:
+          # ---------------- Navigation ----------------
+          - label: "Navigation"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Work", name: "work", widget: "string", i18n: true }
+              - { label: "About", name: "about", widget: "string", i18n: true }
+              - { label: "Toolkit", name: "toolkit", widget: "string", i18n: true }
+              - { label: "Contact", name: "contact", widget: "string", i18n: true }
+
+          # ---------------- Hero ----------------
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Title (HTML allowed: <em>, <br/>)", name: "title_html", widget: "string", i18n: true }
+              - { label: "Subtitle", name: "sub", widget: "text", i18n: true }
+              - { label: "Role", name: "role", widget: "string", i18n: true }
+              - { label: "Location", name: "location", widget: "string", i18n: true }
+
+          # ---------------- Filters ----------------
+          - label: "Filter chips"
+            name: "filters"
+            widget: "object"
+            fields:
+              - { label: "All work", name: "all", widget: "string", i18n: true }
+              - { label: "AI products", name: "ai", widget: "string", i18n: true }
+              - { label: "Ad sales", name: "sales", widget: "string", i18n: true }
+              - { label: "Growth", name: "growth", widget: "string", i18n: true }
+              - { label: "Events", name: "events", widget: "string", i18n: true }
+
+          # ---------------- Masthead ----------------
+          - label: "Book masthead"
+            name: "masthead"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Volume tag (left)", name: "volume", widget: "string", i18n: true }
+              - { label: "Issue (right)", name: "issue", widget: "string", i18n: true }
+              - { label: "Right page top", name: "right", widget: "string", i18n: true }
+
+          # ---------------- Folio ----------------
+          - label: "Folio numbers"
+            name: "folio"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Left page folio", name: "left", widget: "string", i18n: true }
+              - { label: "Right page folio", name: "right", widget: "string", i18n: true }
+
+          # ---------------- Blocks ----------------
+          - label: "Project Blocks"
+            name: "blocks"
+            widget: "object"
+            fields:
+              # Clova EyeD
+              - label: "Clova EyeD"
+                name: "eyed"
+                widget: "object"
+                fields:
+                  - { label: "Kicker", name: "kicker", widget: "string", i18n: true }
+                  - { label: "Title", name: "title", widget: "string", i18n: true }
+                  - { label: "Lead", name: "lead", widget: "text", i18n: true }
+                  - { label: "Stat 1 label", name: "stat1", widget: "string", i18n: true }
+                  - { label: "Stat 2 label", name: "stat2", widget: "string", i18n: true }
+                  - { label: "Stat 3 label", name: "stat3", widget: "string", i18n: true }
+                  - { label: "Photo caption", name: "caption", widget: "string", i18n: true }
+              # RAG Platform
+              - label: "RAG Platform"
+                name: "rag"
+                widget: "object"
+                fields:
+                  - { label: "Kicker", name: "kicker", widget: "string", i18n: true }
+                  - { label: "Title", name: "title", widget: "string", i18n: true }
+                  - { label: "Body", name: "body", widget: "text", i18n: true }
+                  - { label: "Stat 1 label", name: "stat1", widget: "string", i18n: true }
+                  - { label: "Stat 2 label", name: "stat2", widget: "string", i18n: true }
+                  - { label: "Stat 3 label", name: "stat3", widget: "string", i18n: true }
+              # Launcher
+              - label: "Launcher (shook)"
+                name: "launcher"
+                widget: "object"
+                fields:
+                  - { label: "Kicker", name: "kicker", widget: "string", i18n: true }
+                  - { label: "Title", name: "title", widget: "string", i18n: true }
+                  - { label: "Body", name: "body", widget: "text", i18n: true }
+                  - { label: "Photo caption", name: "caption", widget: "string", i18n: true }
+              # Milan
+              - label: "Milan 2026"
+                name: "milan"
+                widget: "object"
+                fields:
+                  - { label: "Kicker", name: "kicker", widget: "string", i18n: true }
+                  - { label: "Title", name: "title", widget: "string", i18n: true }
+                  - { label: "Lead", name: "lead", widget: "string", i18n: true }
+                  - { label: "Body", name: "body", widget: "text", i18n: true }
+                  - { label: "Stat 1 label", name: "stat1", widget: "string", i18n: true }
+                  - { label: "Stat 2 label", name: "stat2", widget: "string", i18n: true }
+                  - { label: "Stat 3 label", name: "stat3", widget: "string", i18n: true }
+                  - { label: "Photo caption", name: "caption", widget: "string", i18n: true }
+                  - { label: "Also-available label", name: "also", widget: "string", i18n: true }
+                  - { label: "Contribution link text", name: "contrib", widget: "string", i18n: true }
+              # Shopping
+              - label: "Shopping Seller Growth"
+                name: "shop"
+                widget: "object"
+                fields:
+                  - { label: "Kicker", name: "kicker", widget: "string", i18n: true }
+                  - { label: "Title", name: "title", widget: "string", i18n: true }
+                  - { label: "Body", name: "body", widget: "text", i18n: true }
+                  - { label: "Photo caption", name: "caption", widget: "string", i18n: true }
+              # DAN25
+              - label: "DAN25 Biz Lounge"
+                name: "dan"
+                widget: "object"
+                fields:
+                  - { label: "Kicker", name: "kicker", widget: "string", i18n: true }
+                  - { label: "Title", name: "title", widget: "string", i18n: true }
+                  - { label: "Body", name: "body", widget: "text", i18n: true }
+                  - { label: "Photo caption", name: "caption", widget: "string", i18n: true }
+
+          # ---------------- Book nav ----------------
+          - label: "Book nav bar"
+            name: "booknav"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "PDF button label", name: "pdf", widget: "string", i18n: true }
+
+          # ---------------- About ----------------
+          - label: "About"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Title (HTML <em> allowed)", name: "title_html", widget: "string", i18n: true }
+              - { label: "Paragraph 1", name: "p1", widget: "text", i18n: true }
+              - { label: "Paragraph 2", name: "p2", widget: "text", i18n: true }
+              - label: "Tag labels"
+                name: "tag"
+                widget: "object"
+                fields:
+                  - { label: "Revenue", name: "rev", widget: "string", i18n: true }
+                  - { label: "Cohort", name: "cohort", widget: "string", i18n: true }
+                  - { label: "Sales", name: "sales", widget: "string", i18n: true }
+                  - { label: "Cross-cultural", name: "cross", widget: "string", i18n: true }
+
+          # ---------------- Toolkit ----------------
+          - label: "Toolkit"
+            name: "toolkit"
+            widget: "object"
+            fields:
+              - { label: "Section heading", name: "head", widget: "string", i18n: true }
+              - label: "Column 1"
+                name: "c1"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h", widget: "string", i18n: true }
+                  - { label: "Paragraph", name: "p", widget: "text", i18n: true }
+              - label: "Column 2"
+                name: "c2"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h", widget: "string", i18n: true }
+                  - { label: "Paragraph", name: "p", widget: "text", i18n: true }
+              - label: "Column 3"
+                name: "c3"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h", widget: "string", i18n: true }
+                  - { label: "Paragraph", name: "p", widget: "text", i18n: true }
+              - label: "Column 4"
+                name: "c4"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h", widget: "string", i18n: true }
+                  - { label: "Paragraph", name: "p", widget: "text", i18n: true }
+
+          # ---------------- Footer ----------------
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Brand tagline", name: "brand", widget: "string", i18n: true }
+              - { label: "Menu heading", name: "menu", widget: "string", i18n: true }
+              - { label: "Menu — Work", name: "work", widget: "string", i18n: true }
+              - { label: "Menu — About", name: "about", widget: "string", i18n: true }
+              - { label: "Menu — Toolkit", name: "toolkit", widget: "string", i18n: true }
+              - { label: "Menu — Contact", name: "contact", widget: "string", i18n: true }
+              - { label: "Elsewhere heading", name: "elsewhere", widget: "string", i18n: true }
+              - { label: "Résumé link", name: "resume", widget: "string", i18n: true }
+              - label: "CTA block"
+                name: "cta"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h", widget: "string", i18n: true }
+                  - { label: "Paragraph", name: "p", widget: "text", i18n: true }
+                  - { label: "Email placeholder", name: "placeholder", widget: "string", i18n: true }
+                  - { label: "Thanks message", name: "thanks", widget: "string", i18n: true }
+              - { label: "Copyright line", name: "copy", widget: "string", i18n: true }

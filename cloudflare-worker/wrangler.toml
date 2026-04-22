@@ -1,0 +1,11 @@
+name = "janet-pm-auth"
+main = "worker.js"
+compatibility_date = "2025-01-15"
+
+# Set these via `wrangler secret put` (see CLOUDFLARE_SETUP.md), never commit them.
+# GITHUB_CLIENT_ID
+# GITHUB_CLIENT_SECRET
+
+# Optional: restrict which origin can call the worker
+[vars]
+ALLOWED_ORIGIN = "https://jan166.github.io"
