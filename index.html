@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hyoju Cheong — a journal of shipping AI products</title>
+<meta name="description" content="Portfolio of Hyoju Cheong — AI Product Manager at NAVER. Selected work in AI products, ad sales, growth programs, and live events, 2021–present."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Serif:ital@0;1&family=Zen+Kaku+Gothic+Antique:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css">
+<style>
+  /* Bookk Myungjo — Korean serif for titles */
+  @font-face {
+    font-family: 'BookkMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Lt.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'BookkMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  :root {
+    --bg:          #EEE5CD;
+    --paper:       #FBF4DD;
+    --paper-edge:  #E8DDB9;
+    --cream-soft:  #F5ECD2;
+    --coral:       #D94B3D;
+    --coral-deep:  #B33527;
+    --ink:         #2B1816;
+    --ink-soft:    #5B3F3B;
+    --muted:       #9C807A;
+    --shadow:      0 30px 80px rgba(91,63,59,0.18), 0 4px 12px rgba(43,24,22,0.06);
+    /* Default (English / Spanish): Fraunces only for top-level headers, NanumSquare for everything else */
+    --sans: 'NanumSquare', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --serif: 'Fraunces', Georgia, serif;
+    --serif-alt: 'NanumSquare', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+
+  /* Everything that used --serif-alt was italic serif; NanumSquare has no italic so drop slant globally */
+  .hero-sub, .masthead .kicker, .block-kicker, .block-lead,
+  .ph-note, .folio, .legend .hint em, .toolkit h3 { font-style: normal; }
+
+  /* Korean / Japanese: NanumSquare for everything (no italic) */
+  html[lang="ko"], html[lang="ja"] {
+    --sans: 'NanumSquare', -apple-system, 'Apple SD Gothic Neo', 'Hiragino Sans', system-ui, sans-serif;
+    --serif: 'NanumSquare', -apple-system, 'Apple SD Gothic Neo', 'Hiragino Sans', Georgia, serif;
+    --serif-alt: 'NanumSquare', -apple-system, 'Apple SD Gothic Neo', 'Hiragino Sans', Georgia, sans-serif;
+  }
+  html[lang="ko"] em, html[lang="ja"] em,
+  html[lang="ko"] i, html[lang="ja"] i,
+  html[lang="ko"] .hero-sub, html[lang="ja"] .hero-sub,
+  html[lang="ko"] .hero h1 em, html[lang="ja"] .hero h1 em,
+  html[lang="ko"] .masthead .kicker, html[lang="ja"] .masthead .kicker,
+  html[lang="ko"] .block-kicker, html[lang="ja"] .block-kicker,
+  html[lang="ko"] .block-lead, html[lang="ja"] .block-lead,
+  html[lang="ko"] .ph-note, html[lang="ja"] .ph-note,
+  html[lang="ko"] .folio, html[lang="ja"] .folio,
+  html[lang="ko"] .legend .hint em, html[lang="ja"] .legend .hint em,
+  html[lang="ko"] .about-strip h2 em, html[lang="ja"] .about-strip h2 em,
+  html[lang="ko"] .foot-brand, html[lang="ja"] .foot-brand,
+  html[lang="ko"] .foot-cta h3, html[lang="ja"] .foot-cta h3,
+  html[lang="ko"] .toolkit h3, html[lang="ja"] .toolkit h3 { font-style: normal; }
+
+  /* Japanese: Zen Kaku Gothic Antique for titles (Tsukushi Old Gothic feel), NanumSquare elsewhere */
+  html[lang="ja"] .hero h1,
+  html[lang="ja"] .block-title,
+  html[lang="ja"] .about-strip h2,
+  html[lang="ja"] .foot-brand,
+  html[lang="ja"] .foot-cta h3 {
+    font-family: 'Zen Kaku Gothic Antique', 'NanumSquare', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
+    font-weight: 900;
+  }
+  html[lang="ja"] .hero h1 { letter-spacing: -0.02em; line-height: 1.25; }
+  html[lang="ja"] .hero h1 em { font-weight: 900; color: var(--coral-deep); }
+  html[lang="ja"] .block-title { font-weight: 700; letter-spacing: -0.015em; line-height: 1.3; }
+  html[lang="ja"] .about-strip h2 { font-weight: 900; letter-spacing: -0.02em; }
+  html[lang="ja"] .about-strip h2 em { font-weight: 700; }
+  html[lang="ja"] .foot-brand { font-weight: 900; letter-spacing: -0.025em; }
+  html[lang="ja"] .foot-cta h3 { font-weight: 700; }
+  html[lang="ja"] .masthead .kicker, html[lang="ja"] .block-kicker { font-weight: 700; }
+
+  /* Korean: BookkMyungjo serif for all titles (editorial mood), NanumSquare elsewhere */
+  html[lang="ko"] .hero h1,
+  html[lang="ko"] .block-title,
+  html[lang="ko"] .about-strip h2,
+  html[lang="ko"] .foot-brand,
+  html[lang="ko"] .foot-cta h3 {
+    font-family: 'BookkMyungjo', 'NanumSquare', -apple-system, 'Apple SD Gothic Neo', Georgia, serif;
+    font-weight: 700;
+  }
+  html[lang="ko"] .hero h1 { letter-spacing: -0.025em; line-height: 1.25; }
+  html[lang="ko"] .hero h1 em { font-weight: 700; color: var(--coral-deep); }
+  html[lang="ko"] .block-title { letter-spacing: -0.015em; line-height: 1.3; }
+  html[lang="ko"] .about-strip h2 { letter-spacing: -0.02em; }
+  html[lang="ko"] .about-strip h2 em { font-weight: 700; }
+  html[lang="ko"] .foot-brand { letter-spacing: -0.025em; }
+
+  /* Korean: kickers stay NanumSquare sans for contrast */
+  html[lang="ko"] .masthead .kicker,
+  html[lang="ko"] .block-kicker { font-weight: 700; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 100;
+    opacity: 0.08; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .page { max-width: 1180px; margin: 0 auto; padding: 20px 24px 0; }
+
+  /* ============ NAV ============ */
+  .nav {
+    background: var(--paper);
+    border-radius: 999px;
+    padding: 8px 10px 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(91,63,59,0.08);
+    margin-top: 16px;
+    border: 0.5px solid rgba(43,24,22,0.06);
+  }
+  .nav-brand {
+    width: 34px; height: 34px;
+    background: var(--coral);
+    color: var(--paper);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-weight: 500; font-style: italic;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-link {
+    font-size: 13px; font-weight: 500;
+    color: var(--ink);
+    padding: 9px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .nav-link:hover { background: rgba(217,75,61,0.08); }
+  .nav-link.active { background: var(--coral); color: var(--paper); }
+  .nav-actions { display: flex; gap: 6px; align-items: center; position: relative; }
+  .nav-icon {
+    width: 34px; height: 34px;
+    background: var(--cream-soft);
+    color: var(--coral);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+    transition: transform 0.2s;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .nav-icon:hover { transform: scale(1.08); }
+  .nav-icon svg { width: 15px; height: 15px; }
+
+  /* Language picker */
+  .lang-picker { position: relative; }
+  .lang-btn {
+    width: auto;
+    padding: 0 12px;
+    gap: 5px;
+  }
+  .lang-btn::after {
+    content: '';
+    width: 0; height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 4px solid var(--coral);
+    margin-left: 2px;
+    transition: transform 0.2s;
+  }
+  .lang-btn.open::after { transform: rotate(180deg); }
+  .lang-menu {
+    position: absolute;
+    top: 42px; right: 0;
+    background: var(--paper);
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow: 0 10px 30px rgba(43,24,22,0.15), 0 2px 6px rgba(43,24,22,0.06);
+    border: 0.5px solid rgba(43,24,22,0.08);
+    min-width: 150px;
+    display: none;
+    z-index: 200;
+  }
+  .lang-menu.open { display: block; animation: rise 0.2s ease-out; }
+  .lang-menu button {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .lang-menu button:hover { background: rgba(217,75,61,0.08); }
+  .lang-menu button.current { color: var(--coral); font-weight: 500; }
+  .lang-menu button .lc {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============ HERO ============ */
+  .hero { text-align: center; padding: 72px 20px 40px; }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(44px, 7vw, 86px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    color: var(--coral);
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--coral-deep);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  }
+  .hero-sub {
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+    max-width: 560px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.5;
+  }
+  html[lang="ko"] .hero-sub,
+  html[lang="ja"] .hero-sub { font-style: normal; }
+  .hero-meta {
+    display: inline-flex;
+    gap: 10px;
+    margin-top: 22px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-meta .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--coral);
+    margin-right: 4px;
+  }
+
+  /* ============ FILTER CHIPS ============ */
+  .filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 44px;
+  }
+  .chip {
+    background: var(--cream-soft);
+    border: 0.5px solid rgba(217,75,61,0.2);
+    color: var(--coral-deep);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .chip:hover { background: var(--paper); transform: translateY(-1px); }
+  .chip.active {
+    background: var(--coral);
+    color: var(--paper);
+    border-color: var(--coral);
+  }
+  .chip .count { opacity: 0.6; font-size: 11px; margin-left: 4px; }
+  .chip.active .count { opacity: 0.8; }
+
+  /* ============ BOOK SPREAD ============ */
+  .book-wrap { max-width: 1100px; margin: 0 auto; }
+  .book {
+    background: var(--paper);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+    border: 0.5px solid var(--paper-edge);
+  }
+  .book::before {
+    content: '';
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(43,24,22,0.2) 15%, rgba(43,24,22,0.25) 50%, rgba(43,24,22,0.2) 85%, transparent 100%);
+    z-index: 3;
+    transform: translateX(-0.5px);
+  }
+  .book::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 46px;
+    background: linear-gradient(90deg, rgba(43,24,22,0.08) 0%, transparent 42%, transparent 58%, rgba(43,24,22,0.08) 100%);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .book-page {
+    padding: 40px 42px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 24px;
+    grid-auto-rows: min-content;
+    align-content: start;
+    position: relative;
+  }
+
+  .folio {
+    position: absolute; bottom: 14px;
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  html[lang="ko"] .folio,
+  html[lang="ja"] .folio { font-style: normal; }
+  .book-page.left .folio  { left: 42px; }
+  .book-page.right .folio { right: 42px; }
+
+  .masthead {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid rgba(43,24,22,0.18);
+    margin-bottom: 2px;
+  }
+  .masthead .kicker {
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--coral);
+  }
+  html[lang="ko"] .masthead .kicker,
+  html[lang="ja"] .masthead .kicker { font-style: normal; }
+  .masthead .meta {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ============ BLOCK (project section) ============ */
+  .block {
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.4s, filter 0.4s, transform 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .block:hover { transform: translateY(-2px); }
+  .block:hover .block-title { color: var(--coral); }
+  .block:hover .arrow-link { background: var(--coral); color: var(--paper); }
+  .block.dim {
+    opacity: 0.28;
+    filter: saturate(0.25);
+    pointer-events: none;
+  }
+  .block-kicker {
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--coral);
+    margin-bottom: 4px;
+  }
+  html[lang="ko"] .block-kicker,
+  html[lang="ja"] .block-kicker { font-style: normal; }
+  .block-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    line-height: 1.1;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+  html[lang="ko"] .block-title,
+  html[lang="ja"] .block-title { line-height: 1.25; }
+  .block-lead {
+    font-family: var(--serif-alt);
+    font-style: italic;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    margin-top: 8px;
+    font-size: 14.5px;
+  }
+  html[lang="ko"] .block-lead,
+  html[lang="ja"] .block-lead { font-style: normal; }
+  .block-body {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+  .block-meta {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .block-meta b { font-weight: 500; color: var(--ink-soft); }
+  .block-stats {
+    display: flex;
+    gap: 14px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+    font-family: var(--serif);
+  }
+  .block-stats .sv {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--coral-deep);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .block-stats .sl {
+    font-family: var(--sans);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .block-extra {
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .block-extra a {
+    color: var(--coral-deep);
+    text-decoration: none;
+    border-bottom: 0.5px dotted var(--coral);
+    padding-bottom: 1px;
+  }
+  .block-extra a:hover { color: var(--coral); }
+
+  .arrow-link {
+    position: absolute;
+    top: 0; right: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--cream-soft);
+    color: var(--coral);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    border: 0.5px solid rgba(217,75,61,0.25);
+    z-index: 2;
+  }
+  .arrow-link svg { width: 11px; height: 11px; }
+
+  /* ============ PHOTO PLACEHOLDERS ============ */
+  .photo-ph {
+    position: relative;
+    width: 100%;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ph-note {
+    position: absolute;
+    bottom: 14px; left: 14px; right: 14px;
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(255,255,255,0.88);
+    z-index: 2;
+    border-top: 0.5px solid rgba(255,255,255,0.35);
+    padding-top: 5px;
+    line-height: 1.3;
+  }
+  html[lang="ko"] .ph-note,
+  html[lang="ja"] .ph-note { font-style: normal; }
+  .ph-peach  { background: linear-gradient(135deg, #E89B7C 0%, #B8604A 100%); }
+  .ph-sage   { background: linear-gradient(135deg, #8CAE97 0%, #4D7A62 100%); }
+  .ph-blue   { background: linear-gradient(150deg, #88A9C6 0%, #3F5F7D 100%); }
+  .ph-olive  { background: linear-gradient(135deg, #B9B280 0%, #7A7246 100%); }
+  .ph-plum   { background: linear-gradient(135deg, #B88FA3 0%, #73495E 100%); }
+  .ph-mustard{ background: linear-gradient(135deg, #CEA359 0%, #8B6524 100%); }
+  .ph-violet { background: linear-gradient(135deg, #A58BC4 0%, #5F4785 100%); }
+
+  /* Magazine-style pink polaroid frame — wraps the gradient tile */
+  .polaroid {
+    padding: 14px 14px 14px;
+    background: #FBDCDF;
+    border-radius: 2px;
+    box-shadow: 0 6px 18px rgba(43,24,22,0.1), 0 1px 3px rgba(43,24,22,0.06);
+    position: relative;
+  }
+  .polaroid .photo-ph { border-radius: 2px; }
+  .polaroid .ph-note {
+    color: var(--ink-soft);
+    border-top: none;
+    left: 0; right: 0;
+    bottom: -4px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 8px;
+    background: transparent;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* ============ BLOCK LAYOUTS ============ */
+  .block-main {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .block-main .photo-ph { aspect-ratio: 4/3.2; }
+  .block-main .block-title { font-size: 32px; }
+
+  .block-rag {
+    grid-column: span 2;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .block-rag-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .block-rag .block-title { font-size: 22px; }
+
+  .block-launcher {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 22px;
+    align-items: start;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .block-launcher .photo-ph { aspect-ratio: 4/3; }
+  .block-launcher .block-title { font-size: 22px; }
+
+  .block-shop {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .block-shop .photo-ph { aspect-ratio: 4/3; }
+  .block-shop .block-title { font-size: 22px; }
+
+  .block-milan {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .block-milan .photo-ph { aspect-ratio: 4/3.6; }
+  .block-milan .block-title { font-size: 26px; }
+
+  .block-dan {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 20px;
+    align-items: start;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .block-dan .photo-ph { aspect-ratio: 1/1; }
+  .block-dan .block-title { font-size: 20px; }
+
+  .block-ad {
+    grid-column: span 2;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .block-ad .block-title { font-size: 22px; }
+  .block-ad .block-body {
+    column-count: 2;
+    column-gap: 22px;
+    column-rule: 0.5px solid rgba(43,24,22,0.08);
+    margin-top: 10px;
+  }
+
+  /* ============ MAGAZINE NAV BAR ============ */
+  .booknav {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6px;
+  }
+  .booknav-pdf {
+    background: var(--coral);
+    color: var(--paper);
+    padding: 11px 20px 11px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(217,75,61,0.2);
+  }
+  .booknav-pdf:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(217,75,61,0.3); }
+  .booknav-pdf svg { width: 12px; height: 12px; }
+
+  .booknav-page {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink-soft);
+    letter-spacing: -0.01em;
+  }
+  html[lang="ko"] .booknav-page,
+  html[lang="ja"] .booknav-page { font-style: normal; font-family: var(--sans); font-size: 17px; font-weight: 600; }
+  .booknav-page .total { color: var(--muted); }
+
+  .booknav-arrows { display: flex; gap: 8px; }
+  .booknav-arrow {
+    width: 42px; height: 42px;
+    border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(217,75,61,0.4);
+    background: transparent;
+    color: var(--coral);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .booknav-arrow svg { width: 14px; height: 14px; }
+  .booknav-arrow:hover { background: rgba(217,75,61,0.08); }
+  .booknav-arrow.primary {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--paper);
+    box-shadow: 0 2px 8px rgba(217,75,61,0.2);
+  }
+  .booknav-arrow.primary:hover { background: var(--coral-deep); box-shadow: 0 4px 14px rgba(217,75,61,0.3); }
+
+  /* ============ ABOUT ============ */
+  .about-strip {
+    max-width: 1100px;
+    margin: 80px auto 48px;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .about-strip h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+  }
+  .about-strip h2 em { color: var(--coral); font-style: italic; }
+  html[lang="ko"] .about-strip h2,
+  html[lang="ja"] .about-strip h2 { line-height: 1.25; }
+  html[lang="ko"] .about-strip h2 em,
+  html[lang="ja"] .about-strip h2 em { font-style: normal; }
+  .about-strip p { font-size: 14px; line-height: 1.7; color: var(--ink-soft); }
+  .about-strip p + p { margin-top: 12px; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .about-tags span {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    background: rgba(217,75,61,0.1);
+    color: var(--coral-deep);
+    border-radius: 999px;
+  }
+
+  /* ============ SKILLS / TOOLKIT ============ */
+  .toolkit {
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    padding: 0 4px;
+  }
+  .toolkit h3 {
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--coral);
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+  }
+  html[lang="ko"] .toolkit h3,
+  html[lang="ja"] .toolkit h3 { font-style: normal; }
+  .toolkit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .tk-col {
+    padding-right: 20px;
+    border-right: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .tk-col:last-child { border-right: none; }
+  .tk-col h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .tk-col p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 900px) {
+    .toolkit-grid { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .tk-col { border-right: none; padding-right: 0; }
+  }
+  @media (max-width: 520px) {
+    .toolkit-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    margin-top: 60px;
+    background: var(--coral);
+    color: var(--paper);
+    padding: 52px 48px 28px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    pointer-events: none;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 2fr;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+  }
+  .foot-brand {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 80px;
+    line-height: 0.9;
+    letter-spacing: -0.038em;
+    color: var(--paper);
+  }
+  html[lang="ko"] .foot-brand,
+  html[lang="ja"] .foot-brand { font-style: normal; font-size: 64px; }
+  .foot-brand small {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(251,244,221,0.72);
+    margin-top: 18px;
+  }
+  .foot-col h4 {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(251,244,221,0.72);
+    margin-bottom: 14px;
+  }
+  .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .foot-col a {
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    text-align: left;
+  }
+  .foot-col a:hover { opacity: 0.75; text-decoration: underline; text-underline-offset: 3px; }
+  .foot-cta { border-left: 0.5px solid rgba(251,244,221,0.22); padding-left: 32px; }
+  .foot-cta h3 {
+    font-family: var(--serif);
+    font-weight: 400; font-style: italic;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--paper);
+    margin-bottom: 8px;
+  }
+  html[lang="ko"] .foot-cta h3,
+  html[lang="ja"] .foot-cta h3 { font-style: normal; }
+  .foot-cta p {
+    font-size: 13px;
+    color: rgba(251,244,221,0.78);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .foot-form {
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5px solid rgba(251,244,221,0.4);
+    padding-bottom: 8px;
+  }
+  .foot-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 6px 0;
+    outline: none;
+  }
+  .foot-form input::placeholder { color: rgba(251,244,221,0.5); }
+  .foot-form button {
+    background: var(--paper);
+    color: var(--coral);
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+  }
+  .foot-form button:hover { transform: translateX(2px); }
+  .foot-base {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 0.5px solid rgba(251,244,221,0.18);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: rgba(251,244,221,0.7);
+  }
+
+  /* ============ ANIM ============ */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .page > * { animation: rise 0.7s ease-out backwards; }
+  .nav { animation-delay: 0.05s; }
+  .hero { animation-delay: 0.15s; }
+  .filters { animation-delay: 0.25s; }
+  .book-wrap { animation-delay: 0.35s; }
+  .booknav { animation-delay: 0.45s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .book { grid-template-columns: 1fr; }
+    .book::before, .book::after { display: none; }
+    .book-page { padding: 28px 24px; }
+    .book-page.left { border-bottom: 0.5px solid rgba(43,24,22,0.1); }
+    .about-strip { grid-template-columns: 1fr; gap: 16px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .foot-cta { grid-column: span 2; border-left: none; padding-left: 0; border-top: 0.5px solid rgba(251,244,221,0.2); padding-top: 22px; }
+    .foot-brand { font-size: 56px; }
+    .page { padding: 14px 14px 0; }
+    .hero { padding: 52px 12px 32px; }
+    .block-main, .block-milan, .block-shop, .block-dan, .block-launcher { grid-template-columns: 1fr; }
+    .block-rag-inner { grid-template-columns: 1fr; }
+    .block-ad .block-body { column-count: 1; }
+  }
+  @media (max-width: 520px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .foot-cta { grid-column: span 1; }
+    .foot-base { flex-direction: column; gap: 6px; }
+    .booknav { flex-wrap: wrap; gap: 12px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ========= NAV ========= -->
+  <nav class="nav">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="nav-brand">h</div>
+    </div>
+    <div class="nav-links">
+      <a href="#work" class="nav-link active" data-i18n="nav.work">Work</a>
+      <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+      <a href="#toolkit" class="nav-link" data-i18n="nav.toolkit">Toolkit</a>
+      <a href="mailto:janettt16@gmail.com" class="nav-link" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="lang-picker">
+        <button class="nav-icon lang-btn" id="langBtn" aria-label="Language" aria-expanded="false">
+          <span id="langCurrent">EN</span>
+        </button>
+        <div class="lang-menu" id="langMenu" role="menu">
+          <button data-lang="en" role="menuitem">English <span class="lc">EN</span></button>
+          <button data-lang="ko" role="menuitem">한국어 <span class="lc">KO</span></button>
+          <button data-lang="ja" role="menuitem">日本語 <span class="lc">JA</span></button>
+          <button data-lang="es" role="menuitem">Español <span class="lc">ES</span></button>
+        </div>
+      </div>
+      <button class="nav-icon" title="LinkedIn" onclick="window.open('https://linkedin.com/in/hyoju-cheong','_blank')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>
+      </button>
+      <button class="nav-icon" title="Email" onclick="window.location.href='mailto:janettt16@gmail.com'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========= HERO ========= -->
+  <section class="hero">
+    <h1 data-i18n-html="hero.title">Read it, <em>see it</em>,<br/>ship it.</h1>
+    <p class="hero-sub" data-i18n="hero.sub">An annotated bibliography of AI products, growth programs, and the occasional live event — shipped by Hyoju Cheong between 2021 and today.</p>
+    <div class="hero-meta">
+      <span><span class="dot"></span><span data-i18n="hero.role">AI Product Manager</span></span>
+      <span>·</span>
+      <span data-i18n="hero.location">NAVER, Seoul</span>
+      <span>·</span>
+      <span>KR · EN · ES · JA</span>
+    </div>
+  </section>
+
+  <!-- ========= FILTERS ========= -->
+  <div class="filters" id="filters" role="tablist"></div>
+
+  <!-- ========= BOOK (EDITORIAL OVERVIEW) ========= -->
+  <section class="book-wrap" id="work">
+    <article class="book" id="book">
+
+      <!-- ===== LEFT PAGE — AI PRODUCTS ===== -->
+      <div class="book-page left">
+        <div class="masthead">
+          <span class="kicker" data-i18n="masthead.volume">— Volume 04 · Portfolio —</span>
+          <span class="meta" data-i18n="masthead.issue">Spring 2026</span>
+        </div>
+
+        <!-- MAIN FEATURE: Clova EyeD -->
+        <div class="block block-main" data-category="ai" data-report="reports/clova-eyed.html">
+          <div class="polaroid">
+            <div class="photo-ph ph-peach" style="aspect-ratio: 4/3.2;"></div>
+            <div class="ph-note" data-i18n="blocks.eyed.caption">Clova EyeD · SDK cover or product demo</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.eyed.kicker">The main story</div>
+            <div class="block-meta"><b>NAVER CLOUD · LINE</b><span>·</span><span>2021 — 2023</span></div>
+            <h2 class="block-title" data-i18n="blocks.eyed.title">Clova EyeD — a vision SDK at the scale of a small country.</h2>
+            <p class="block-lead" data-i18n="blocks.eyed.lead">A face-recognition SDK that became the backbone of eKYC for Japan's top payments apps — ranked 6th on NIST FRVT Investigation.</p>
+            <div class="block-stats">
+              <div><div class="sv">¥319M</div><div class="sl" data-i18n="blocks.eyed.stat1">FY24 Revenue</div></div>
+              <div><div class="sv">165%</div><div class="sl" data-i18n="blocks.eyed.stat2">FY25 vs. Budget</div></div>
+              <div><div class="sv">6<sup style="font-size:0.6em;">th</sup></div><div class="sl" data-i18n="blocks.eyed.stat3">NIST FRVT rank</div></div>
+            </div>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- RAG PLATFORM -->
+        <div class="block block-rag" data-category="ai" data-report="reports/rag-platform.html">
+          <div class="block-rag-inner">
+            <div>
+              <div class="block-kicker" data-i18n="blocks.rag.kicker">Also in this issue</div>
+              <div class="block-meta"><b>NAVER CLOUD · AI Application Tech</b><span>·</span><span>2024 —</span></div>
+              <h3 class="block-title" data-i18n="blocks.rag.title">RAG Platform — putting private data back into the answer.</h3>
+            </div>
+            <div>
+              <p class="block-body" data-i18n="blocks.rag.body">An NCP-native RAG PaaS built around five services — Document, Retrieval, Orchestration, Evaluation, Console. Market research across 15+ competitors; prompt experiments on query rewriting; an A/B evaluation of a new orchestration model across 18 queries that resolved the roadmap for v1.0.</p>
+              <div class="block-stats">
+                <div><div class="sv">5</div><div class="sl" data-i18n="blocks.rag.stat1">Services</div></div>
+                <div><div class="sv">15+</div><div class="sl" data-i18n="blocks.rag.stat2">Competitors benched</div></div>
+                <div><div class="sv">10.9</div><div class="sl" data-i18n="blocks.rag.stat3">MM invested</div></div>
+              </div>
+            </div>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- LAUNCHER (shook) -->
+        <div class="block block-launcher" data-category="ai" data-report="reports/launcher.html">
+          <div class="photo-ph ph-violet">
+            <div class="ph-note" data-i18n="blocks.launcher.caption">Launcher (shook) · desktop command bar</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.launcher.kicker">Sidebar</div>
+            <div class="block-meta"><b>NAVER · AI Application Tech</b><span>·</span><span>2024 —</span></div>
+            <h3 class="block-title" data-i18n="blocks.launcher.title">Launcher (shook) — one shortcut, every workplace answer.</h3>
+            <p class="block-body" data-i18n="blocks.launcher.body">A desktop assistant that pulls files, Slack, Wiki, Connect and HR into a single ⌘+E search bar, then hands the query off to HCX. v0.5 shipped integrated search; v0.6 added HCX; v1.0 will connect to RAG Platform for grounded answers. Mapped enterprise-search competitors and designed two user journeys to ground the feature roadmap.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <div class="folio" data-i18n="folio.left">— folio recto · 04 —</div>
+      </div>
+
+      <!-- ===== RIGHT PAGE — GROWTH · SALES · EVENTS ===== -->
+      <div class="book-page right">
+        <div class="masthead">
+          <span class="kicker" data-i18n="masthead.right">— selected work, 2021 — 2026 —</span>
+          <span class="meta">Hyoju Cheong</span>
+        </div>
+
+        <!-- MILAN OLYMPICS -->
+        <div class="block block-milan" data-category="sales" data-report="reports/milano-olympics.html">
+          <div class="polaroid">
+            <div class="photo-ph ph-blue" style="aspect-ratio: 4/3.6;"></div>
+            <div class="ph-note" data-i18n="blocks.milan.caption">Milano · event venue or inventory mock</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.milan.kicker">The feature story</div>
+            <div class="block-meta"><b>NAVER · JTBC</b><span>·</span><span>2025 — 2026</span></div>
+            <h3 class="block-title" data-i18n="blocks.milan.title">Milan 2026 — an Olympic inventory, co-sold.</h3>
+            <p class="block-lead" data-i18n="blocks.milan.lead">22 advertisers, a short timeline, one public window.</p>
+            <p class="block-body" data-i18n="blocks.milan.body">Led a joint sales package between NAVER and JTBC for the Milano–Cortina Winter Games. Ran the pricing ladders, the discount logic, and the late-stage edge cases. Sell-out landed around KRW 30B (~$23M).</p>
+            <div class="block-stats">
+              <div><div class="sv">22</div><div class="sl" data-i18n="blocks.milan.stat1">Advertisers</div></div>
+              <div><div class="sv">$23M</div><div class="sl" data-i18n="blocks.milan.stat2">Sell-out</div></div>
+              <div><div class="sv">Lead</div><div class="sl" data-i18n="blocks.milan.stat3">PM role</div></div>
+            </div>
+            <div class="block-extra">
+              <span data-i18n="blocks.milan.also">Also available:</span>
+              <a href="reports/milano-contribution.html" target="_blank" rel="noopener" onclick="event.stopPropagation();" data-i18n="blocks.milan.contrib">individual contribution report →</a>
+            </div>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- SHOPPING SELLER GROWTH -->
+        <div class="block block-shop" data-category="growth" data-report="reports/shopping-seller.html">
+          <div>
+            <div class="block-kicker" data-i18n="blocks.shop.kicker">Field notes</div>
+            <div class="block-meta"><b>NAVER Shopping</b><span>·</span><span>2025</span></div>
+            <h3 class="block-title" data-i18n="blocks.shop.title">Seller growth — from 4% to 11% apply rate.</h3>
+            <p class="block-body" data-i18n="blocks.shop.body">A 0→1 onboarding program targeting 3,000+ Shopping sellers. Multi-channel funnel, data-led messaging rewrites, and a 2.75× lift in end-to-end conversion.</p>
+          </div>
+          <div class="photo-ph ph-mustard">
+            <div class="ph-note" data-i18n="blocks.shop.caption">Shopping · campaign or dashboard shot</div>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- DAN25 -->
+        <div class="block block-dan" data-category="events" data-report="reports/dan25.html">
+          <div class="photo-ph ph-plum">
+            <div class="ph-note" data-i18n="blocks.dan.caption">DAN25 · stage or lounge crowd</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.dan.kicker">Off-script</div>
+            <div class="block-meta"><b>NAVER · DAN25</b><span>·</span><span>2025</span></div>
+            <h3 class="block-title" data-i18n="blocks.dan.title">DAN25 Biz Lounge — 200 partners, 90 minutes.</h3>
+            <p class="block-body" data-i18n="blocks.dan.body">A partner event rebuilt over four months with a 20-person ops crew. Two core messages, three teams, one run of show that held.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <div class="folio" data-i18n="folio.right">— folio verso · 05 —</div>
+      </div>
+
+    </article>
+  </section>
+
+  <!-- ========= MAGAZINE NAV BAR ========= -->
+  <div class="booknav">
+    <a class="booknav-pdf" href="CV_Hyoju_Cheong_202601.pdf" target="_blank" rel="noopener">
+      <span data-i18n="booknav.pdf">PDF</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 4v14m0 0l-6-6m6 6l6-6"/></svg>
+    </a>
+    <div class="booknav-page">
+      <span id="pageCurrent">01</span><span class="total"> / 05</span>
+    </div>
+    <div class="booknav-arrows">
+      <button class="booknav-arrow" id="pagePrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button class="booknav-arrow primary" id="pageNext" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========= ABOUT ========= -->
+  <section class="about-strip" id="about">
+    <div>
+      <h2 data-i18n-html="about.title">A note from <em>the author.</em></h2>
+    </div>
+    <div>
+      <p data-i18n="about.p1">I'm a product manager at NAVER, working at the intersection of advertising strategy and applied AI. Before this, I spent almost four years at NAVER CLOUD shipping computer vision SDKs and enterprise RAG platforms to over 30 million users.</p>
+      <p data-i18n="about.p2">I care about products that move business metrics — revenue, retention, market share — and about the quiet operational work that gets them there. I speak Korean, English, Japanese, and Spanish, and have worked across Korea, Japan, Mexico, Spain, and the Dominican Republic.</p>
+      <div class="about-tags">
+        <span>RAG / LLM</span><span>Computer Vision</span><span>B2B GTM</span>
+        <span data-i18n="about.tag.rev">Revenue Diagnostics</span>
+        <span data-i18n="about.tag.cohort">Cohort Analysis</span>
+        <span data-i18n="about.tag.sales">Enterprise Sales</span>
+        <span data-i18n="about.tag.cross">Cross-cultural</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= TOOLKIT ========= -->
+  <section class="toolkit" id="toolkit">
+    <h3 data-i18n="toolkit.head">— the working kit —</h3>
+    <div class="toolkit-grid">
+      <div class="tk-col">
+        <h4 data-i18n="toolkit.c1.h">Product &amp; Planning</h4>
+        <p data-i18n="toolkit.c1.p">Roadmap shaping · User journey mapping · Competitive matrix · Pricing strategy · Go-to-market · PRD &amp; spec writing</p>
+      </div>
+      <div class="tk-col">
+        <h4 data-i18n="toolkit.c2.h">AI &amp; Data</h4>
+        <p data-i18n="toolkit.c2.p">RAG pipelines · Prompt engineering · LLM evaluation (A/B qualitative) · HCX / OpenAI / Claude · Dataset planning &amp; QA</p>
+      </div>
+      <div class="tk-col">
+        <h4 data-i18n="toolkit.c3.h">Commercial</h4>
+        <p data-i18n="toolkit.c3.p">Revenue diagnostics · Cohort analysis · Enterprise B2B sales · Vendor &amp; contract negotiation · Joint sales packaging</p>
+      </div>
+      <div class="tk-col">
+        <h4 data-i18n="toolkit.c4.h">Craft</h4>
+        <p data-i18n="toolkit.c4.p">SQL · Figma · Tableau · Notion · Confluence · Cross-cultural storytelling (KR · EN · ES · JA)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= FOOTER ========= -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="foot-brand">Hyoju<em style="color:rgba(251,244,221,0.6);">.</em>
+          <small data-i18n="footer.brand">Made with care in Seoul, 2026</small>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="footer.menu">Menu</h4>
+        <ul>
+          <li><a href="#work" data-i18n="footer.work">Selected work</a></li>
+          <li><a href="#about" data-i18n="footer.about">About</a></li>
+          <li><a href="#toolkit" data-i18n="footer.toolkit">Toolkit</a></li>
+          <li><a href="mailto:janettt16@gmail.com" data-i18n="footer.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="footer.elsewhere">Elsewhere</h4>
+        <ul>
+          <li><a href="https://linkedin.com/in/hyoju-cheong" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:janettt16@gmail.com">Email</a></li>
+          <li><a href="CV_Hyoju_Cheong_202601.pdf" target="_blank" data-i18n="footer.resume">Résumé (PDF)</a></li>
+        </ul>
+      </div>
+      <div class="foot-cta">
+        <h3 data-i18n="footer.cta.h">More work, shipping soon.</h3>
+        <p data-i18n="footer.cta.p">Drop an email to be first to see new project write-ups as they go live.</p>
+        <form class="foot-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('input').placeholder= (window.__i18n && window.__i18n.footer.cta.thanks) || 'Thanks — talk soon ✿';">
+          <input type="email" placeholder="your@email.com" data-i18n-placeholder="footer.cta.placeholder" required/>
+          <button type="submit" title="Subscribe">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-base">
+      <div data-i18n="footer.copy">© 2026 Hyoju Cheong · All rights reserved.</div>
+      <div>janettt16@gmail.com</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ============ i18n dictionaries ============
+  const I18N = {
+    en: {
+      nav: { work: 'Work', about: 'About', toolkit: 'Toolkit', contact: 'Contact' },
+      hero: {
+        title: 'AI products that<br/><em>move revenue.</em>',
+        sub: 'Product Manager at NAVER. 30M+ users shipped · $25M+ revenue unlocked · KRW 30B Olympic sell-out · NIST FRVT world #6.',
+        role: 'AI Product Manager',
+        location: 'NAVER, Seoul'
+      },
+      filters: { all: 'All work', ai: 'AI products', sales: 'Ad sales', growth: 'Growth', events: 'Events' },
+      masthead: { volume: '— Volume 04 · Portfolio —', issue: 'Spring 2026', right: '— selected work, 2021 — 2026 —' },
+      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
+      blocks: {
+        eyed: {
+          kicker: 'Flagship',
+          title: 'Clova EyeD — ¥319M revenue, NIST FRVT world #6.',
+          lead: "The eKYC SDK behind Japan's top payments apps. 165% of FY25 budget. Adopted by PayPay, LINE Pay, Liquid, DNP, and 15+ enterprise clients.",
+          stat1: 'FY24 Revenue', stat2: 'FY25 vs. Budget', stat3: 'NIST FRVT',
+          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
+        },
+        rag: {
+          kicker: 'In development',
+          title: "RAG Platform — NCP's enterprise RAG PaaS.",
+          body: '5-service pipeline (Document · Retrieval · Orchestration · Evaluation · Console). Benched 15+ global competitors (Mindbreeze, Lucidworks, Elastic, Kendra, Vertex AI). Ran A/B qualitative eval on 18 queries — new orchestrator won 9 to 1.',
+          stat1: 'Services', stat2: 'Competitors benched', stat3: 'MM invested'
+        },
+        launcher: {
+          kicker: 'New',
+          title: 'Launcher (shook) — ⌘+E → every workplace answer.',
+          body: 'Desktop AI assistant. One shortcut searches files, Slack, Wiki, Connect, HR. HCX handles grounded questions. v0.5 shipped 5-source search. v0.6 added HCX. v1.0 wires RAG Platform for enterprise-grade grounding.',
+          caption: 'Launcher (shook) · ⌘+E desktop assistant'
+        },
+        milan: {
+          kicker: 'Cover story',
+          title: 'Milan 2026 — KRW 30B sold in one window.',
+          lead: '22 advertisers · NAVER × JTBC · Olympic inventory.',
+          body: 'Led the joint sales package for the Milano–Cortina Winter Games. Built pricing ladders, discount logic, and the end-to-end exception playbook. Sell-out landed around KRW 30B (~$23M).',
+          stat1: 'Advertisers', stat2: 'Sell-out', stat3: 'Role',
+          caption: 'Milano–Cortina 2026',
+          also: 'Also available:', contrib: 'individual contribution report →'
+        },
+        shop: {
+          kicker: 'Growth',
+          title: 'Shopping sellers — 4% → 11% apply rate.',
+          body: '0→1 onboarding for 3,000+ NAVER Shopping sellers. Multi-channel funnel, data-led messaging rewrites. 2.75× lift in end-to-end conversion.',
+          caption: 'NAVER Shopping · Seller onboarding'
+        },
+        dan: {
+          kicker: 'Event',
+          title: 'DAN25 Biz Lounge — 200 partners, 90 minutes.',
+          body: 'Partner event rebuilt in 4 months with a 20-person ops crew. Two core messages, three teams, one run-of-show that held end to end.',
+          caption: 'DAN25 · Biz Lounge, Seoul'
+        }
+      },
+      legend: { hint: 'tap any chapter to open the full report ·', pages: 'Pages 04 — 05 / 22' },
+      booknav: { pdf: 'PDF' },
+      about: {
+        title: 'About me — <em>AI PM with a revenue lens.</em>',
+        p1: 'Product Manager at NAVER, at the intersection of advertising strategy and applied AI. Four years at NAVER CLOUD shipping computer vision SDKs and enterprise RAG platforms to 30M+ users.',
+        p2: 'I ship products that move business metrics — revenue, retention, market share — and obsess over the operational craft behind them. Korean · English · Japanese · Spanish. Worked in KR, JP, MX, ES, DO.',
+        tag: { rev: 'Revenue Diagnostics', cohort: 'Cohort Analysis', sales: 'Enterprise Sales', cross: 'Cross-cultural' }
+      },
+      toolkit: {
+        head: '— the working kit —',
+        c1: { h: 'Product & Planning', p: 'Roadmap shaping · User journey mapping · Competitive matrix · Pricing strategy · Go-to-market · PRD & spec writing' },
+        c2: { h: 'AI & Data', p: 'RAG pipelines · Prompt engineering · LLM evaluation (A/B qualitative) · HCX / OpenAI / Claude · Dataset planning & QA' },
+        c3: { h: 'Commercial', p: 'Revenue diagnostics · Cohort analysis · Enterprise B2B sales · Vendor & contract negotiation · Joint sales packaging' },
+        c4: { h: 'Craft', p: 'SQL · Figma · Tableau · Notion · Confluence · Cross-cultural storytelling (KR · EN · ES · JA)' }
+      },
+      footer: {
+        brand: 'Made with care in Seoul, 2026',
+        menu: 'Menu', work: 'Selected work', about: 'About', toolkit: 'Toolkit', contact: 'Contact',
+        elsewhere: 'Elsewhere', resume: 'Résumé (PDF)',
+        cta: {
+          h: 'More work, shipping soon.',
+          p: 'Drop an email to be first when new reports go live.',
+          placeholder: 'your@email.com', thanks: 'Thanks — talk soon ✿'
+        },
+        copy: '© 2026 Hyoju Cheong · All rights reserved.'
+      }
+    },
+
+    ko: {
+      nav: { work: '프로젝트', about: '소개', toolkit: '역량', contact: '연락처' },
+      hero: {
+        title: '매출을 움직이는<br/><em>AI 프로덕트</em>를 만듭니다.',
+        sub: '네이버 프로덕트 매니저. 3천만 유저가 쓰는 AI 프로덕트를 만들고, 매출 $25M+ · 밀라노 올림픽 300억 원 완판 · NIST FRVT 세계 6위의 성과를 기록했습니다.',
+        role: 'AI 프로덕트 매니저',
+        location: '네이버 · 서울'
+      },
+      filters: { all: '전체 프로젝트', ai: 'AI 프로덕트', sales: '광고 세일즈', growth: '그로스', events: '이벤트' },
+      masthead: { volume: '— Volume 04 · 포트폴리오 —', issue: 'Spring 2026', right: '— selected work, 2021 — 2026 —' },
+      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
+      blocks: {
+        eyed: {
+          kicker: '대표 프로젝트',
+          title: 'Clova EyeD — 매출 ¥319M, NIST FRVT 세계 6위.',
+          lead: '일본 주요 결제 앱의 eKYC 엔진이 된 얼굴 인식 SDK. FY25 예산 대비 165%를 달성했고, PayPay · LINE Pay · Liquid · DNP 등 엔터프라이즈 15곳 이상에 도입되었습니다.',
+          stat1: 'FY24 매출', stat2: 'FY25 달성률', stat3: '세계 순위',
+          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
+        },
+        rag: {
+          kicker: '진행 중',
+          title: 'RAG Platform — NCP향 엔터프라이즈 RAG PaaS.',
+          body: 'Document · Retrieval · Orchestration · Evaluation · Console 5개 서비스로 구성된 파이프라인을 설계했습니다. 글로벌 경쟁사 15곳(Mindbreeze · Lucidworks · Elastic · Kendra · Vertex AI)을 매트릭스로 분석하고, 18개 쿼리 A/B 정성 평가에서 신규 오케스트레이터가 9:1로 우위를 보이며 v1.0 로드맵을 확정했습니다.',
+          stat1: '서비스 수', stat2: '조사한 경쟁사', stat3: '투입 MM'
+        },
+        launcher: {
+          kicker: '신규',
+          title: 'Launcher (shook) — ⌘+E로 업무의 모든 답을 찾다.',
+          body: '데스크탑 AI 어시스턴트. 단축키 하나로 파일 · 슬랙 · 위키 · 커넥트 · 사원정보를 통합 검색하고, HCX로 출처가 있는 답변을 받습니다. v0.5에서 5개 소스 통합 검색, v0.6에서 HCX 연결을 출시했고, v1.0에서 RAG Platform 연동을 통해 엔터프라이즈급 그라운딩을 붙입니다.',
+          caption: 'Launcher (shook) · ⌘+E 데스크탑 어시스턴트'
+        },
+        milan: {
+          kicker: '커버 스토리',
+          title: '밀라노 2026 — 한 시즌에 300억 원을 완판한 올림픽 세일즈.',
+          lead: '광고주 22곳 · 네이버 × JTBC · 올림픽 공식 인벤토리.',
+          body: '밀라노-코르티나 동계올림픽 공동 세일즈 패키지를 주도했습니다. 가격 계단, 할인 로직, 후반부 예외 케이스까지 모두 정리해 최종 약 300억 원(~$23M) 규모로 완판했습니다.',
+          stat1: '광고주', stat2: '완판 규모', stat3: '역할',
+          caption: '밀라노–코르티나 2026',
+          also: '함께 보기:', contrib: '개인 기여 리포트 →'
+        },
+        shop: {
+          kicker: '그로스 프로그램',
+          title: '쇼핑 셀러 — 신청율 4%에서 11%로.',
+          body: '네이버 쇼핑 셀러 3,000명 이상을 대상으로 한 0→1 온보딩 프로그램. 멀티채널 퍼널을 설계하고 데이터 기반으로 메시징을 다시 쓰는 방식으로 end-to-end 전환률을 2.75배 끌어올렸습니다.',
+          caption: '네이버 쇼핑 · 셀러 온보딩'
+        },
+        dan: {
+          kicker: '이벤트',
+          title: 'DAN25 Biz Lounge — 파트너 200명, 90분.',
+          body: '4개월에 걸쳐 다시 설계한 파트너 이벤트. 오퍼레이션 크루 20명과 함께 핵심 메시지 2개, 협업 팀 3곳으로 구성된 런오브쇼를 운영해 90분 내내 흔들림 없이 마무리했습니다.',
+          caption: 'DAN25 · Biz Lounge, 서울'
+        }
+      },
+      legend: { hint: '각 챕터를 누르면 상세 리포트가 열립니다 ·', pages: 'Pages 04 — 05 / 22' },
+      booknav: { pdf: '이력서' },
+      about: {
+        title: '<em>소개</em> — 매출을 보는 AI PM.',
+        p1: '네이버의 프로덕트 매니저로, 광고 전략과 응용 AI의 접점에서 일하고 있습니다. 그 전 4년간은 NAVER CLOUD에서 컴퓨터 비전 SDK와 엔터프라이즈 RAG 플랫폼을 3천만 명 이상의 유저에게 배포했습니다.',
+        p2: '매출 · 리텐션 · 시장 점유율 같은 비즈니스 숫자를 움직이는 프로덕트, 그리고 그 뒤에서 돌아가는 오퍼레이션의 디테일을 중요하게 생각합니다. 한국어 · 영어 · 일본어 · 스페인어를 사용하며, 한국 · 일본 · 멕시코 · 스페인 · 도미니카공화국에서 일한 경험이 있습니다.',
+        tag: { rev: '매출 진단', cohort: '코호트 분석', sales: '엔터프라이즈 세일즈', cross: '다국가 협업' }
+      },
+      toolkit: {
+        head: '— 보유 역량 —',
+        c1: { h: '프로덕트 & 기획', p: '로드맵 설계 · User Journey 매핑 · 경쟁사 매트릭스 · 프라이싱 전략 · GTM · PRD/스펙 작성' },
+        c2: { h: 'AI & 데이터', p: 'RAG 파이프라인 · 프롬프트 엔지니어링 · LLM 정성 A/B 평가 · HCX / OpenAI / Claude · 데이터셋 설계 및 QA' },
+        c3: { h: '비즈니스', p: '매출 진단 · 코호트 분석 · 엔터프라이즈 B2B 세일즈 · 외주/계약 협상 · 공동 세일즈 패키징' },
+        c4: { h: '툴 & 언어', p: 'SQL · Figma · Tableau · Notion · Confluence · 다국어 커뮤니케이션 (KR · EN · ES · JA)' }
+      },
+      footer: {
+        brand: '서울에서 정성껏 · 2026',
+        menu: '메뉴', work: '프로젝트', about: '소개', toolkit: '역량', contact: '연락처',
+        elsewhere: '다른 곳에서', resume: '이력서 (PDF)',
+        cta: {
+          h: '새 프로젝트, 곧 공개됩니다.',
+          p: '이메일을 남겨주시면 새 리포트가 공개될 때 가장 먼저 알려드리겠습니다.',
+          placeholder: 'your@email.com', thanks: '감사합니다 — 곧 연락드리겠습니다 ✿'
+        },
+        copy: '© 2026 정효주 · All rights reserved.'
+      }
+    },
+
+    ja: {
+      nav: { work: 'プロジェクト', about: '自己紹介', toolkit: 'ツールキット', contact: 'お問い合わせ' },
+      hero: {
+        title: '売上を動かす<br/><em>AIプロダクト。</em>',
+        sub: 'NAVERプロダクトマネージャー。3,000万人のユーザー · 売上$25M+ · ミラノ五輪300億ウォン完売 · NIST FRVT世界6位。',
+        role: 'AIプロダクトマネージャー',
+        location: 'NAVER · ソウル'
+      },
+      filters: { all: 'すべて', ai: 'AIプロダクト', sales: '広告セールス', growth: 'グロース', events: 'イベント' },
+      masthead: { volume: '— Volume 04 · Portfolio —', issue: 'Spring 2026', right: '— selected work, 2021 — 2026 —' },
+      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
+      blocks: {
+        eyed: {
+          kicker: '代表作',
+          title: 'Clova EyeD — 売上¥319M · NIST FRVT世界6位。',
+          lead: '日本の主要決済アプリのeKYCを支える顔認識SDK。FY25予算165%達成。PayPay · LINE Pay · Liquid · DNPなどエンタープライズ15社が導入。',
+          stat1: 'FY24 売上', stat2: 'FY25 達成率', stat3: '世界順位',
+          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
+        },
+        rag: {
+          kicker: '開発中',
+          title: 'RAG Platform — NCP向けエンタープライズRAG PaaS。',
+          body: 'Document・Retrieval・Orchestration・Evaluation・Consoleの5サービスパイプライン。グローバル競合15社（Mindbreeze・Lucidworks・Elastic・Kendra・Vertex AI）をマトリックス分析。18クエリのA/B定性評価で新オーケストレーターが9対1で勝利。',
+          stat1: 'サービス数', stat2: '調査した競合', stat3: '投入MM'
+        },
+        launcher: {
+          kicker: '新規',
+          title: 'Launcher (shook) — ⌘+Eで業務の全ての答え。',
+          body: 'デスクトップAIアシスタント。ショートカット一つでファイル・Slack・Wiki・Connect・社員情報を検索、HCXが根拠のある回答を生成。v0.5で統合検索（5ソース）、v0.6でHCX接続、v1.0でRAG Platform連携によるエンタープライズグラウンディング。',
+          caption: 'Launcher (shook) · ⌘+Eデスクトップアシスタント'
+        },
+        milan: {
+          kicker: '表紙の記事',
+          title: 'ミラノ2026 — 1シーズンで300億ウォン完売。',
+          lead: '広告主22社 · NAVER × JTBC · 五輪公式枠。',
+          body: 'ミラノ・コルティナ冬季五輪の共同セールスパッケージを主導。価格階層、ディスカウントロジック、終盤の例外ケースまで整理。最終的に約300億ウォン（約$23M）で完売。',
+          stat1: '広告主', stat2: '完売規模', stat3: '役割',
+          caption: 'ミラノ–コルティナ 2026',
+          also: 'あわせて見る:', contrib: '個人寄与レポート →'
+        },
+        shop: {
+          kicker: 'グロース',
+          title: 'Shoppingセラー — 申請率4% → 11%。',
+          body: 'NAVER Shoppingセラー3,000社以上を対象にした0→1オンボーディング。マルチチャネルファネルとデータ駆動のメッセージング改善で、エンドツーエンドCVR 2.75倍。',
+          caption: 'NAVER Shopping · セラーオンボーディング'
+        },
+        dan: {
+          kicker: 'イベント',
+          title: 'DAN25 Biz Lounge — パートナー200名、90分。',
+          body: '4か月かけて再設計したパートナーイベント。20名のオペレーションクルー、2つのコアメッセージ、3チーム、最後まで崩れなかった進行表。',
+          caption: 'DAN25 · Biz Lounge, ソウル'
+        }
+      },
+      legend: { hint: '各チャプターをタップすると詳細レポートが開きます ·', pages: 'Pages 04 — 05 / 22' },
+      booknav: { pdf: '履歴書' },
+      about: {
+        title: '自己紹介 <em>— 売上を見るAI PM。</em>',
+        p1: 'NAVERプロダクトマネージャー。広告戦略と応用AIの交差点で働いています。その前の4年間はNAVER CLOUDで、コンピュータビジョンSDKとエンタープライズRAGプラットフォームを3,000万人以上のユーザーに届けました。',
+        p2: '売上 · リテンション · マーケットシェアといったビジネス数値を実際に動かすプロダクトと、その裏側のオペレーションを大切にしています。韓国語・英語・日本語・スペイン語。韓国・日本・メキシコ・スペイン・ドミニカ共和国で働いた経験あり。',
+        tag: { rev: '売上診断', cohort: 'コホート分析', sales: 'エンタープライズセールス', cross: '多文化協働' }
+      },
+      toolkit: {
+        head: '— ワーキングキット —',
+        c1: { h: 'プロダクト & 企画', p: 'ロードマップ設計 · User Journeyマッピング · 競合マトリックス · プライシング戦略 · GTM · PRD/仕様策定' },
+        c2: { h: 'AI & データ', p: 'RAGパイプライン · プロンプトエンジニアリング · LLM定性A/B評価 · HCX / OpenAI / Claude · データセット設計とQA' },
+        c3: { h: 'コマーシャル', p: '売上診断 · コホート分析 · エンタープライズB2Bセールス · ベンダー/契約交渉 · 共同セールスパッケージング' },
+        c4: { h: 'ツール & 言語', p: 'SQL · Figma · Tableau · Notion · Confluence · 多言語ストーリーテリング (KR · EN · ES · JA)' }
+      },
+      footer: {
+        brand: 'ソウルで丁寧に · 2026',
+        menu: 'メニュー', work: 'プロジェクト', about: '自己紹介', toolkit: 'ツールキット', contact: 'お問い合わせ',
+        elsewhere: '他の場所で', resume: '履歴書 (PDF)',
+        cta: {
+          h: '新しい仕事、まもなく公開。',
+          p: 'メールをいただければ、新しいレポート公開をいち早くお知らせします。',
+          placeholder: 'your@email.com', thanks: 'ありがとうございます — すぐにご連絡します ✿'
+        },
+        copy: '© 2026 Hyoju Cheong · All rights reserved.'
+      }
+    },
+
+    es: {
+      nav: { work: 'Trabajo', about: 'Sobre mí', toolkit: 'Herramientas', contact: 'Contacto' },
+      hero: {
+        title: 'Productos de IA que<br/><em>mueven ingresos.</em>',
+        sub: 'Product Manager en NAVER. 30M+ usuarios · $25M+ en ingresos · 30 000M KRW en los JJ.OO. de Milán · 6.º mundial en NIST FRVT.',
+        role: 'Product Manager de IA',
+        location: 'NAVER, Seúl'
+      },
+      filters: { all: 'Todo', ai: 'Productos de IA', sales: 'Ventas de publicidad', growth: 'Crecimiento', events: 'Eventos' },
+      masthead: { volume: '— Volumen 04 · Portafolio —', issue: 'Primavera 2026', right: '— trabajo seleccionado, 2021 — 2026 —' },
+      folio: { left: '— folio recto · 04 —', right: '— folio verso · 05 —' },
+      blocks: {
+        eyed: {
+          kicker: 'Proyecto insignia',
+          title: 'Clova EyeD — ¥319M en ingresos · 6.º en NIST FRVT.',
+          lead: 'El SDK de eKYC detrás de las principales apps de pagos de Japón. 165% del presupuesto FY25. Adoptado por PayPay, LINE Pay, Liquid, DNP y 15+ clientes empresariales.',
+          stat1: 'Ingresos FY24', stat2: 'FY25 vs. Presupuesto', stat3: 'NIST FRVT',
+          caption: 'Clova EyeD · Vision AI SDK, 2021—2023'
+        },
+        rag: {
+          kicker: 'En desarrollo',
+          title: 'RAG Platform — RAG PaaS empresarial de NCP.',
+          body: 'Pipeline de 5 servicios (Document · Retrieval · Orchestration · Evaluation · Console). Benchmark de 15+ competidores globales (Mindbreeze, Lucidworks, Elastic, Kendra, Vertex AI). Evaluación A/B cualitativa en 18 consultas — el nuevo orquestador ganó 9 a 1.',
+          stat1: 'Servicios', stat2: 'Competidores evaluados', stat3: 'MM invertidos'
+        },
+        launcher: {
+          kicker: 'Nuevo',
+          title: 'Launcher (shook) — ⌘+E → cualquier respuesta laboral.',
+          body: 'Asistente de IA de escritorio. Un atajo busca archivos, Slack, Wiki, Connect y RR. HH.; HCX responde preguntas con fundamento. v0.5 lanzó búsqueda integrada (5 fuentes). v0.6 añadió HCX. v1.0 conectará RAG Platform para grounding empresarial.',
+          caption: 'Launcher (shook) · asistente de escritorio ⌘+E'
+        },
+        milan: {
+          kicker: 'Portada',
+          title: 'Milán 2026 — 30 000M KRW vendidos en una ventana.',
+          lead: '22 anunciantes · NAVER × JTBC · inventario olímpico.',
+          body: 'Lideré el paquete de venta conjunta para los Juegos de Invierno de Milán–Cortina. Armé las escalas de precios, la lógica de descuentos y el playbook de excepciones. Sell-out ~30 000M KRW (~$23M).',
+          stat1: 'Anunciantes', stat2: 'Venta total', stat3: 'Rol',
+          caption: 'Milán–Cortina 2026',
+          also: 'También disponible:', contrib: 'informe de contribución individual →'
+        },
+        shop: {
+          kicker: 'Crecimiento',
+          title: 'Vendedores de Shopping — 4% → 11% de postulación.',
+          body: 'Onboarding 0→1 para 3.000+ vendedores de NAVER Shopping. Embudo multicanal, mensajes reescritos con datos. 2,75× de aumento en conversión end-to-end.',
+          caption: 'NAVER Shopping · Onboarding de vendedores'
+        },
+        dan: {
+          kicker: 'Evento',
+          title: 'DAN25 Biz Lounge — 200 socios, 90 minutos.',
+          body: 'Evento para socios reconstruido en 4 meses con un equipo operativo de 20 personas. Dos mensajes clave, tres equipos, un run of show que se sostuvo de principio a fin.',
+          caption: 'DAN25 · Biz Lounge, Seúl'
+        }
+      },
+      legend: { hint: 'toca cualquier capítulo para leer el informe completo ·', pages: 'Páginas 04 — 05 / 22' },
+      booknav: { pdf: 'CV' },
+      about: {
+        title: 'Sobre mí — <em>PM de IA con ojo comercial.</em>',
+        p1: 'Product Manager en NAVER, en la intersección entre estrategia publicitaria e IA aplicada. Cuatro años previos en NAVER CLOUD entregando SDKs de visión por computadora y plataformas RAG empresariales a 30M+ usuarios.',
+        p2: 'Envío productos que mueven métricas de negocio — ingresos, retención, cuota de mercado — y cuido la artesanía operativa detrás. Coreano · inglés · japonés · español. Experiencia en KR, JP, MX, ES, DO.',
+        tag: { rev: 'Diagnóstico de ingresos', cohort: 'Análisis de cohortes', sales: 'Ventas empresariales', cross: 'Intercultural' }
+      },
+      toolkit: {
+        head: '— el kit de trabajo —',
+        c1: { h: 'Producto & Planificación', p: 'Roadmap · User journey mapping · Matriz competitiva · Estrategia de precios · GTM · PRD y redacción de especificaciones' },
+        c2: { h: 'IA & Datos', p: 'Pipelines RAG · Prompt engineering · Evaluación A/B cualitativa de LLM · HCX / OpenAI / Claude · Diseño de datasets y QA' },
+        c3: { h: 'Comercial', p: 'Diagnóstico de ingresos · Análisis de cohortes · Ventas B2B empresariales · Negociación con proveedores/contratos · Paquetes de venta conjunta' },
+        c4: { h: 'Herramientas & Idiomas', p: 'SQL · Figma · Tableau · Notion · Confluence · Storytelling intercultural (KR · EN · ES · JA)' }
+      },
+      footer: {
+        brand: 'Hecho con cuidado en Seúl, 2026',
+        menu: 'Menú', work: 'Trabajo', about: 'Sobre mí', toolkit: 'Herramientas', contact: 'Contacto',
+        elsewhere: 'En otros lugares', resume: 'CV (PDF)',
+        cta: {
+          h: 'Más trabajo, llegando pronto.',
+          p: 'Deja tu correo para ver los nuevos reportes antes que nadie.',
+          placeholder: 'tu@email.com', thanks: 'Gracias — hablamos pronto ✿'
+        },
+        copy: '© 2026 Hyoju Cheong · Todos los derechos reservados.'
+      }
+    }
+  };
+
+  // ============ Filter categories (per-language) ============
+  function categoriesFor(lang) {
+    const f = I18N[lang].filters;
+    return [
+      { id: 'all',    label: f.all },
+      { id: 'ai',     label: f.ai },
+      { id: 'sales',  label: f.sales },
+      { id: 'growth', label: f.growth },
+      { id: 'events', label: f.events }
+    ];
+  }
+  let activeCategory = 'all';
+  let activeLang = 'en';
+
+  function getBlocks() { return Array.from(document.querySelectorAll('.block')); }
+
+  function renderFilters() {
+    const blocks = getBlocks();
+    const el = document.getElementById('filters');
+    el.innerHTML = categoriesFor(activeLang).map(c => {
+      const count = c.id === 'all'
+        ? blocks.length
+        : blocks.filter(b => b.dataset.category === c.id).length;
+      return '<button class="chip ' + (c.id === activeCategory ? 'active' : '') + '" data-cat="' + c.id + '">' + c.label + ' <span class="count">' + count + '</span></button>';
+    }).join('');
+    el.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.cat;
+        renderFilters();
+        applyFilter();
+      });
+    });
+  }
+  function applyFilter() {
+    getBlocks().forEach(b => {
+      if (activeCategory === 'all' || b.dataset.category === activeCategory) {
+        b.classList.remove('dim');
+      } else {
+        b.classList.add('dim');
+      }
+    });
+  }
+
+  getBlocks().forEach(b => {
+    b.addEventListener('click', () => {
+      const report = b.dataset.report;
+      if (report) window.open(report, '_blank', 'noopener');
+    });
+  });
+
+  // ============ i18n apply ============
+  function resolvePath(obj, path) {
+    return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+  }
+
+  function applyLang(lang) {
+    activeLang = lang;
+    const dict = I18N[lang] || I18N.en;
+    window.__i18n = dict;
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const v = resolvePath(dict, el.getAttribute('data-i18n'));
+      if (typeof v === 'string') el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const v = resolvePath(dict, el.getAttribute('data-i18n-html'));
+      if (typeof v === 'string') el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const v = resolvePath(dict, el.getAttribute('data-i18n-placeholder'));
+      if (typeof v === 'string') el.placeholder = v;
+    });
+
+    // Language picker label
+    document.getElementById('langCurrent').textContent = lang.toUpperCase();
+    document.querySelectorAll('.lang-menu button').forEach(b => {
+      b.classList.toggle('current', b.dataset.lang === lang);
+    });
+
+    renderFilters();
+  }
+
+  // ============ Language picker ============
+  const langBtn = document.getElementById('langBtn');
+  const langMenu = document.getElementById('langMenu');
+  langBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = langMenu.classList.toggle('open');
+    langBtn.classList.toggle('open', open);
+    langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', (e) => {
+    if (!langMenu.contains(e.target) && !langBtn.contains(e.target)) {
+      langMenu.classList.remove('open');
+      langBtn.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  langMenu.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      const l = b.dataset.lang;
+      localStorage.setItem('hyoju.lang', l);
+      applyLang(l);
+      langMenu.classList.remove('open');
+      langBtn.classList.remove('open');
+    });
+  });
+
+  // ============ Language auto-detect (IP-based with fallback) ============
+  const SPANISH_COUNTRIES = new Set([
+    'ES','MX','AR','CL','CO','PE','VE','UY','PY','BO','EC','GT','HN','NI','CR','PA','DO','CU','SV','PR'
+  ]);
+
+  async function detectLanguage() {
+    const stored = localStorage.getItem('hyoju.lang');
+    if (stored && I18N[stored]) return stored;
+
+    // Try IP geolocation
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 2500);
+      const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
+      clearTimeout(timeout);
+      if (res.ok) {
+        const data = await res.json();
+        const cc = (data.country_code || data.country || '').toUpperCase();
+        if (cc === 'KR') return 'ko';
+        if (cc === 'JP') return 'ja';
+        if (SPANISH_COUNTRIES.has(cc)) return 'es';
+        if (cc) return 'en';
+      }
+    } catch (_) { /* ignore — fall through */ }
+
+    // Fallback to navigator.language
+    const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    if (nav === 'ko') return 'ko';
+    if (nav === 'ja') return 'ja';
+    if (nav === 'es') return 'es';
+    return 'en';
+  }
+
+  // ============ Magazine page nav — cycles through filter categories ============
+  const pageCurrent = document.getElementById('pageCurrent');
+  const pagePrev = document.getElementById('pagePrev');
+  const pageNext = document.getElementById('pageNext');
+
+  function updatePageCounter() {
+    const order = ['all', 'ai', 'sales', 'growth', 'events'];
+    const idx = order.indexOf(activeCategory);
+    const num = String(idx + 1).padStart(2, '0');
+    if (pageCurrent) pageCurrent.textContent = num;
+  }
+  function cycleCategory(dir) {
+    const order = ['all', 'ai', 'sales', 'growth', 'events'];
+    const idx = order.indexOf(activeCategory);
+    const next = (idx + dir + order.length) % order.length;
+    activeCategory = order[next];
+    renderFilters();
+    applyFilter();
+    updatePageCounter();
+  }
+  if (pagePrev) pagePrev.addEventListener('click', () => cycleCategory(-1));
+  if (pageNext) pageNext.addEventListener('click', () => cycleCategory(1));
+
+  // Wrap renderFilters to also update page counter
+  const _origRenderFilters = renderFilters;
+  renderFilters = function() {
+    _origRenderFilters();
+    // Re-bind chip clicks to also update page counter
+    document.querySelectorAll('#filters .chip').forEach(btn => {
+      btn.addEventListener('click', () => setTimeout(updatePageCounter, 0));
+    });
+    updatePageCounter();
+  };
+
+  // Initial render + detect
+  applyLang('en');
+  applyFilter();
+  updatePageCounter();
+  detectLanguage().then(lang => { if (lang !== activeLang) applyLang(lang); });
+</script>
+</body>
+</html>

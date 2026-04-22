@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clova EyeD — eKYC SDK 프로덕트 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #00d4ff;
+    --brand-2: #6366f1;
+    --brand-grad: linear-gradient(135deg, #00d4ff 0%, #6366f1 100%);
+    --accent: #00ffa3;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(99,102,241,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(0,212,255,0.1) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 720px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--brand);
+  }
+  .hero-badge.gold { background: rgba(255,183,77,0.08); border-color: rgba(255,183,77,0.2); color: var(--warn); }
+  .hero-badge.green { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.2); color: var(--accent); }
+
+  /* ===== STAT BAR ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat {
+    background: var(--bg-2);
+    padding: 28px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(28px, 2.8vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  /* ===== SECTION ===== */
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--brand);
+  }
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 720px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  /* ===== GRID ===== */
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(0,212,255,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* ===== VERSION TIMELINE ===== */
+  .versions {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .version {
+    display: grid;
+    grid-template-columns: 140px 140px 1fr;
+    align-items: start;
+    gap: 32px;
+    padding: 28px 32px;
+    border-top: 1px solid var(--border);
+  }
+  .version:first-child { border-top: none; }
+  .version:hover { background: var(--surface-2); }
+  .version-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--brand);
+    background: rgba(0,212,255,0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    letter-spacing: 0.02em;
+  }
+  .version-tag.major { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+  .version-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .version-note { color: var(--text-soft); font-size: 14px; }
+  .version-note strong { color: var(--text); font-weight: 600; }
+
+  /* ===== BENCHMARK ===== */
+  .bench {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bench::before {
+    content: ''; position: absolute;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .bench-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+    position: relative;
+  }
+  .bench-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 64px;
+    font-weight: 800;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .bench-rank sup { font-size: 0.4em; vertical-align: super; }
+  .bench-desc { color: var(--text-soft); font-size: 14.5px; margin-top: 8px; }
+
+  /* ===== PERF TABLE ===== */
+  .perf-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  .perf-table th {
+    text-align: left;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .perf-table td {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+  }
+  .perf-table td strong { color: var(--text); }
+  .perf-table td.num {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--brand);
+    text-align: right;
+  }
+
+  /* ===== SERVICES ===== */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .service {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-region {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: var(--surface-2);
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  .service h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 12px 0 4px;
+    letter-spacing: -0.02em;
+  }
+  .service .rev {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .service .rev strong { color: var(--accent); font-weight: 700; font-size: 15px; }
+  .service .status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .service .status.done { background: rgba(0,255,163,0.12); color: var(--accent); }
+  .service .status.prog { background: rgba(255,183,77,0.12); color: var(--warn); }
+  .service .status.tap { background: rgba(99,102,241,0.12); color: #a5b4fc; }
+  .service ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+  .service ul li {
+    color: var(--text-dim);
+    padding: 4px 0;
+  }
+  .service.hero-service {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(0,212,255,0.08) 100%);
+    border-color: rgba(0,212,255,0.3);
+  }
+
+  /* ===== GOAL PROGRESS ===== */
+  .goal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 14px;
+  }
+  .goal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .goal-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .goal-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brand);
+  }
+  .goal-bar {
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .goal-bar > div {
+    height: 100%;
+    background: var(--brand-grad);
+    border-radius: 100px;
+    transition: width 1s;
+  }
+  .goal-sub {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .goal-chip {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-soft);
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .goal-chip.done::before {
+    content: '✓'; color: var(--accent);
+  }
+  .goal-chip.prog::before {
+    content: '○'; color: var(--warn);
+  }
+  .goal-chip.tap::before {
+    content: '…'; color: #a5b4fc;
+  }
+  .goal-chip.undone::before {
+    content: '—'; color: var(--text-dim);
+  }
+
+  /* ===== FEATURE ===== */
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .feature-head {
+    padding: 28px 32px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--brand-grad);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800; font-size: 18px;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .feature-head h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .feature-head p {
+    color: var(--text-soft);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .feature-body {
+    padding: 28px 32px;
+  }
+  .feature-body ul {
+    padding-left: 18px;
+    color: var(--text-soft);
+    font-size: 14.5px;
+  }
+  .feature-body ul li { margin-bottom: 8px; }
+  .feature-body ul li strong { color: var(--text); }
+
+  /* ===== ONE PAGER ===== */
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(0,212,255,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p {
+    color: var(--text-soft);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 920px;
+  }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .version { grid-template-columns: 1fr; gap: 12px; }
+    .bench { padding: 32px 24px; }
+    .bench-row { grid-template-columns: 1fr; }
+    .onepager { padding: 36px 28px; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <span class="hero-tag"><span class="dot"></span>Clova · Vision AI · 2021 – 2023</span>
+    <h1 class="hero-title">
+      <span>Clova EyeD.</span><br/>
+      비대면 본인 확인을 위한<br/>
+      얼굴 인식 eKYC SDK
+    </h1>
+    <p class="hero-sub">
+      Vision AI 기반 얼굴 인식과 신분증 OCR을 결합해 금융·보안 시나리오의 비대면 신원 확인을 구현하는 SDK 프로덕트.
+      Android · iOS 개별 SDK를 통합해 재설계하고, 엣지·서버 양쪽에서 동작하도록 아키텍처를 다시 짰습니다.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge gold">🏆 NIST FRVT · Investigation 6th</span>
+      <span class="hero-badge gold">🏆 FRVT · Identification 15th</span>
+      <span class="hero-badge">🛡️ KISA 인증</span>
+      <span class="hero-badge green">FY24 Budget 127% 달성</span>
+      <span class="hero-badge green">FY25 Budget 165% 달성</span>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">FY24 실적</div>
+        <div class="stat-num"><span class="grad">¥319M</span></div>
+        <div class="stat-hint">Budget 대비 <strong style="color:var(--accent)">127%</strong> 달성</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">FY25 Forecast</div>
+        <div class="stat-num"><span class="grad">¥298M</span></div>
+        <div class="stat-hint">Budget 대비 <strong style="color:var(--accent)">165%</strong> 달성</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">FRVT 국제 랭킹</div>
+        <div class="stat-num">6<span class="sm">th</span></div>
+        <div class="stat-hint">NIST Investigation 부문</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Edge Latency</div>
+        <div class="stat-num">11<span class="sm">ms</span></div>
+        <div class="stat-hint">iPhone 12 · 30 FPS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. OVERVIEW -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Product Vision</span>
+    <h2>프로덕트 비전 · 배경</h2>
+    <p class="desc">
+      2020년 팬데믹으로 비대면 인증 시장이 급격히 확대되던 시점, 사내에서 개별 운영되던 Android · iOS SDK는 동일한 기능을 중복 개발하고 있었습니다.
+      이 둘을 하나의 일관된 UX · 동일한 엔진으로 통합하고, 상품화까지 이어나가는 것이 프로젝트의 출발점이었습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">VISION 01</div>
+        <h3>비대면을 넘어선 가치</h3>
+        <p>얼굴 인식 기반 전자 신원 확인 솔루션을 만들어, 비대면 시대 이후에도 계좌 인증 · 신분증 촬영의 프로세스 효율화 가치를 유지한다.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">VISION 02</div>
+        <h3>도메인 확장 가능성</h3>
+        <p>금융뿐 아니라 여행 · 의료 · 중고거래 · 송금으로 버티컬을 확장해 수익을 다원화한다. 표준화된 SDK로 SMB 시장까지 내려가는 것이 목표.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">VISION 03</div>
+        <h3>Edge + Server Hybrid</h3>
+        <p>요구되는 보안 수준에 따라 Edge(경량·빠른 추론)와 Server(고정확도)를 선택하거나 조합할 수 있는 유연한 아키텍처로 설계.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. COMPONENTS -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Product Components</span>
+    <h2>SDK를 구성하는 3가지 블록</h2>
+    <p class="desc">
+      FACE SDK는 얼굴 인식의 전 과정을, Card Detector SDK는 신분증·신용카드 캡처를 담당합니다. 이 둘을 시나리오 샘플 코드로 묶어 실제 구현 난이도를 낮췄습니다.
+    </p>
+
+    <div class="g3">
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon">Fx</div>
+          <h3>FACE SDK</h3>
+          <p>얼굴 검출 · 키포인트 · 인식 · 안티스푸핑 파이프라인</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>FRVT(미국) · KISA(한국) 인증</strong>을 획득한 모델</li>
+            <li>Edge (CPU only) ~ Server (T4 GPU) 선택 가능</li>
+            <li>5-keypoint · <strong>106-keypoint</strong> 검출 지원</li>
+            <li>Face motion · 스티커 · 메이크업 구현 기반</li>
+            <li>Face occlusion(마스크·코·입·눈) 검출</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#6366f1 0%,#00ffa3 100%);">Cd</div>
+          <h3>Card Detector SDK</h3>
+          <p>신분증 · 신용카드 자동 촬영 및 품질 판정</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li>신용카드 국제 규격 <strong>1.5858:1</strong> 사각형 자동 검출</li>
+            <li><strong>블러 · 기울기 · Glare · Shaky</strong> 품질 판정</li>
+            <li>측면 인식 지원 (<strong>75° – 110°</strong>)</li>
+            <li>OpenCV(AOS) · Vision Framework(iOS) 기반</li>
+            <li>여권 <strong>MRZ 영역</strong> 인식 beta</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#ffb74d 0%,#ff5c7c 100%);">SC</div>
+          <h3>Scenario Samples</h3>
+          <p>eKYC 구현을 위한 실전 샘플 코드</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>FACE Compare</strong>: 신분증 얼굴 ↔ 실시간 셀카 (threshold 조정 가능)</li>
+            <li><strong>Credit Card OCR</strong>: 블러·기울기 자동 보정 후 인식</li>
+            <li><strong>eKYC 전체 플로우</strong>: OCR → Compare → Liveness</li>
+            <li>NAVER Pay · LINE Pay 실제 시나리오 기반</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. BENCHMARK -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Performance Benchmark</span>
+    <h2>국제 인증 · 실측 성능</h2>
+    <p class="desc">
+      NIST(미국 국립표준기술연구소)가 주관하는 FRVT는 전 세계 상용 얼굴 인식 모델이 참여하는 가장 권위 있는 벤치마크입니다.
+      Clova EyeD는 이 벤치마크에서 상위권에 진입했습니다.
+    </p>
+
+    <div class="g2">
+      <div class="bench">
+        <div class="bench-row">
+          <div>
+            <div class="bench-rank">6<sup>th</sup></div>
+            <div class="bench-desc">NIST FRVT <strong style="color:var(--text);">Investigation</strong></div>
+          </div>
+          <div>
+            <p style="font-size:14px;color:var(--text-soft);line-height:1.6;">
+              전 세계 상용 모델 중 <strong style="color:var(--text);">6위</strong>. 주로 미확인 얼굴 대상 DB를 조회하는 과제에서의 성능 지표.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="bench">
+        <div class="bench-row">
+          <div>
+            <div class="bench-rank">15<sup>th</sup></div>
+            <div class="bench-desc">NIST FRVT <strong style="color:var(--text);">Identification</strong></div>
+          </div>
+          <div>
+            <p style="font-size:14px;color:var(--text-soft);line-height:1.6;">
+              1:N 식별 벤치마크에서 <strong style="color:var(--text);">15위</strong>. FRVT 및 KISA 인증과 함께 금융권 레퍼런스의 근거가 됨.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px;font-size:20px;font-weight:700;margin-bottom:16px;">실측 Latency / Size</h3>
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>Configuration</th>
+          <th>Device</th>
+          <th style="text-align:right;">Latency</th>
+          <th style="text-align:right;">FPS / TPS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Edge E2E</strong> (CPU only)</td>
+          <td>iPhone 12</td>
+          <td class="num">11 ms</td>
+          <td class="num">30 FPS</td>
+        </tr>
+        <tr>
+          <td><strong>Edge E2E</strong> (CPU only)</td>
+          <td>Galaxy S20</td>
+          <td class="num">13 ms</td>
+          <td class="num">31 FPS</td>
+        </tr>
+        <tr>
+          <td>Edge + Server (T4 GPU)</td>
+          <td>iPhone 12</td>
+          <td class="num">16 ms</td>
+          <td class="num">30 FPS</td>
+        </tr>
+        <tr>
+          <td>Edge + Server (T4 GPU)</td>
+          <td>Galaxy S20</td>
+          <td class="num">27 ms</td>
+          <td class="num">30 FPS</td>
+        </tr>
+        <tr>
+          <td>Server only</td>
+          <td>NVIDIA T4</td>
+          <td class="num">120 ms</td>
+          <td class="num">10 TPS</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:48px;font-size:20px;font-weight:700;margin-bottom:16px;">SDK Bundle Size</h3>
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>Configuration</th>
+          <th style="text-align:right;">Android</th>
+          <th style="text-align:right;">iOS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Card Detector SDK only</td><td class="num">5.1 MB</td><td class="num">0.1 MB</td></tr>
+        <tr><td>Basic (Face + Card Detector)</td><td class="num">8.28 MB</td><td class="num">1.6 MB</td></tr>
+        <tr><td>Basic + RGB anti-spoofing</td><td class="num">20.28 MB</td><td class="num">13.1 MB</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 04. VERSION TIMELINE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · Release History</span>
+    <h2>버전별 출시 이력</h2>
+    <p class="desc">
+      v3.0 통합 재설계 이후 2년간 지속적인 모델 업데이트와 아키텍처 개선. 각 서비스의 VOC를 받아 빠르게 반영했습니다.
+    </p>
+
+    <div class="versions">
+      <div class="version">
+        <span class="version-tag major">v3.0.0</span>
+        <span class="version-date">2022.01.13</span>
+        <div class="version-note">
+          <strong>초기 통합 릴리스</strong> — Android · iOS SDK 통합 재개발.
+          Face, Card Detection, Landmark, Recognition 모델 Edge/Server 양쪽 업데이트.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag">v3.0.1</span>
+        <span class="version-date">2022.02.10</span>
+        <div class="version-note">
+          <strong>CardDetector 성능 개선 · LinePay 대응</strong> — 측면 인식률 개선 (80–99°),
+          Android Shape/Angle 검출 로직 재설계 (Contour 꼭지점 기반).
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag major">v3.1.0</span>
+        <span class="version-date">2022.03.25</span>
+        <div class="version-note">
+          <strong>Single Image Anti-Spoofing</strong> — Edge · Server 선택 옵션 추가, Spoofing threshold 설정 기능 제공.
+          SDK 사이즈 vs 정확도 트레이드오프를 고객이 제어할 수 있도록 설계.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag major">v3.2.0</span>
+        <span class="version-date">2022.07.29</span>
+        <div class="version-note">
+          <strong>NAVER Pay 자동 촬영 · 여권 MRZ beta</strong> — LINE Pay의 Action 기반 Anti-spoofing 데모 제공,
+          한국·일본 외 여권 MRZ 영역 인식 beta 릴리스.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag major">v3.3.0</span>
+        <span class="version-date">2022.11.15</span>
+        <div class="version-note">
+          <strong>Card Detector 핵심 재설계</strong> — 카드 각도 오프셋 · 얼굴 위치 무관 설정,
+          Blurry · Glare 체크 고도화, 세로 ID 카드 검출 분기.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag">v3.2302.64</span>
+        <span class="version-date">2023.01.10</span>
+        <div class="version-note">
+          <strong>엔진 · 프레임워크 교체</strong> — clovasee → <strong>ClovaEyes</strong>, iOS 12+,
+          face occlusion (입·코·좌우 눈) 개별 검출 정보 제공, Vision Framework → CVCardDetector (OpenCV 통합).
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag">v3.2305.67</span>
+        <span class="version-date">2023.02.01</span>
+        <div class="version-note">
+          <strong>Clova EyeS 엔진 교체</strong> — NCNN → TF Lite 전환 완료, landmark 성능 개선.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEW: FINANCIAL PERFORMANCE -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · Financial Performance</span>
+    <h2>재무 성과 · FY24–FY26</h2>
+    <p class="desc">
+      FY24 · FY25 연속으로 예산 대비 100%를 크게 상회하는 실적을 기록. 특히 FY25에는 <strong style="color:var(--text);">Budget 대비 165% 달성</strong>으로, 일본 금융·ID 인증 시장에서의 포지션이 안정적으로 자리잡았음을 보여줍니다.
+    </p>
+
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>FY</th>
+          <th style="text-align:right;">Budget</th>
+          <th style="text-align:right;">Actual / Forecast</th>
+          <th style="text-align:right;">Achievement</th>
+          <th style="text-align:right;">KRW 환산 (~9.4x)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FY24</strong> (24.01–24.12)</td>
+          <td class="num" style="color:var(--text-dim);">¥250.8M</td>
+          <td class="num">¥319.7M</td>
+          <td class="num" style="color:var(--accent);">127%</td>
+          <td class="num" style="color:var(--text-soft);">≈ 30억원</td>
+        </tr>
+        <tr>
+          <td><strong>FY25</strong> (25.01–25.12)</td>
+          <td class="num" style="color:var(--text-dim);">¥180.8M</td>
+          <td class="num">¥298.8M</td>
+          <td class="num" style="color:var(--accent);">165%</td>
+          <td class="num" style="color:var(--text-soft);">≈ 28억원</td>
+        </tr>
+        <tr>
+          <td><strong>FY26 Q1</strong> (26.01–26.03)</td>
+          <td class="num" style="color:var(--text-dim);">¥25.0M</td>
+          <td class="num">¥84.4M</td>
+          <td class="num" style="color:var(--accent);">337%</td>
+          <td class="num" style="color:var(--text-soft);">≈ 7.9억원 (Q1)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:48px;font-size:20px;font-weight:700;margin-bottom:16px;">FY24 상위 고객사 매출</h3>
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Client</th>
+          <th style="text-align:right;">FY24 Total (JPY)</th>
+          <th style="text-align:right;">비중</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num" style="color:var(--warn);">1</td>
+          <td><strong>PayPay株式会社</strong> <span class="service-region" style="margin-left:8px;">🇯🇵 JP</span></td>
+          <td class="num">¥216,081,450</td>
+          <td class="num">67.6%</td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td>株式会社Liquid</td>
+          <td class="num">¥36,006,173</td>
+          <td class="num">11.3%</td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td>株式会社DNPアイディーシステム</td>
+          <td class="num">¥16,000,000</td>
+          <td class="num">5.0%</td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td>LINEPAY株式会社</td>
+          <td class="num">¥14,398,458</td>
+          <td class="num">4.5%</td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td>株式会社TRUSTDOCK</td>
+          <td class="num">¥6,724,807</td>
+          <td class="num">2.1%</td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td>LINE Taiwan Limited · ブラステル · 日本海隆 외 다수</td>
+          <td class="num">¥30,451,444</td>
+          <td class="num">9.5%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:48px;font-size:20px;font-weight:700;margin-bottom:16px;">FY25 상위 고객사 매출</h3>
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Client</th>
+          <th style="text-align:right;">FY25 Total (JPY)</th>
+          <th style="text-align:right;">비중</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num" style="color:var(--warn);">1</td>
+          <td><strong>PayPay株式会社</strong></td>
+          <td class="num">¥201,166,140</td>
+          <td class="num">67.3%</td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td>株式会社Liquid</td>
+          <td class="num">¥41,655,866</td>
+          <td class="num">13.9%</td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td>株式会社DNPアイディーシステム</td>
+          <td class="num">¥16,000,000</td>
+          <td class="num">5.4%</td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td>株式会社TRUSTDOCK <span class="service-region" style="margin-left:8px;color:var(--accent);background:rgba(0,255,163,0.1);">+110% YoY</span></td>
+          <td class="num">¥14,105,321</td>
+          <td class="num">4.7%</td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td>株式会社BuySellTechnologies <span class="service-region" style="margin-left:8px;color:var(--accent);background:rgba(0,255,163,0.1);">+109% YoY</span></td>
+          <td class="num">¥3,590,370</td>
+          <td class="num">1.2%</td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td>기타 10+ 고객사</td>
+          <td class="num">¥22,278,798</td>
+          <td class="num">7.5%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="g2" style="margin-top:40px;">
+      <div class="card">
+        <div class="card-num">COST STRUCTURE</div>
+        <h3>외주 운영비 (JP)</h3>
+        <p>일본 현지에서 Plan/Dev를 담당하는 <strong>日鉄ソリューションズ(NSSOL)</strong> 계약으로, 2024.01부터 1.0 MM @ <strong>월 ¥2,600,000</strong> 운영.</p>
+        <ul>
+          <li>연간 외주비: <strong>¥31.2M</strong> (~2.9억원)</li>
+          <li>CS 리소스는 OCR 발주와 통합 (LY Communications)</li>
+          <li>FY24 매출 대비 외주비 비중 <strong>약 9.8%</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num">PROFITABILITY</div>
+        <h3>매출 구조의 건강도</h3>
+        <p>FY24·FY25 모두 Budget을 크게 초과 달성. PayPay 단일 고객 의존도가 <strong>67%</strong>로 높지만, 10+ 중소 고객사가 꾸준히 추가되며 포트폴리오 리스크를 서서히 분산.</p>
+        <ul>
+          <li>FY24 → FY25 TRUSTDOCK <strong>+110% YoY</strong></li>
+          <li>FY25 신규 고객사 5곳 이상 온보딩</li>
+          <li>LINE Taiwan 등 일부 해외 고객 이탈도 존재</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06. SERVICES -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">06 · Deployments</span>
+    <h2>도입 서비스 · 시장 포지션</h2>
+    <p class="desc">
+      KR · JP 리전의 주요 금융·ID 인증 서비스에 도입. 일본 PayPay는 Polarify 대비 우수한 성능으로 프로젝트 최대 매출원이 되었고, Liquid · DNP 등 일본 eKYC 플랫폼사로도 확산.
+    </p>
+
+    <div class="services-grid">
+      <div class="service hero-service">
+        <span class="service-region">🇯🇵 JP</span>
+        <h3>PayPay</h3>
+        <div class="rev">연간 ARR <strong>10 – 10.5억원</strong></div>
+        <span class="status done">DONE</span>
+        <ul>
+          <li>Polarify 대체 도입</li>
+          <li>빛반사 threshold 커스터마이징</li>
+          <li>프로젝트 최대 매출원</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <span class="service-region">🇰🇷 KR</span>
+        <h3>네이버 파이낸셜</h3>
+        <div class="rev">연간 ARR <strong>6,000만원</strong></div>
+        <span class="status done">DONE</span>
+        <ul>
+          <li>Card Detection + 신분증 OCR</li>
+          <li>얼굴 인증 eKYC 전환</li>
+          <li>Pay Lib SDK 통합</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <span class="service-region">🇯🇵 JP</span>
+        <h3>LinePay JP</h3>
+        <div class="rev">연간 ARR <strong>4,000만원</strong></div>
+        <span class="status done">DONE</span>
+        <ul>
+          <li>Android 앱 용량 이슈 대응</li>
+          <li>Action 기반 Anti-spoofing</li>
+          <li>v3.2316.105 별도 전달</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <span class="service-region">🇰🇷 KR</span>
+        <h3>NCP eKYC SDK</h3>
+        <div class="rev">상품화 진행 중</div>
+        <span class="status prog">IN PROGRESS</span>
+        <ul>
+          <li>인증 키 발급 시스템</li>
+          <li>NCP API 연동</li>
+          <li>ADMIN 검수 시스템</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <span class="service-region">🇰🇷 KR</span>
+        <h3>네이버 회원</h3>
+        <div class="rev">도입 논의 단계</div>
+        <span class="status tap">TAPPING</span>
+        <ul>
+          <li>내부 시너지 타진</li>
+          <li>회원 인증 확장 검토</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <span class="service-region">🇹🇭 TH</span>
+        <h3>Linebank TH</h3>
+        <div class="rev">글로벌 확장 타진</div>
+        <span class="status tap">TAPPING</span>
+        <ul>
+          <li>라이선스 과금 모델 필요</li>
+          <li>태국 금융 규제 검토</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07. 2023 RESULTS -->
+<section>
+  <div class="wrap">
+    <span class="label">07 · 2023 H1 Results</span>
+    <h2>2023년 상반기 목표 달성</h2>
+    <p class="desc">
+      4개의 우선순위 목표 중 일본 서비스 도입은 100%, 네이버 내부 도입은 50%, SMB 시장 확장은 25% 진행. 매출 기여도가 가장 높은 라인을 우선 완성한 결과.
+    </p>
+
+    <div class="goal">
+      <div class="goal-head">
+        <div class="goal-title">🎯 P1 · 네이버 내부 서비스 내 eKYC SDK 도입</div>
+        <div class="goal-pct">50%</div>
+      </div>
+      <div class="goal-bar"><div style="width:50%;"></div></div>
+      <div class="goal-sub">
+        <span class="goal-chip done">네이버 파이낸셜 DONE</span>
+        <span class="goal-chip tap">네이버 회원 TAPPING</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      <div class="goal-head">
+        <div class="goal-title">🎯 P2 · 일본 서비스 내 eKYC SDK 도입</div>
+        <div class="goal-pct" style="color:var(--accent);">100%</div>
+      </div>
+      <div class="goal-bar"><div style="width:100%;background:linear-gradient(90deg,#00ffa3,#00d4ff);"></div></div>
+      <div class="goal-sub">
+        <span class="goal-chip done">LinePay JP DONE</span>
+        <span class="goal-chip done">PayPay DONE (10억+)</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      <div class="goal-head">
+        <div class="goal-title">🎯 P3 · eKYC 표준화 · SDK화를 통한 SMB 시장 도입</div>
+        <div class="goal-pct">25%</div>
+      </div>
+      <div class="goal-bar"><div style="width:25%;"></div></div>
+      <div class="goal-sub">
+        <span class="goal-chip prog">NCP KR 상품화 진행 중</span>
+        <span class="goal-chip undone">NCP JP 미진행</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      <div class="goal-head">
+        <div class="goal-title">🎯 P4 · 글로벌 서비스 내 eKYC 도입</div>
+        <div class="goal-pct">0%</div>
+      </div>
+      <div class="goal-bar"><div style="width:2%;background:var(--text-dim);"></div></div>
+      <div class="goal-sub">
+        <span class="goal-chip tap">Linebank TH TAPPING</span>
+        <span class="goal-chip undone">Poshmark 미착수</span>
+        <span class="goal-chip undone">라이선스 과금 모델 개발 필요</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07b. 정효주 기여 -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">07b · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      Clova EyeD의 <strong style="color:var(--text);">데이터 구축 · 모델 업데이트 · V3.2 출시 · 알체라 외주 계약</strong>을 담당한 프로덕트 기획 리소스. 외주사 협상부터 사내 데이터 정제 KPI 설계, APP DEMO 기획, 출시 Follow-up까지 V3.2의 기획-실행 전 구간을 책임졌습니다.
+    </p>
+
+    <div class="g2">
+      <div class="card" style="border-color:rgba(99,102,241,0.25); background:linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(0,212,255,0.04) 100%);">
+        <div class="card-num" style="color:#a5b4fc;">01 · DATA OPS</div>
+        <h3>Anti-spoofing 데이터 구축 · 외주 계약</h3>
+        <ul>
+          <li><strong>알체라 외주 계약 체결</strong> — Anti-spoofing 업데이트용 데이터 구축 계약 완료. 내부 예산 <strong>¥207M (2억 7백만원)</strong> 편성 조율.</li>
+          <li><strong>단계별 납품 스케줄 설계</strong>
+            <ul style="margin-top:6px;">
+              <li>1차: Paper Attack 38,602 / Replay-1 3,762 / Replay-2 2,135</li>
+              <li>2차: Paper Attack 77,204 / Replay-1 7,524 / Replay-2 2,271</li>
+              <li>3차: Paper Attack 77,204 / Replay-1 7,524 / Replay-2 2,271</li>
+            </ul>
+          </li>
+          <li><strong>검수 오류율 2% 조항 협상</strong> — 샘플링 검수에서 오류 기준 초과 시 전수 반납 및 재작업 조항을 계약서에 반영해 품질 안전장치 확보.</li>
+          <li><strong>구매팀 · 외주사 간 용어 정합성 가이드 작성</strong> — 기술 영역 이해가 낮은 구매팀에 프로젝트 목적과 데이터 사양을 시각화해 공유, 협상 과정에서 누락되는 조항을 사전 차단.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-color:rgba(0,255,163,0.25); background:linear-gradient(135deg, rgba(0,255,163,0.05) 0%, rgba(0,212,255,0.03) 100%);">
+        <div class="card-num" style="color:var(--accent);">02 · IN-HOUSE LABELING</div>
+        <h3>CelebA 기반 사내 데이터 정제</h3>
+        <ul>
+          <li><strong>Anti-spoofing CelebA 학습/연구용 데이터 정제 작업 시작</strong> — 외주 보완과 병행해 사내 정제 파이프라인 구축.</li>
+          <li><strong>1인 KPI 산정</strong> — 초기 <strong>500~700장/일</strong>, 숙달 후 <strong>1,500~2,000장/일</strong> 수준으로 설정.</li>
+          <li>작업자 지치지 않는 <strong>적절한 작업량 분배</strong>와 스케줄 기반 인원 투입 조절.</li>
+          <li>follow-up 수량 · 날짜 관리 엑셀 체계화 — 각 파트별 완료 여부를 추적 가능하도록 프로세스 정립.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-color:rgba(255,183,77,0.25); background:linear-gradient(135deg, rgba(255,183,77,0.05) 0%, rgba(255,92,124,0.03) 100%);">
+        <div class="card-num" style="color:var(--warn);">03 · V3.2 PLANNING</div>
+        <h3>APP DEMO · V3.2 기획</h3>
+        <ul>
+          <li><strong>V3.2 기획서 업데이트</strong>, 개발/디자인팀 리뷰 이메일 작성 및 피드백 반영.</li>
+          <li><strong>3.2V 빛반사 test 실효성 검증</strong> — 실시간 감지가 아닌 <strong>신분증 사진 사후 검증</strong>으로 기능 방향을 재정의해 해결.</li>
+          <li>향후 EyeD 패키징 방법(SaaS / On-prem) 정리 TODO로 스코프화.</li>
+          <li><strong>eValuable(리더보드) 웹 기획 착수</strong> — 모델/제품 성능 지표를 대외 공개 가능한 형태로 제공하기 위한 신규 프로덕트 초안.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-color:rgba(0,212,255,0.25); background:linear-gradient(135deg, rgba(0,212,255,0.05) 0%, rgba(99,102,241,0.03) 100%);">
+        <div class="card-num" style="color:var(--brand);">04 · SCHEDULE &amp; RELEASE</div>
+        <h3>스케줄 관리 · 출시 Follow-up</h3>
+        <ul>
+          <li><strong>Clova EyeD Milestone · V3.2 Schedule 세분화</strong> (w/ 효선님) — 하나의 덩어리였던 개발 일정을 우선순위 기반 서브태스크로 분할.</li>
+          <li>개발팀 1차 리뷰 (Image Vision · Edge · SDK), 디자인팀 리뷰 조율.</li>
+          <li><strong>출시 Follow-up</strong> — 여권 beta API, DEMO APP beta, QA 의뢰 전 스펙 점검, 네이버 페이 사전 출시 전달, release 공지 작성/발송 관리.</li>
+          <li>각 개발 일정에 <strong>"언제까지 · 무엇을 · 왜"</strong>를 분명히 설명하는 커뮤니케이션 원칙 정립.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:36px; padding:28px 32px; background:var(--surface); border:1px solid var(--border); border-radius:16px;">
+      <div class="card-num" style="color:var(--text-dim); margin-bottom:14px;">LEARNED</div>
+      <p style="color:var(--text-soft); font-size:14.5px; line-height:1.8;">
+        <strong style="color:var(--text);">계약 관리에서의 교훈</strong> — "우리에게 중요한 조항은 먼저 제안하는 게 낫다"는 판단.
+        구매팀은 기술을 100% 이해하기 어려우므로 기획자가 계약서 갱신 때마다 정독하고 필수 조항(예: 2% 이상 검수 오류 시 전수 반납)을 직접 제안하는 것이 리스크를 줄이는 가장 빠른 길이라는 것을 이 프로젝트에서 체화.
+        <br/><br/>
+        <strong style="color:var(--text);">데이터 구축에서의 교훈</strong> — 단순 수량 관리가 아니라 "이 데이터가 어떤 모델의 어떤 문제를 풀기 위한 것인지"를 작업자까지 이해하게 만드는 것이 결과물 품질의 핵심. KPI는 작업자가 지치지 않는 수준에서 시작해 숙달에 따라 단계적으로 올려야 한다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 08. KEY ACHIEVEMENTS -->
+<section>
+  <div class="wrap">
+    <span class="label">08 · Highlights</span>
+    <h2>핵심 성과 하이라이트</h2>
+    <p class="desc">
+      숫자로 요약할 수 있는 프로젝트의 핵심 결과.
+    </p>
+
+    <div class="g4">
+      <div class="card" style="text-align:center;">
+        <div class="card-num">FY24 REVENUE</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;"><span style="background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¥319M</span></div>
+        <p style="font-size:13px;">≈ 30억원 · Budget 127%</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">FY25 REVENUE</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;"><span style="background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¥298M</span></div>
+        <p style="font-size:13px;">≈ 28억원 · Budget 165%</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">GLOBAL RANK</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;color:var(--warn);">6<sup style="font-size:16px;">th</sup></div>
+        <p style="font-size:13px;">NIST FRVT Investigation</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">LATENCY</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;color:var(--accent);">11ms</div>
+        <p style="font-size:13px;">iPhone 12 Edge E2E</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08. ONEPAGER -->
+<section class="tight">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>Clova EyeD</strong>는 2020년 팬데믹 시기의 비대면 인증 시장 확대를 인사이트로, 사내에서 분산 운영되던 Android · iOS SDK를 <strong>하나의 일관된 제품</strong>으로 통합 재설계한 Vision AI 프로젝트였습니다.
+        얼굴 검출부터 키포인트 · 인식 · 안티스푸핑까지 end-to-end 파이프라인을 구축했고, <span class="hl">NIST FRVT Investigation 6위 · Identification 15위</span>의 국제 벤치마크 성과를 확보했습니다.
+        Edge(11ms @ iPhone 12) · Server Hybrid 아키텍처로 고객의 보안 수준 요구에 유연하게 대응했으며,
+        <strong>일본 PayPay · LinePay · Liquid · DNP · TRUSTDOCK</strong> 등 일본 금융·eKYC 플랫폼 15+ 고객사에 도입.
+        <span class="hl">FY24 ¥319M (Budget 127%)</span>, <span class="hl">FY25 ¥298M (Budget 165%)</span>의 실적을 기록했고, FY26 Q1에는 Budget 대비 337%를 달성하며 성장세를 이어가고 있습니다.
+        외주비(¥31M/년, 매출 대비 9.8%)를 감안해도 탄탄한 수익 구조를 구축했습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>Clova EyeD · eKYC SDK</strong>
+      NAVER Cloud · Vision AI · 2021 – 2023
+    </div>
+    <div style="text-align:right;">
+      <strong>Last updated</strong>
+      2026-04-21 · Confluence AIWORKS/1718037269
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

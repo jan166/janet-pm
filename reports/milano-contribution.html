@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026 밀라노 동계올림픽 광고세일즈 — 정효주 개인 기여 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #00d4ff;
+    --brand-2: #6366f1;
+    --brand-grad: linear-gradient(135deg, #00d4ff 0%, #6366f1 100%);
+    --gold: #ffd700;
+    --gold-grad: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    --purple-grad: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    --accent: #00ffa3;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 15% 0%, rgba(168,85,247,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(236,72,153,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 500px 400px at 50% 100%, rgba(255,215,0,0.05) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #ec4899;
+    box-shadow: 0 0 14px #ec4899;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .profile-avatar {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: var(--purple-grad);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: 800;
+    color: white;
+    letter-spacing: -0.02em;
+    box-shadow: 0 0 40px rgba(168,85,247,0.3);
+  }
+  .profile-info h1 {
+    font-size: clamp(36px, 5.5vw, 62px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+  .profile-info h1 span {
+    background: var(--purple-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .profile-info .role {
+    font-size: 15px;
+    color: var(--text-soft);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 760px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-top: 32px;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(168,85,247,0.1);
+    border: 1px solid rgba(168,85,247,0.25);
+    color: #a855f7;
+  }
+  .hero-badge.gold { background: rgba(255,215,0,0.08); border-color: rgba(255,215,0,0.25); color: var(--gold); }
+  .hero-badge.green { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.2); color: var(--accent); }
+  .hero-badge.pink { background: rgba(236,72,153,0.1); border-color: rgba(236,72,153,0.25); color: #ec4899; }
+
+  /* ===== STAT BAR ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat {
+    background: var(--bg-2);
+    padding: 28px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(28px, 2.8vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--purple-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-num .gold {
+    background: var(--gold-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  /* ===== SECTION ===== */
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #a855f7;
+    text-transform: uppercase;
+  }
+  .label::before {
+    content: ''; width: 24px; height: 1px;
+    background: #a855f7;
+  }
+  .label.gold { color: var(--gold); }
+  .label.gold::before { background: var(--gold); }
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 780px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  /* ===== GRID ===== */
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  /* ===== ROLE CARDS ===== */
+  .role-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .role-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--purple-grad);
+    opacity: 0.6;
+  }
+  .role-card:hover { border-color: rgba(168,85,247,0.3); transform: translateY(-2px); }
+  .role-card h3 { font-size: 20px; margin-bottom: 6px; }
+  .role-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #a855f7;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .role-meta { font-size: 13px; color: var(--text-dim); margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
+  .role-card p { color: var(--text-soft); font-size: 14.5px; line-height: 1.7; }
+  .role-card ul { margin-top: 12px; padding-left: 20px; }
+  .role-card li { font-size: 13.5px; color: var(--text-soft); margin-bottom: 6px; line-height: 1.55; }
+  .role-card strong { color: var(--text); font-weight: 600; }
+
+  /* ===== DELIVERABLE LIST ===== */
+  .deliv {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: border-color 0.2s;
+  }
+  .deliv:hover { border-color: rgba(168,85,247,0.3); }
+  .deliv-main { flex: 1; }
+  .deliv-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .deliv-desc { font-size: 13.5px; color: var(--text-soft); line-height: 1.55; }
+  .deliv-meta { font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--purple-grad);
+    opacity: 0.4;
+  }
+  .tl-item {
+    position: relative;
+    padding: 20px 0 20px 28px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -30px; top: 26px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 3px solid #a855f7;
+  }
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: #a855f7;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .tl-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .tl-desc { font-size: 14px; color: var(--text-soft); line-height: 1.6; }
+
+  /* ===== KPI ===== */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+  }
+  .kpi-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
+  .kpi-value { font-size: 36px; font-weight: 800; letter-spacing: -0.03em; margin: 10px 0 4px; }
+  .kpi-sub { font-size: 12.5px; color: var(--text-dim); }
+
+  /* ===== HIGHLIGHT ===== */
+  .hl {
+    padding: 2px 8px;
+    background: rgba(168,85,247,0.15);
+    border-radius: 6px;
+    color: #c084fc;
+    font-weight: 600;
+  }
+  .hl.gold { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .hl.accent { background: rgba(0,255,163,0.12); color: var(--accent); }
+
+  /* ===== SKILLS ===== */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .skill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .skill-name { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .skill-tag { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 3px 8px; background: rgba(168,85,247,0.1); color: #c084fc; border-radius: 6px; }
+
+  /* ===== ONEPAGER ===== */
+  .onepager {
+    background: linear-gradient(135deg, rgba(168,85,247,0.05) 0%, rgba(236,72,153,0.04) 100%);
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 20px;
+    padding: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .onepager::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+  }
+  .onepager p { font-size: 16px; line-height: 1.8; color: var(--text-soft); max-width: 100%; position: relative; z-index: 2; margin-top: 20px; }
+  .onepager p strong { color: var(--text); font-weight: 700; }
+
+  /* ===== WORK LOG ===== */
+  .worklog {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .worklog-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: #ec4899;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .worklog ul { padding-left: 20px; }
+  .worklog li { font-size: 14px; color: var(--text-soft); margin-bottom: 6px; line-height: 1.55; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0;
+    background: var(--bg-2);
+  }
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text-soft); display: block; margin-bottom: 4px; font-weight: 600; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 80px 0; }
+    .onepager { padding: 36px 24px; }
+    .profile { flex-direction: column; align-items: flex-start; }
+    .deliv { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="hero-tag"><span class="dot"></span>Individual Contribution Report · 2025.11 – 2026.04</span>
+
+    <div class="profile">
+      <div class="profile-avatar">정</div>
+      <div class="profile-info">
+        <h1><span>정효주</span>의 기여</h1>
+        <div class="role">NAVER 광고세일즈 · 세일즈기획실 · 세일즈 플래닝</div>
+      </div>
+    </div>
+
+    <p class="hero-sub">
+      2026 밀라노-코르티나 동계올림픽 광고세일즈 프로젝트에서 <strong>세일즈덱 전담 설계</strong> · <strong>주요 경기 시간대 정리</strong> · <strong>대행사 데이터 취득 기획</strong> · <strong>운영 Knowledge Base 구축</strong>까지 4개월 프로젝트의 정보·문서 인프라 영역을 담당했습니다.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">세일즈덱 v0.1 → v0.8 (+전용 3종)</span>
+      <span class="hero-badge pink">트리플크라운 경기 시간대 매핑</span>
+      <span class="hero-badge gold">Wiki 2개 생성 · 1,572건 메일 분석</span>
+      <span class="hero-badge green">2026 아젠다 발굴</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">세일즈덱 버전</div>
+        <div class="stat-num"><span class="grad">8<sup style="font-size:0.55em;">+α</sup></span></div>
+        <div class="stat-hint">v0.1 ~ v0.8 + 광고주 전용 3종</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">분석 메일</div>
+        <div class="stat-num"><span class="grad">1,572</span><span class="sm">건</span></div>
+        <div class="stat-hint">4개 폴더 · 210+ 쓰레드</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Wiki 생성 · 업데이트</div>
+        <div class="stat-num"><span class="grad">2</span><span class="sm">개 / 5회</span></div>
+        <div class="stat-hint">FAQ · 커뮤니케이션 가이드</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">집계된 근무 리포트</div>
+        <div class="stat-num">15<span class="sm">h+</span></div>
+        <div class="stat-hint">기록된 초과근무 (2025-11, 12)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01. ROLE SUMMARY -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Role</span>
+    <h2>담당 역할 요약</h2>
+    <p class="desc">
+      세일즈기획실 세일즈 플래닝 포지션에서, 판매 준비 단계의 <strong>자료 설계</strong>부터 운영 단계의 <strong>지식 자산화</strong>까지 담당. 세일즈 AM이 광고주 접촉에 집중할 수 있도록 정보 인프라를 구축하는 역할.
+    </p>
+
+    <div class="g3">
+      <div class="role-card">
+        <span class="role-tag">AREA 01</span>
+        <h3>세일즈덱 설계·관리</h3>
+        <div class="role-meta">2025-10 ~ 2025-12 · Phase 1~2</div>
+        <p>올림픽 스폰서십 패키지 세일즈덱 v0.1부터 v0.8까지 <strong>8차 버전 설계·배포</strong>, 광고주 전용 Samsung·OB·OMEGA 편집본 별도 제작.</p>
+        <ul>
+          <li>올림픽 성과 페이지 수치 변경 (삼성 단일 → 베이징 올림픽 전체)</li>
+          <li>상세 프로덕트 가격 페이지 신규 추가</li>
+          <li>Appendix 영역 개별 광고주별 재정리</li>
+          <li>중복 지면 제거 + 한번에 표로 정리</li>
+          <li>하이퍼링크 구성(장표 ↔ Appendix 연결)</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag">AREA 02</span>
+        <h3>운영 정보 정리</h3>
+        <div class="role-meta">2025-12 · Phase 1</div>
+        <p><strong>트리플크라운 주요 경기 시간대 매핑</strong> — 쇼트트랙·스피드스케이팅·컬링·피겨스케이팅 4개 종목 일자별 주요경기 시간대 정리. 프라임 시간대 확정에 기여.</p>
+        <ul>
+          <li>김현준 PM 명시 — "효주님이 잘 정리해주셨고요"</li>
+          <li>세일즈덱 하이라이팅 구좌 기준이 됨</li>
+          <li>비디오 상품 예상 노출 수 수정 반영</li>
+          <li>스폰서사 선제안 일정 안내 공유 자료 업데이트</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag">AREA 03</span>
+        <h3>대행사 · 외부 커뮤니케이션</h3>
+        <div class="role-meta">2026-01 ~ 2026-02 · Phase 3~4</div>
+        <p>공식 메일 <code style="font-size:12px;color:var(--brand);">dl_milano2026@navercorp.com</code>을 통해 대행사·광고주 문의 응대. 대기열 관리, 부킹 접수, 취소 처리 등.</p>
+        <ul>
+          <li>나스미디어 전북도청 캠페인 완판 안내 (2026-01-28)</li>
+          <li>메조미디어 신협중앙회 대기열 접수 취소 처리 (2026-01-28)</li>
+          <li>디플랜360·인크로스·DMC 등 다수 대행사 응대</li>
+          <li>폴더 120(1차) 기준 직접 회신 건 다수</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag">AREA 04</span>
+        <h3>데이터 · 지식 관리</h3>
+        <div class="role-meta">2026-04 (프로젝트 회고)</div>
+        <p>4개월 누적 메일함 <strong>1,572건</strong>을 4개 폴더(올림픽 관련 ~ 관련4)로 분할 후 구조화 분석, Wiki 2개 페이지로 자산화.</p>
+        <ul>
+          <li><strong>FAQ 정리</strong> Wiki — 16개 섹션, 210+ 쓰레드 분석</li>
+          <li><strong>주요 커뮤니케이션 가이드</strong> — 5 Phase × 17개 템플릿</li>
+          <li>nworks CLI 페이징 버그 우회 처리 (400건 제한 → 폴더 분할)</li>
+          <li>월드컵 대응 체크리스트 작성 (후속 이벤트 이월)</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag">AREA 05</span>
+        <h3>2026 아젠다 발굴</h3>
+        <div class="role-meta">2025-11 ~ 2026-04</div>
+        <p>KA 주요 업종 담당자 대상 인터뷰 진행, 대행사 DB 취득을 위한 기획 1차 공유. 다음 시즌 대비 전략 자산 확보.</p>
+        <ul>
+          <li>KA 주요 업종 담당자 인터뷰 1회차 진행 (2025-11-26)</li>
+          <li>대행사 DB 취득을 위한 기획사항 1차 공유 (2025-12-24)</li>
+          <li>2026 아젠다 발굴 근무 리포트 기록</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag">AREA 06</span>
+        <h3>내부 협업 지원</h3>
+        <div class="role-meta">상시</div>
+        <p>세일즈기획실장·세일즈기획 PM·프리미엄광고팀 간 자료 싱크 허브 역할. 장윤석 실장·김현준 PM 등과 밀착 협업.</p>
+        <ul>
+          <li>세일즈덱 피드백 회의 참여</li>
+          <li>상품팀과의 추가 논의 조율</li>
+          <li>2025 Harmony Night 대행사 sync 회의 참여</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. TIMELINE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Timeline</span>
+    <h2>개인 기여 타임라인</h2>
+    <p class="desc">
+      기간별 주요 작업과 산출물. 근무 결과 리포트 및 메일 Thread 기반 재구성.
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025-10-31</div>
+        <div class="tl-title">세일즈덱 v0.1 초안 설계 참여</div>
+        <div class="tl-desc">공통 패키지 구성 초안, 영상 최저단가 4천만원 확정 단계부터 참여. 김현준 PM으로부터 세일즈덱 작업 배정.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-11-05 ~ 11-14</div>
+        <div class="tl-title">JTBC 결합 상품 아이데이션 · 이미지 자료 취합</div>
+        <div class="tl-desc">JTBC미디어컴과 공동 세일즈 패키지 논의 단계에서 특집페이지 시안·이미지 자료 정리 담당. "세일즈덱 구성 들어가야 할 것 같습니다"(김현준) 지시에 따라 v0.1 제작 착수.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-11-26 <span style="color:var(--text-dim);font-weight:500;">(근무 리포트 기록)</span></div>
+        <div class="tl-title">올림픽 전용 패키지 세일즈덱 작성 + KA 인터뷰</div>
+        <div class="tl-desc">
+          ・ 올림픽 전용 패키지 세일즈덱 작성 + 피드백 회의<br>
+          ・ 2025 Harmony Night 대행사 sync 회의 참여 + 실시간 커뮤니케이션<br>
+          ・ KA 주요 업종 담당자 대상 인터뷰 1회차 진행 + 2026 아젠다 발굴<br>
+          <em style="color:var(--text-dim);">(초과근무 7시간 25분)</em>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-11-28</div>
+        <div class="tl-title">세일즈덱 v0.1 내부 공유 · 피드백 반영</div>
+        <div class="tl-desc">
+          <strong>1. 올림픽 성과 페이지</strong> — 삼성 단일 광고주 수치 → 베이징 올림픽 광고주 전체 수치로 변경<br>
+          <strong>2. 상세 프로덕트 가격 페이지 추가</strong> — 패키지별 중복 지면 제거, 한번에 표로 정리<br>
+          <strong>3. 올림픽 광고 설득 페이지</strong> — 수치 추가 (변경 가능 항목으로 별도 기재)
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-12</div>
+        <div class="tl-title">주요 경기 시간대 정리 (트리플크라운)</div>
+        <div class="tl-desc">쇼트트랙·스피드스케이팅·컬링·피겨스케이팅 4개 종목 일자별 주요경기 시간대 매핑. 김현준 PM 메일 원문: "4개 주요종목의 주요경기 시간대입니다 효주님이 잘 정리해주셨고요". 세일즈덱에 반영되어 하이라이팅 구좌(프라임 시간대) 확정의 근거가 됨.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-15 ~ 12-19</div>
+        <div class="tl-title">세일즈덱 v0.8 배포 · 광고주 전용 버전 제작</div>
+        <div class="tl-desc">
+          Appendix 영역 수정 파일 공유:<br>
+          ・ <code style="font-size:12.5px;color:var(--brand);">Samsung_SalesDeck_v0.8올림픽스폰서십.pptx</code> (98MB)<br>
+          ・ <code style="font-size:12.5px;color:var(--brand);">OB_appendixonly_SalesDeck올림픽스폰서십.pptx</code> (69MB)<br>
+          ・ <code style="font-size:12.5px;color:var(--brand);">OMEGA_SalesDeck_올림픽스폰서십.pptx</code> (19MB)<br>
+          장표 내 중복 수정·전체 할인율·노출수 재산정 반영.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-19</div>
+        <div class="tl-title">스폰서사 선제안 자료 업데이트</div>
+        <div class="tl-desc">상품팀 논의 결과에 따라 공통패키지 내 비디오 상품의 예상 노출 수 수정 → 최신 버전 세일즈덱으로 배포. 노두식·라미정·심지영·홍혜진 AM 측 공유 자료 일괄 업데이트 반영.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-24 <span style="color:var(--text-dim);font-weight:500;">(근무 리포트 기록)</span></div>
+        <div class="tl-title">세일즈덱 수정·배포 · 대행사 DB 기획</div>
+        <div class="tl-desc">
+          ・ 올림픽 세일즈덱 수정 및 배포, 상품팀과의 추가 논의<br>
+          ・ 대행사 DB 취득을 위한 기획사항 1차 공유<br>
+          <em style="color:var(--text-dim);">(초과근무 7시간 30분)</em>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-01-08</div>
+        <div class="tl-title">스폰서사 선제안 기간 업데이트 반영</div>
+        <div class="tl-desc">김현준 PM 회람 메일에 공유 자료 확인 및 업데이트 반영. 수정 사항 반영된 최신 세일즈덱 배포. NOSP 공지 업로드(14:00) 직전까지 최종 버전 싱크.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-01-22 ~ 2026-01-28</div>
+        <div class="tl-title">대기열·완판 광고주 직접 응대</div>
+        <div class="tl-desc">
+          공식 메일 계정으로 외부 대행사 응대:<br>
+          ・ <strong>메조미디어 신협중앙회</strong> 대기열 접수 취소 처리 (1-28)<br>
+          ・ <strong>나스미디어 전북도청</strong> 완판 안내 (1-28)<br>
+          ・ 기타 복수 대행사 응대 (히스토리·순번·제작가이드 관련)
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-04-21</div>
+        <div class="tl-title">프로젝트 회고 · Wiki 자산화</div>
+        <div class="tl-desc">
+          4개월 누적 메일 1,572건 4개 폴더 구조 분석 → 2개 Wiki 페이지 생성·업데이트:<br>
+          ・ <strong>FAQ 정리</strong> (16개 섹션, 5회 업데이트, 3회 버전)<br>
+          ・ <strong>주요 커뮤니케이션 가이드</strong> (5 Phase × 17 템플릿, 2회 버전)<br>
+          ・ 월드컵 대응 체크리스트 작성<br>
+          ・ 본 HTML 리포트 2종 제작
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. KEY DELIVERABLES -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Deliverables</span>
+    <h2>주요 산출물 리스트</h2>
+    <p class="desc">
+      프로젝트 기간 중 직접 작성 · 주도한 산출물.
+    </p>
+
+    <h3 style="font-size:18px;margin-bottom:16px;color:var(--text-soft);">A. 세일즈덱 (8차 버전 + 광고주 전용 3종)</h3>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">SalesDeck v0.1 ~ v0.8 — 올림픽 스폰서십 네이버 세일즈 패키지</div>
+        <div class="deliv-desc">최초 시안부터 공식 배포 직전까지 8차 버전. 패키지 구성·공시단가·할인율 반영, 피드백 대응, Appendix 영역 정리</div>
+      </div>
+      <div class="deliv-meta">2025-10-31 → 2025-12-26<br>PPTX · 99MB</div>
+    </div>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">Samsung_SalesDeck_v0.8 올림픽스폰서십</div>
+        <div class="deliv-desc">삼성전자 전용 편집본 (Exclusive Gold 5억). D-DAY 광고 → 트리플크라운 2구좌 대체 반영, 같은 날 4시간 집행안 정리</div>
+      </div>
+      <div class="deliv-meta">2025-12-15<br>PPTX · 98MB</div>
+    </div>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">OB_appendixonly_SalesDeck 올림픽스폰서십</div>
+        <div class="deliv-desc">오비맥주(카스) 전용 Appendix. 주류 브랜드 제한 지면 조정 반영. OB 패키지 제안·구매 확정까지 활용</div>
+      </div>
+      <div class="deliv-meta">2025-12-15<br>PPTX · 69MB</div>
+    </div>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">OMEGA_SalesDeck 올림픽스폰서십</div>
+        <div class="deliv-desc">오메가 전용 패키지 제안서 (Exclusive Bronze 1억 + Essential 5천). 카운트다운 D-DAY 독점 상품 별도 장표, 하이퍼링크 구성</div>
+      </div>
+      <div class="deliv-meta">2025-12-24<br>PPTX · 19MB</div>
+    </div>
+
+    <h3 style="font-size:18px;margin:32px 0 16px;color:var(--text-soft);">B. 운영 데이터 정리</h3>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">트리플크라운 주요 경기 시간대 매핑</div>
+        <div class="deliv-desc">쇼트트랙·스피드스케이팅·컬링·피겨스케이팅 4개 종목 × 17일 × 세부 경기 시간대 정리. 하이라이팅 구좌(프라임) 확정의 근거</div>
+      </div>
+      <div class="deliv-meta">2025-12-12<br>세일즈덱 반영</div>
+    </div>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">공통패키지 비디오 상품 예상 노출 수 수정</div>
+        <div class="deliv-desc">상품팀 논의 결과 반영 후 최신 세일즈덱 배포. 노두식·라미정·심지영·홍혜진 AM 측 자료 일괄 업데이트</div>
+      </div>
+      <div class="deliv-meta">2025-12-19</div>
+    </div>
+
+    <h3 style="font-size:18px;margin:32px 0 16px;color:var(--text-soft);">C. Wiki · Knowledge Base (2026-04)</h3>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">🏂 <a href="https://wiki.navercorp.com/spaces/emc/pages/5138626534/FAQ+%EC%A0%95%EB%A6%AC" style="color:var(--brand);">FAQ 정리</a></div>
+        <div class="deliv-desc">
+          16개 섹션 종합 FAQ (판매 타임라인·가격 구조·제작가이드·IOC TRACK·JTBC 협업·트래픽 대응·앰부쉬·월드컵 체크리스트 등). 1,572건 × 4개 폴더 × 210+ 쓰레드 분석 기반. 월드컵 프로젝트 온보딩 자산.
+        </div>
+      </div>
+      <div class="deliv-meta">3회 버전 업데이트<br>Confluence emc/5138626534</div>
+    </div>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">📨 <a href="https://wiki.navercorp.com/spaces/emc/pages/5138627273/%EC%A3%BC%EC%9A%94+%EC%BB%A4%EB%AE%A4%EB%8B%88%EC%BC%80%EC%9D%B4%EC%85%98+%EA%B0%80%EC%9D%B4%EB%93%9C" style="color:var(--brand);">주요 커뮤니케이션 가이드</a></div>
+        <div class="deliv-desc">
+          5 Phase × 17개 템플릿. 금지·권장 워딩 표 (11개 상황), 부킹 지연·대기열·위약금·보상 라인·이슈 대응·앰부쉬 등 즉시 복사 가능한 메시지. 월드컵 AM 온보딩 교육 자료.
+        </div>
+      </div>
+      <div class="deliv-meta">2회 버전 업데이트<br>Confluence emc/5138627273</div>
+    </div>
+
+    <h3 style="font-size:18px;margin:32px 0 16px;color:var(--text-soft);">D. 프로젝트 회고 HTML 리포트</h3>
+
+    <div class="deliv">
+      <div class="deliv-main">
+        <div class="deliv-title">🏅 밀라노올림픽 광고세일즈 프로젝트 리포트 (종합)</div>
+        <div class="deliv-desc">프로젝트 전체 성과·광고주·실적·이슈 대응 기록. 28.1억 판매 / 213.6M 노출 / 578M 보상 집행 데이터 포함</div>
+      </div>
+      <div class="deliv-meta">2026-04-21<br>HTML</div>
+    </div>
+
+    <div class="deliv" style="border-color:rgba(168,85,247,0.3);">
+      <div class="deliv-main">
+        <div class="deliv-title" style="color:#c084fc;">👤 정효주 개인 기여 리포트 (본 문서)</div>
+        <div class="deliv-desc">5개 담당 영역(세일즈덱·운영 정보·외부 커뮤·데이터 관리·아젠다 발굴) 기여도 정리. 회고 및 이력 아카이빙</div>
+      </div>
+      <div class="deliv-meta">2026-04-21<br>HTML</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04. WORK LOG -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · Work Log</span>
+    <h2>근무 결과 리포트 기록</h2>
+    <p class="desc">
+      공식 결재 승인된 초과근무 기록 — 프로젝트 몰입 강도를 객관적으로 확인 가능한 공식 자료.
+    </p>
+
+    <div class="worklog">
+      <div class="worklog-date">2025-11-26 (수) · Remote · 7시간 25분 초과근무 · 장윤석 실장 승인</div>
+      <ul>
+        <li>올림픽 전용 패키지 세일즈덱 작성 + 피드백 회의</li>
+        <li>2025 Harmony Night 대행사 sync 회의 참여 + 실시간 커뮤니케이션</li>
+        <li>KA 주요 업종 담당자 대상 인터뷰 1회차 진행 + <strong>2026 아젠다 발굴</strong></li>
+      </ul>
+    </div>
+
+    <div class="worklog">
+      <div class="worklog-date">2025-12-24 (수) · Remote · 7시간 30분 초과근무 · 장윤석 실장 승인</div>
+      <ul>
+        <li>올림픽 세일즈덱 수정 및 배포, 상품팀과의 추가 논의</li>
+        <li><strong>대행사 DB 취득을 위한 기획사항 1차 공유</strong></li>
+      </ul>
+    </div>
+
+    <p style="margin-top:24px;font-size:13.5px;color:var(--text-dim);">
+      * 위는 결재 시스템에 기록된 공식 초과근무 건이며, 실 작업 시간은 이보다 많습니다. 세일즈덱 작업 시즌(2025-11 ~ 12)에 집중.
+    </p>
+  </div>
+</section>
+
+<!-- 05. KEY NUMBERS -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · Key Numbers</span>
+    <h2>기여 지표 요약</h2>
+    <p class="desc">
+      본 프로젝트에서의 개인 기여를 숫자로 표현.
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">SALES DECK</div>
+        <div class="kpi-value"><span style="background:var(--purple-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">11</span></div>
+        <div class="kpi-sub">v0.1 ~ v0.8 + 전용 3종</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">MAIL ANALYZED</div>
+        <div class="kpi-value"><span style="background:var(--purple-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1,572</span></div>
+        <div class="kpi-sub">4개 폴더 / 210+ 쓰레드</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">WIKI PAGES</div>
+        <div class="kpi-value">2</div>
+        <div class="kpi-sub">FAQ + 커뮤니케이션 가이드</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">WIKI SECTIONS</div>
+        <div class="kpi-value">23</div>
+        <div class="kpi-sub">FAQ 16 + 커뮤니케이션 7</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">MESSAGE TEMPLATES</div>
+        <div class="kpi-value">17</div>
+        <div class="kpi-sub">Phase별 즉시 복사 가능</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">KA INTERVIEWS</div>
+        <div class="kpi-value">1<span style="font-size:16px;color:var(--text-dim);">차</span></div>
+        <div class="kpi-sub">2026 아젠다 발굴</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">GAME TIMESLOTS</div>
+        <div class="kpi-value">17<span style="font-size:16px;color:var(--text-dim);">일</span></div>
+        <div class="kpi-sub">4개 종목 · 전 경기 매핑</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">EXCLUSIVE DECKS</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-sub">Samsung · OB · OMEGA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06. SKILLS -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">06 · Capabilities Applied</span>
+    <h2>투입 역량</h2>
+    <p class="desc">
+      프로젝트를 통해 활용·강화된 역량.
+    </p>
+
+    <div class="skill-grid">
+      <div class="skill">
+        <div class="skill-name">📊 프로덕트 가격 설계</div>
+        <p style="font-size:13px;color:var(--text-soft);">공시단가·할인율·쿼터 구조 테이블 작성, 패키지 간 밸런스 조정</p>
+        <div class="skill-tags">
+          <span class="skill-tag">pricing</span>
+          <span class="skill-tag">packaging</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">🎯 세일즈덱 스토리텔링</div>
+        <p style="font-size:13px;color:var(--text-soft);">올림픽 성과 → 패키지 제안 → Appendix 구성까지 일관된 흐름 설계</p>
+        <div class="skill-tags">
+          <span class="skill-tag">deck</span>
+          <span class="skill-tag">storytelling</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">🗓 운영 일정 정리</div>
+        <p style="font-size:13px;color:var(--text-soft);">주요 경기 시간대 매핑, 프라임 구좌 식별, 하이라이팅 기준 정립</p>
+        <div class="skill-tags">
+          <span class="skill-tag">operations</span>
+          <span class="skill-tag">scheduling</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">📨 대행사 대응</div>
+        <p style="font-size:13px;color:var(--text-soft);">공식 DL 운영, 대기열·완판 안내, 취소 처리 등 프론트라인 응대</p>
+        <div class="skill-tags">
+          <span class="skill-tag">crm</span>
+          <span class="skill-tag">frontline</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">📚 지식 자산화</div>
+        <p style="font-size:13px;color:var(--text-soft);">메일 쓰레드 분석 → FAQ 구조화 → 재사용 가능한 템플릿으로 정제</p>
+        <div class="skill-tags">
+          <span class="skill-tag">knowledge-mgmt</span>
+          <span class="skill-tag">wiki</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">🔎 데이터 마이닝</div>
+        <p style="font-size:13px;color:var(--text-soft);">nworks CLI · batch/chain · 페이징 버그 우회 설계. 1,572건 구조화</p>
+        <div class="skill-tags">
+          <span class="skill-tag">cli</span>
+          <span class="skill-tag">data-eng</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">🤝 이해관계자 협업</div>
+        <p style="font-size:13px;color:var(--text-soft);">실장·PM·AM·상품팀·프리미엄광고·JTBC 등 다층 협업 조율</p>
+        <div class="skill-tags">
+          <span class="skill-tag">stakeholder</span>
+          <span class="skill-tag">collaboration</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">🎨 문서 디자인</div>
+        <p style="font-size:13px;color:var(--text-soft);">Appendix 구조, 하이퍼링크 내비, 이미지 깨짐 사전 검수 등 편집 품질 관리</p>
+        <div class="skill-tags">
+          <span class="skill-tag">pptx</span>
+          <span class="skill-tag">editing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07. ONE PAGER -->
+<section class="tight">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>정효주</strong>는 2026 밀라노-코르티나 동계올림픽 광고세일즈 프로젝트에서 세일즈기획실 세일즈 플래닝 역할로 <span class="hl">판매 준비 단계의 자료 인프라</span>와 <span class="hl">운영 단계의 정보 정리</span>, 그리고 <span class="hl gold">프로젝트 회고 단계의 지식 자산화</span>를 담당했습니다.
+        세일즈덱은 v0.1부터 v0.8까지 <strong>8차 버전을 직접 설계·배포</strong>하고, 삼성·OB·OMEGA 광고주 전용 편집본 3종을 별도 제작했습니다. 올림픽 성과 페이지 수치 변경, 상세 프로덕트 가격 페이지 신설, Appendix 영역 정리까지 덱의 주요 변경점 대부분을 담당했습니다.
+        <strong>트리플크라운 주요 경기 시간대 매핑</strong>은 PM으로부터 "잘 정리해주셨다"는 피드백을 받았고 세일즈덱의 하이라이팅 구좌 확정 근거가 되었습니다.
+        라이브 이후 대행사 대응에서는 메조미디어 신협 대기열 취소, 나스미디어 전북도청 완판 안내 등 <span class="hl">공식 메일 계정을 통해 프론트라인 응대</span>를 병행했습니다.
+        프로젝트 회고 단계에서는 <span class="hl accent">4개월간 누적된 1,572건의 메일을 4개 폴더로 분할 분석</span>, 월드컵 등 후속 이벤트에서 바로 활용 가능한 <strong>FAQ 정리(16개 섹션)</strong>와 <strong>주요 커뮤니케이션 가이드(5 Phase × 17개 템플릿)</strong>를 Wiki에 자산화했습니다.
+        세일즈 AM이 광고주 접촉에 집중할 수 있도록 <strong>정보 인프라를 깔고, 운영 후에는 다음 시즌을 위한 기록을 남기는</strong> 역할. 4개월 프로젝트의 기록 담당자로서 기여했습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>정효주 · 세일즈 플래닝</strong>
+      NAVER 광고세일즈 · 세일즈기획실 · 2025.11 – 2026.04
+    </div>
+    <div style="text-align:right;">
+      <strong>Last updated</strong>
+      2026-04-21 · Based on 1,572 mails + 2 Wiki pages
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

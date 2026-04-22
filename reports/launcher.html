@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Launcher (shook) — 팀네이버 데스크탑 AI 어시스턴트 프로젝트 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #8b5cf6;
+    --brand-2: #00d4ff;
+    --brand-grad: linear-gradient(135deg, #8b5cf6 0%, #00d4ff 100%);
+    --accent: #00ffa3;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(139,92,246,0.14) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(0,212,255,0.1) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-shortcut {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 32px;
+    padding: 14px 22px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .hero-shortcut kbd {
+    display: inline-block;
+    padding: 3px 9px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--brand-2);
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.22);
+    color: #c4b5fd;
+  }
+  .hero-badge.cyan { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2); color: var(--brand-2); }
+  .hero-badge.gold { background: rgba(255,183,77,0.08); border-color: rgba(255,183,77,0.2); color: var(--warn); }
+  .hero-badge.green { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.2); color: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat {
+    background: var(--bg-2);
+    padding: 28px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(28px, 2.8vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--brand);
+  }
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 780px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(139,92,246,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .versions {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .version {
+    display: grid;
+    grid-template-columns: 140px 160px 1fr;
+    align-items: start;
+    gap: 32px;
+    padding: 28px 32px;
+    border-top: 1px solid var(--border);
+  }
+  .version:first-child { border-top: none; }
+  .version:hover { background: var(--surface-2); }
+  .version-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--brand);
+    background: rgba(139,92,246,0.1);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    letter-spacing: 0.02em;
+  }
+  .version-tag.major { background: rgba(0,212,255,0.12); color: #67e8f9; }
+  .version-tag.plan { background: rgba(255,183,77,0.12); color: var(--warn); }
+  .version-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .version-note { color: var(--text-soft); font-size: 14px; }
+  .version-note strong { color: var(--text); font-weight: 600; }
+
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .feature-head {
+    padding: 28px 32px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--brand-grad);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800; font-size: 18px;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .feature-head h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .feature-head p {
+    color: var(--text-soft);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .feature-body {
+    padding: 28px 32px;
+  }
+  .feature-body ul {
+    padding-left: 18px;
+    color: var(--text-soft);
+    font-size: 14.5px;
+  }
+  .feature-body ul li { margin-bottom: 8px; }
+  .feature-body ul li strong { color: var(--text); }
+
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+  }
+  .flow-step .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 700;
+    color: var(--brand);
+  }
+  .flow-step h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 10px 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .flow-step p { color: var(--text-soft); font-size: 13.5px; }
+  .flow-step .key {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 9px;
+    border-radius: 5px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--brand-2);
+    font-weight: 600;
+  }
+
+  .contrib {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(0,212,255,0.05) 100%);
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .contrib h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(139,92,246,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #c4b5fd;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li {
+    color: var(--text-soft);
+    font-size: 14.5px;
+    margin-bottom: 9px;
+    line-height: 1.6;
+  }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .perf-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  .perf-table th {
+    text-align: left;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .perf-table td {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    vertical-align: top;
+  }
+  .perf-table td strong { color: var(--text); }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(139,92,246,0.1) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p {
+    color: var(--text-soft);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 940px;
+  }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .version { grid-template-columns: 1fr; gap: 12px; }
+    .onepager { padding: 36px 28px; }
+    .contrib { padding: 32px 28px; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <span class="hero-tag"><span class="dot"></span>AI Application Tech · 2024 –</span>
+    <h1 class="hero-title">
+      <span>Launcher (shook).</span><br/>
+      데스크탑 하나에서 끝내는<br/>
+      팀네이버 업무 어시스턴트
+    </h1>
+    <p class="hero-sub">
+      로컬 파일, 인트라넷, Wiki, Slack, 커넥트, 사원 정보를 한 입력창에서 찾고, HCX로 바로 질문까지 이어지는 설치형 생산성 도구.
+      RAG Platform · HCX · SSO를 엮어 <strong style="color:var(--text);">업무의 연속성</strong>을 끊지 않는 것을 핵심 가치로 설계했습니다.
+    </p>
+    <div class="hero-shortcut">
+      <kbd>⌘</kbd> <span style="color:var(--text-dim);">+</span> <kbd>E</kbd>
+      <span style="margin-left:12px; color:var(--text-soft);">로 어디서든 호출</span>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge">B2B · Desktop Installer</span>
+      <span class="hero-badge cyan">RAG Platform 연동</span>
+      <span class="hero-badge cyan">HCX 연동</span>
+      <span class="hero-badge">SSO 진입점 일원화</span>
+      <span class="hero-badge gold">팀네이버 공개 예정</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">제품 형태</div>
+        <div class="stat-num"><span class="grad">Desktop</span></div>
+        <div class="stat-hint">설치형 · Mac / Windows</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">투입 리소스</div>
+        <div class="stat-num">4.7<span class="sm">MM</span></div>
+        <div class="stat-hint">기획 2.5 · 개발 2.2 (BE 1.0 / FE 1.2)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">현재 버전</div>
+        <div class="stat-num">v0.6</div>
+        <div class="stat-hint">HCX 기본 기능 탑재</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">검색 소스</div>
+        <div class="stat-num">5<span class="sm">+</span></div>
+        <div class="stat-hint">로컬 · Slack · Wiki · 커넥트 · 사원정보</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. OVERVIEW -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Product Vision</span>
+    <h2>왜 만드는가</h2>
+    <p class="desc">
+      업무 중 정보를 찾으려면 Wiki · Slack · 커넥트 · 로컬 폴더 · 인트라넷을 <strong style="color:var(--text);">각자의 창에서 각자의 방식으로</strong> 검색해야 합니다.
+      그 과정에서 "맥락이 끊긴다"는 문제를 한 단계에서 해결하는 것이 Launcher의 목표입니다.
+      여기에 HCX를 얹어 단순 검색을 넘어 <strong style="color:var(--text);">질문 → 답변 → 실행</strong>까지의 흐름을 데스크탑 키보드 단축키 하나로 완결시킵니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">VISION 01</div>
+        <h3>업무의 연속성 유지</h3>
+        <p>현재 작업창을 벗어나지 않고도 가장 빠른 경로로 원하는 정보에 도달. <strong>⌘+E</strong> 단축키 하나로 시작되는 검색 UX로 컨텍스트 스위칭 비용을 제거.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">VISION 02</div>
+        <h3>RAG × LLM 시나리오 강화</h3>
+        <p>RAG Platform과 연동해 사내 데이터를 기반으로 HCX가 답변. 단순 "검색된 문서 목록"이 아니라 <strong>질문에 대한 답</strong> 그 자체를 반환.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">VISION 03</div>
+        <h3>SaaS 진입점의 일원화</h3>
+        <p>SSO 기반으로 타 사내 SaaS로의 진입점을 하나로. Launcher가 곧 "팀네이버 업무 허브"가 되도록 설계.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. CORE FLOW -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Core Flow</span>
+    <h2>3 스텝 인터랙션</h2>
+    <p class="desc">
+      데스크탑의 어느 화면에 있든 <strong style="color:var(--text);">⌘+E</strong>로 호출 → 검색 또는 HCX 질문 → 답변/링크로 바로 연결. "앱을 켠다"는 단계 자체를 제거한 것이 가장 큰 UX 전환점입니다.
+    </p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">STEP 01</div>
+        <h4>호출</h4>
+        <p>어느 앱에 있든 단축키로 Launcher 호출. 현재 작업창을 가리지 않는 플로팅 UI.</p>
+        <span class="key">⌘ + E</span>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 02</div>
+        <h4>검색 또는 질문</h4>
+        <p>키워드를 입력하면 통합 검색. HCX 버튼을 누르면 같은 입력창이 질문창으로 전환.</p>
+        <span class="key">Keyword · Prompt</span>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 03</div>
+        <h4>결과 · 실행</h4>
+        <p>검색 결과는 원본 링크로 바로 점프. HCX 답변은 출처와 함께 인라인 노출, 후속 질문 가능.</p>
+        <span class="key">Open · Follow-up</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. FEATURES -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Product Features</span>
+    <h2>핵심 피처 3블록</h2>
+    <p class="desc">
+      통합 검색 · HCX 어시스턴트 · 생산성 유틸리티. 이 세 축이 Launcher를 구성하고, RAG Platform 연동으로 검색의 의미 수준을 한 단계 끌어올립니다.
+    </p>
+
+    <div class="g3">
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon">S</div>
+          <h3>통합 검색 (v0.5)</h3>
+          <p>흩어진 사내 데이터를 한 입력창으로</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>로컬 파일</strong> 검색 (파일명 · 폴더)</li>
+            <li><strong>Slack</strong> 메시지 · 파일 · 채널</li>
+            <li><strong>사내 Wiki</strong> 페이지 (Confluence)</li>
+            <li><strong>커넥트</strong> 업무 일정 · 게시물</li>
+            <li><strong>사원 정보</strong> 조직도 · 연락처</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#00d4ff 0%,#00ffa3 100%);">H</div>
+          <h3>HCX 어시스턴트 (v0.6)</h3>
+          <p>클릭 한 번으로 검색을 LLM 질문으로</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li>입력창 내 <strong>HCX 버튼 토글</strong>로 모드 전환</li>
+            <li>자연어 질문 → 답변 인라인 표시</li>
+            <li>후속 질문으로 대화 이어가기</li>
+            <li>기본 프롬프트 · 시스템 가이드 내장</li>
+            <li>향후 RAG Platform 결합으로 사내 지식 기반 답변 고도화 예정</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#ffb74d 0%,#ff5c7c 100%);">U</div>
+          <h3>생산성 유틸리티</h3>
+          <p>검색 외 업무의 간극을 메우는 도구들</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>뉴스피드</strong> (예정) — 구독 기반 업무 피드</li>
+            <li><strong>SSO 진입점</strong> — 사내 SaaS 단일 허브</li>
+            <li>Quick launch · 빈번 사용 문서 핀</li>
+            <li>향후 업무 유틸 지속 확장</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04. ROADMAP -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · Release Roadmap</span>
+    <h2>버전별 릴리즈 계획</h2>
+    <p class="desc">
+      초기 통합 검색 기반을 먼저 완성한 뒤, HCX · RAG Platform · 유틸을 단계별로 쌓아 올려 최종적으로 <strong style="color:var(--text);">팀네이버 전사 공개</strong>를 목표로 하고 있습니다.
+    </p>
+
+    <div class="versions">
+      <div class="version">
+        <span class="version-tag major">v0.5</span>
+        <span class="version-date">릴리즈 완료</span>
+        <div class="version-note">
+          <strong>통합 검색 MVP</strong> — 로컬 파일 · Slack · Wiki · 커넥트 · 사원정보 5개 소스 통합 검색.
+          ⌘+E 단축키 기반 플로팅 UI 완성.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag major">v0.6</span>
+        <span class="version-date">릴리즈 완료</span>
+        <div class="version-note">
+          <strong>HCX 기본 기능 탑재</strong> — HCX 버튼을 통한 LLM 질문 모드 제공.
+          검색창을 질문창으로 전환하는 UI 인터랙션 구축.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag plan">v0.7+</span>
+        <span class="version-date">예정</span>
+        <div class="version-note">
+          <strong>유틸리티 확장</strong> — 생산성 유틸 추가 (퀵 노트, 즐겨찾기 등), 검색 결과 UX 고도화.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag plan">v1.0</span>
+        <span class="version-date">예정</span>
+        <div class="version-note">
+          <strong>RAG Platform 연동 · 뉴스피드</strong> — 사내 데이터 기반 RAG 답변 제공, 업무 구독형 뉴스피드 추가.
+          HCX 응답이 단순 LLM 답변을 넘어 <strong>사내 지식 기반 인용 답변</strong>으로 진화.
+        </div>
+      </div>
+      <div class="version">
+        <span class="version-tag plan">Team NAVER GA</span>
+        <span class="version-date">예정 (연내 목표)</span>
+        <div class="version-note">
+          <strong>팀네이버 전사 공개</strong> — 사용성 · 안정성 강화, HCX 연동 시나리오 확장.
+          SSO를 통한 사내 SaaS 진입점 통합까지 완성.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. RESOURCES -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · Team &amp; Resources</span>
+    <h2>참여 조직 · 리소스 구성</h2>
+    <p class="desc">
+      AI Solution 조직의 기획과 뉴로서치/AI Solution의 개발 리소스가 결합된 교차 조직 프로젝트. 작은 리소스로 빠르게 제품을 조립하는 구조.
+    </p>
+
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>담당</th>
+          <th style="text-align:right;">투입 MM</th>
+          <th>역할</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>기획</strong></td>
+          <td>AI Solution</td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace;">2.5</td>
+          <td>프로덕트 방향 · UX · 피처 · 로드맵</td>
+        </tr>
+        <tr>
+          <td><strong>개발 (BE)</strong></td>
+          <td>뉴로서치</td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace;">1.0</td>
+          <td>검색 · RAG · HCX 연동 백엔드</td>
+        </tr>
+        <tr>
+          <td><strong>개발 (FE)</strong></td>
+          <td>AI Solution</td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace;">1.2</td>
+          <td>데스크탑 앱 UI · 인터랙션 · 설치 배포</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim);">합계</td>
+          <td style="color:var(--text-dim);">—</td>
+          <td style="text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--brand);">4.7</td>
+          <td style="color:var(--text-dim);">MM</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:24px; color:var(--text-dim); font-size:14px;">
+      <strong style="color:var(--text-soft);">사용 GPU:</strong> N/A — LLM 추론은 HCX API 호출, RAG 리트리벌은 RAG Platform에 위임.
+    </p>
+  </div>
+</section>
+
+<!-- 06. 정효주 기여 -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">06 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      AI Solution 조직의 기획 리소스로 Launcher 프로덕트 방향성 수립과 RAG Platform 연동 설계의 접점을 담당.
+      엔터프라이즈 서치 마켓 리서치에서 출발해, 피처 구조 · 사용자 여정 · 경쟁사 포지셔닝까지 프로덕트의 뼈대를 그렸습니다.
+    </p>
+
+    <div class="contrib">
+      <span class="role">Product Planner · AI Solution</span>
+      <h3>엔터프라이즈 서치 마켓 리서치 · 포지셔닝 설계</h3>
+      <ul>
+        <li><strong>글로벌 경쟁사 9곳 심층 분석</strong> — Mindbreeze · Lucidworks · Sinequa · Elastic · Coveo · Lucy · OpenText · Yext · EPAM의 비즈니스 전개 방식, Killer Feature, 브랜딩, 고객사, 경쟁 우위 포인트를 매트릭스로 비교.</li>
+        <li><strong>검색의 4단계 모델 정의</strong> — "검색 전 / 검색 / 검색 중 / 결과물" 각 단계별 단계 특성 · Painpoint · 경쟁사 매핑 · "우리가 잘할 수 있는 포인트"를 도출해 <strong>차별화 축을 데이터 연결 · Hallucination 없는 RAG · 결과 커스터마이징</strong>으로 정의.</li>
+        <li><strong>User Journey 2종 설계</strong> — "필요한 자료를 찾아서 공유/업무 진행" 여정과 "최소 시간으로 최대 생산성 결과물 제작" 여정을 각각 단계별 핵심행동 · 유저 혼란 수준(1~5) · Needs/Painpoint · 개선 포인트 · Feature로 풀어냄.</li>
+        <li><strong>피처 후보군 도출</strong> — search bookmark · one click search · 0-depth search · 1hr 인수인계 솔루션 · 원본 그대로 보여주는 인용 솔루션 · export customization 등 Launcher의 초기 피처 풀을 User Journey에서 역산.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">Cross-project Bridge</span>
+      <h3>RAG Platform × Launcher 연동 설계 브릿지</h3>
+      <ul>
+        <li><strong>RAG Platform을 Launcher의 HCX 시나리오 강화 재료로 정의</strong> — Launcher의 특장점 중 "기업내부 정보를 이용한 RAG Platform과의 연동을 통한 LLM 사용 시나리오 강화"를 핵심 포지션으로 프로덕트 문서에 확정.</li>
+        <li><strong>RAG 도입 시나리오 재사용</strong> — RAG Platform 기획에서 진행한 Nomura · 사내 ESS Orchestration 실험 결과를 Launcher의 HCX 답변 품질 기준으로 역-참조해 "단순 검색 결과 리스트"가 아닌 "인용 기반 답변"이 왜 필요한지의 근거 마련.</li>
+        <li><strong>HCX 답변 포맷 가이드</strong> — ESS Orchestration 개선 피드백에서 확인된 "넘버링 · 볼드 · 목차 구조"가 유용성에 미치는 영향을 Launcher의 HCX 답변 UX에도 동일하게 반영하도록 전달.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">Product Planning</span>
+      <h3>프로덕트 정의 · 로드맵 · 커뮤니케이션</h3>
+      <ul>
+        <li>Launcher의 제품 정의문 · 특장점 · 비전 3종 · B2B 사업 유형 · 주요 일정 계획 등 <strong>프로덕트 문서 전반 작성</strong>.</li>
+        <li>v0.5 → v0.6 → v1.0 → 팀네이버 GA의 <strong>단계별 릴리즈 플랜 수립</strong>, 각 버전에서 담을 기능 범위 정의.</li>
+        <li>뉴로서치(BE) · AI Solution(FE) 간 <strong>교차 조직 커뮤니케이션</strong>과 기획 R&amp;R 분배.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07. ONEPAGER -->
+<section class="tight">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>Launcher (shook)</strong>는 팀네이버 직원이 <strong>데스크탑 어디에서든 ⌘+E 한 번으로</strong> 사내 정보(로컬 파일 · Slack · Wiki · 커넥트 · 사원정보)를 찾고 HCX로 바로 질문까지 이어갈 수 있는 설치형 업무 어시스턴트입니다.
+        <span class="hl">v0.5 통합 검색 MVP</span>, <span class="hl">v0.6 HCX 기본 기능</span>이 릴리즈 완료되었고,
+        이어서 <strong>RAG Platform 연동 · 뉴스피드 · 팀네이버 전사 공개</strong>를 향해 로드맵을 확장 중.
+        AI Solution(기획 2.5MM · FE 1.2MM)과 뉴로서치(BE 1.0MM)가 결합된 <span class="hl">4.7MM의 슬림한 구성</span>으로,
+        정효주는 AI Solution의 기획 리소스로 <strong>엔터프라이즈 서치 마켓 리서치 · User Journey 설계 · 피처 도출 · RAG Platform 연동 포지셔닝</strong>을 담당했습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>Launcher (shook)</strong>
+      AI Application Tech · 2024 –
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence AIPLATFORM/2500938456
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

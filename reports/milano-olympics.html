@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026 밀라노-코르티나 동계올림픽 광고세일즈 — 프로젝트 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #00d4ff;
+    --brand-2: #6366f1;
+    --brand-grad: linear-gradient(135deg, #00d4ff 0%, #6366f1 100%);
+    --gold: #ffd700;
+    --gold-grad: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    --accent: #00ffa3;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(99,102,241,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(0,212,255,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 500px 400px at 50% 100%, rgba(255,215,0,0.06) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h1.hero-title span.gold {
+    background: var(--gold-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 720px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--brand);
+  }
+  .hero-badge.gold { background: rgba(255,215,0,0.08); border-color: rgba(255,215,0,0.25); color: var(--gold); }
+  .hero-badge.green { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.2); color: var(--accent); }
+  .hero-badge.warn { background: rgba(255,183,77,0.08); border-color: rgba(255,183,77,0.2); color: var(--warn); }
+
+  /* ===== STAT BAR ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat {
+    background: var(--bg-2);
+    padding: 28px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(28px, 2.8vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-num .gold {
+    background: var(--gold-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  /* ===== SECTION ===== */
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--brand);
+  }
+  .label.gold { color: var(--gold); }
+  .label.gold::before { background: var(--gold); }
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 780px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  /* ===== GRID ===== */
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .g5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-2px); }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .card p { font-size: 14.5px; color: var(--text-soft); line-height: 1.65; margin-top: 8px; }
+  .card ul { margin-top: 12px; padding-left: 18px; }
+  .card li { font-size: 13.5px; color: var(--text-soft); margin-bottom: 4px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--brand) 0%, var(--brand-2) 50%, var(--gold) 100%);
+    opacity: 0.4;
+  }
+  .tl-item {
+    position: relative;
+    padding: 20px 0 20px 28px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -30px; top: 26px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 3px solid var(--brand);
+  }
+  .tl-item.gold::before { border-color: var(--gold); }
+  .tl-item.accent::before { border-color: var(--accent); }
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--brand);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .tl-item.gold .tl-date { color: var(--gold); }
+  .tl-item.accent .tl-date { color: var(--accent); }
+  .tl-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .tl-desc { font-size: 14px; color: var(--text-soft); line-height: 1.6; }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  thead th {
+    background: var(--bg-2);
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  .num { font-family: 'JetBrains Mono', monospace; text-align: right; font-variant-numeric: tabular-nums; }
+  td strong { color: var(--text); font-weight: 600; }
+
+  /* ===== PACKAGE CARDS ===== */
+  .pkg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .pkg {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+  }
+  .pkg.gold { border-color: rgba(255,215,0,0.3); background: linear-gradient(180deg, rgba(255,215,0,0.05) 0%, var(--surface) 60%); }
+  .pkg.silver { border-color: rgba(192,192,192,0.3); }
+  .pkg.bronze { border-color: rgba(205,127,50,0.3); }
+  .pkg.video { border-color: rgba(99,102,241,0.3); }
+  .pkg-tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .pkg.gold .pkg-tier { color: var(--gold); }
+  .pkg-price {
+    font-size: 32px; font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 8px 0 4px;
+  }
+  .pkg-discount {
+    font-size: 13px; color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .pkg-quota {
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: var(--bg-2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-soft);
+  }
+  .pkg-quota strong { color: var(--text); font-weight: 700; }
+
+  /* ===== ADVERTISER LIST ===== */
+  .adv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .adv {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .adv-tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 6px;
+    align-self: flex-start;
+    background: rgba(255,255,255,0.04);
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .adv-tier.exclusive { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .adv-tier.gold { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .adv-tier.tc { background: rgba(255,92,124,0.12); color: var(--danger); }
+  .adv-tier.bronze { background: rgba(205,127,50,0.15); color: #cd7f32; }
+  .adv-tier.video { background: rgba(99,102,241,0.12); color: var(--brand-2); }
+  .adv-tier.dbcrown { background: rgba(0,255,163,0.1); color: var(--accent); }
+  .adv-name { font-size: 17px; font-weight: 700; }
+  .adv-amount { font-size: 14px; color: var(--text-soft); font-family: 'JetBrains Mono', monospace; }
+  .adv-meta { font-size: 12px; color: var(--text-dim); }
+
+  /* ===== METRIC BAR ===== */
+  .metric-bar {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .metric-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .metric-value { font-size: 22px; font-weight: 800; font-family: 'JetBrains Mono', monospace; letter-spacing: -0.02em; }
+
+  /* ===== ISSUE CARD ===== */
+  .issue {
+    background: linear-gradient(135deg, rgba(255,92,124,0.05) 0%, rgba(255,183,77,0.05) 100%);
+    border: 1px solid rgba(255,92,124,0.2);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .issue-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--danger);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .issue h3 { color: var(--text); margin-bottom: 14px; }
+  .issue-body { color: var(--text-soft); line-height: 1.7; font-size: 14.5px; }
+  .issue-body strong { color: var(--text); }
+  .issue-flow {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; margin-top: 20px;
+  }
+  .issue-step {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    position: relative;
+  }
+  .issue-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    color: var(--warn);
+    margin-bottom: 6px;
+  }
+
+  /* ===== HIGHLIGHT ===== */
+  .hl {
+    padding: 2px 8px;
+    background: rgba(0,212,255,0.12);
+    border-radius: 6px;
+    color: var(--brand);
+    font-weight: 600;
+  }
+  .hl.gold { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .hl.accent { background: rgba(0,255,163,0.12); color: var(--accent); }
+
+  /* ===== ONEPAGER ===== */
+  .onepager {
+    background: linear-gradient(135deg, rgba(0,212,255,0.04) 0%, rgba(99,102,241,0.04) 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .onepager::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+  }
+  .onepager p { font-size: 16px; line-height: 1.8; color: var(--text-soft); max-width: 100%; position: relative; z-index: 2; margin-top: 20px; }
+  .onepager p strong { color: var(--text); font-weight: 700; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0;
+    background: var(--bg-2);
+  }
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text-soft); display: block; margin-bottom: 4px; font-weight: 600; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .issue-flow { grid-template-columns: 1fr; }
+    section { padding: 80px 0; }
+    .onepager { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="hero-tag"><span class="dot"></span>Project Retrospective · 2025.11 – 2026.02</span>
+    <h1 class="hero-title">
+      2026 밀라노-코르티나<br>
+      동계올림픽 <span class="gold">광고세일즈</span> 프로젝트
+    </h1>
+    <p class="hero-sub">
+      네이버가 단독 생중계한 동계올림픽의 프리미엄 광고 패키지 세일즈 프로젝트. IOC 공식 스폰서 Exclusive 구성부터 일반 판매, 실시간 트래픽 미달 대응까지 4개월에 걸친 전사 협업의 기록.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge gold">공식 스폰서십 패키지</span>
+      <span class="hero-badge">GOLD · SILVER · BRONZE · VIDEO · TRIPLE CROWN</span>
+      <span class="hero-badge green">총 22개 광고주 판매</span>
+      <span class="hero-badge warn">IOC · KSOC · JTBC 협업</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">총 판매액</div>
+        <div class="stat-num"><span class="gold">28.1</span><span class="sm">억원+</span></div>
+        <div class="stat-hint">완판된 구좌 기준</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">판매 광고주</div>
+        <div class="stat-num"><span class="grad">22</span><span class="sm">개사</span></div>
+        <div class="stat-hint">대기열 추가 24개사</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">총 노출</div>
+        <div class="stat-num">213.6<span class="sm">M+</span></div>
+        <div class="stat-hint">메인 광고상품 4종 합계</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">대응 메일</div>
+        <div class="stat-num">1,572<span class="sm">건</span></div>
+        <div class="stat-hint">4개월 dl_milano2026 기준</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01. PROJECT OVERVIEW -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Project Overview</span>
+    <h2>프로젝트 배경·목표</h2>
+    <p class="desc">
+      2026 밀라노-코르티나 동계올림픽은 네이버가 온라인 플랫폼 중 단독 생중계를 확보한 첫 하계·동계 메가 스포츠 이벤트. JTBC가 방송 중계 단독 파트너로 확정되면서, "동계올림픽 시청 = 네이버 or JTBC" 구도가 만들어졌습니다. 이 포지션을 살린 프리미엄 광고 패키지를 설계·판매하고, 17일간의 집중 운영 기간에 최대 가치를 전달하는 것이 프로젝트의 목표였습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">OBJECTIVE 01</div>
+        <h3>프리미엄 단독 포지션 수익화</h3>
+        <p>네이버 단독 생중계 + JTBC 방송 중계의 이중 채널을 통합한 스폰서십 패키지 설계. 공시단가 대비 평균 30%+ 할인으로 대형 광고주 유치 극대화.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">OBJECTIVE 02</div>
+        <h3>IOC 공식 파트너 별도 대응</h3>
+        <p>IOC TOP Sponsor 5개사(삼성·에어비앤비·오비맥주·오메가·알리바바) Exclusive 패키지 별도 설계. IOC/KSOC 심의·TRACK 승인 절차 동시 운영.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">OBJECTIVE 03</div>
+        <h3>앰부쉬·일반 광고주 병행 판매</h3>
+        <p>비공식 스폰서(신한금융지주 등) 앰부쉬 캠페인도 일반 패키지로 수용. IOC 전용 지면은 차단, 일반 지면은 선착순 공정 판매.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. SALES TIMELINE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Sales Timeline</span>
+    <h2>판매 타임라인</h2>
+    <p class="desc">
+      2025-11 TF 킥오프부터 2026-02-27 대회 종료 직후 대응까지 — 4개월간 5개 Phase로 진행된 판매·운영 사이클.
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025-11 초</div>
+        <div class="tl-title">Phase 1 — TF 킥오프 · 패키지 기획</div>
+        <div class="tl-desc">올림픽 TF 구성, JTBC 협업 아이데이션, 에어비앤비 독점 제안 초안(3억/300M view), 세일즈 패키지 v0.1 배포. 영상 최저 단가 4천만원으로 상향.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-11-10 ~ 11-28</div>
+        <div class="tl-title">특수 광고주 제안·세일즈덱 v0.1 작성</div>
+        <div class="tl-desc">오메가 카운트다운 상품 기획 (IOC 공식 스폰서 워치 브랜드 한정 독점). 세일즈덱 v0.1 내부 공유 (피드백 반영, 상세 프로덕트 가격 페이지 추가). 올림픽 성과 페이지 삼성 → 베이징 올림픽 전체 수치로 변경.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-12</div>
+        <div class="tl-title">주요 경기 시간대 공유 — 트리플크라운 매핑</div>
+        <div class="tl-desc">쇼트트랙·스피드스케이팅·컬링·피겨스케이팅 4개 종목 일자별 주요경기 시간대 정리. 하이라이팅 구좌(프라임 시간대) 확정 후 세일즈덱 반영.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-15</div>
+        <div class="tl-title">세일즈덱 v0.8 배포 — 광고주 전용 버전</div>
+        <div class="tl-desc">Appendix 영역별 정리, 삼성/OB/오메가 광고주 전용 버전 분리. 중복 지면 제거, 하이퍼링크 구성 (Appendix ↔ 패키지 장표 연결).</div>
+      </div>
+      <div class="tl-item gold">
+        <div class="tl-date">2025-12-19 ~ 12-28</div>
+        <div class="tl-title">Phase 2 — IOC 스폰서사 선제안 기간</div>
+        <div class="tl-desc">삼성·오메가·에어비앤비·버드와이저·알리바바 등 IOC 공식 파트너 대상 Exclusive 패키지 선제안. 코카콜라·피앤지 거절 / 삼성·에어비앤비·오비맥주·오메가·알리바바 구매 완료.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-12-24</div>
+        <div class="tl-title">삼성 Exclusive 미세조정 · 오비맥주 Silver 확정</div>
+        <div class="tl-desc">삼성: D-DAY 광고(1.5억) 제외 → 트리플크라운 2구좌 추가 (같은 날 4시간 집행, 2시간+인터벌+2시간). OB: 주류 브랜드 제한 지면 조정 후 SILVER 3억 확정 (월드컵에 비중 이동).</div>
+      </div>
+      <div class="tl-item gold">
+        <div class="tl-date">2025-12-29 10:00</div>
+        <div class="tl-title">Phase 3 — 일반 광고주 판매 개시</div>
+        <div class="tl-desc">IOC 선제안 마감 후 일반 선착순 판매 시작. 채널/EC/업종 컨설팅 AM 루트로 수요 접수. 24일간 접수된 광고주 대기 리스트 24개사 관리.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-01-07 ~ 01-08</div>
+        <div class="tl-title">G/S/B 수요 1차 취합 · NOSP 공식 공지</div>
+        <div class="tl-desc">내부 광고세일즈 대상 1차 구매수요 취합(~15시 마감). 트리플크라운 2월 최대 4개 구좌 합의. 1/8 14:00 NOSP 공지 업로드, 공식 상품소개서 PDF 링크 활성화.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-01-12 ~ 01-22</div>
+        <div class="tl-title">Phase 4 — NOSP 캠페인 생성 · 광고라인 세팅</div>
+        <div class="tl-desc">대행사별 캠페인 대량 생성, SA 라인번호 매핑. 광고주-브랜드 레벨 구분(예: 동화약품 → 화이투벤/판콜 차주 확정). 1/22까지 위약금 없이 취소 가능.</div>
+      </div>
+      <div class="tl-item accent">
+        <div class="tl-date">2026-02-05 ~ 02-23</div>
+        <div class="tl-title">Phase 5 — 라이브 운영</div>
+        <div class="tl-desc">동영상 상품 2/5 노출 시작, DA 상품 2/6 시작. 카운트다운은 경기 방송 시작 24시간 전 노출. 17일간 전 광고주 동시 집행.</div>
+      </div>
+      <div class="tl-item accent">
+        <div class="tl-date">2026-02-11 ~ 02-23</div>
+        <div class="tl-title">트래픽 미달 대응 · 추가 재원 투입</div>
+        <div class="tl-desc">치지직 유입 편중으로 본 사이트 노출 예상 대비 30~50%. 2/13 00시부터 패키지 등급별 추가 상품 투입(스페셜DA·타임보드·피드·인스트림 등). 종료 후 7일 내(~3/2) 스페셜DA 연장 옵션.</div>
+      </div>
+      <div class="tl-item accent">
+        <div class="tl-date">2026-02-23 ~ 02-27</div>
+        <div class="tl-title">대회 종료 · 보상안 마무리</div>
+        <div class="tl-desc">GFA 기회비용 환산 578.3M. 22개 광고주 × 30개 보상 구좌 집행 완료. 숏폼·범퍼 지표 월말까지 취합하여 개별 리포트 발송.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. PACKAGE STRUCTURE -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Package Structure</span>
+    <h2>패키지 구성 · 가격 · 할인율</h2>
+    <p class="desc">
+      공통 패키지 4종(GOLD / SILVER / BRONZE / VIDEO) + IOC 공식 파트너 Exclusive 패키지로 이원화. 공시단가 대비 평균 <strong>32% 할인</strong>으로 설계.
+    </p>
+
+    <div class="pkg-grid">
+      <div class="pkg gold">
+        <div class="pkg-tier">GOLD</div>
+        <div class="pkg-price">5억<span style="font-size:15px;color:var(--text-dim);"> / 구좌</span></div>
+        <div class="pkg-discount">공시 7.75억 · −35%</div>
+        <div class="pkg-quota"><strong>쿼터 1구좌</strong> · 업비트 확보</div>
+      </div>
+      <div class="pkg silver">
+        <div class="pkg-tier">SILVER</div>
+        <div class="pkg-price">3억<span style="font-size:15px;color:var(--text-dim);"> / 구좌</span></div>
+        <div class="pkg-discount">공시 4.4억 · −32%</div>
+        <div class="pkg-quota"><strong>쿼터 3구좌</strong></div>
+      </div>
+      <div class="pkg bronze">
+        <div class="pkg-tier">BRONZE</div>
+        <div class="pkg-price">1억<span style="font-size:15px;color:var(--text-dim);"> / 구좌</span></div>
+        <div class="pkg-discount">공시 1.45억 · −31%</div>
+        <div class="pkg-quota"><strong>쿼터 3구좌</strong> · 르노/알리바바/DB/NHN 완판</div>
+      </div>
+      <div class="pkg video">
+        <div class="pkg-tier">VIDEO ONLY</div>
+        <div class="pkg-price">4천<span style="font-size:15px;color:var(--text-dim);"> / 구좌</span></div>
+        <div class="pkg-discount">공시 4천 · 0%</div>
+        <div class="pkg-quota"><strong>쿼터 5구좌</strong> · 최저 단가 상향 (기존 3천→4천)</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:56px;font-size:22px;">IOC 공식 파트너 Exclusive 패키지</h3>
+    <p style="color:var(--text-soft);margin-bottom:24px;font-size:14.5px;">공식 파트너 전용 프리미엄 지면 + 기존 공통 패키지 구성을 결합. 개별 광고주 전용 세일즈덱 제작.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>광고주</th>
+          <th>등급</th>
+          <th style="text-align:right;">판매가</th>
+          <th style="text-align:right;">공시단가</th>
+          <th style="text-align:right;">할인율</th>
+          <th>프리미엄 추가 상품</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>삼성전자</strong></td><td>Exclusive Gold</td><td class="num">5억</td><td class="num">—</td><td class="num">—</td><td>트리플크라운 2구좌 (4시간 2회 분산) · 치지직 메인브랜딩</td></tr>
+        <tr><td><strong>에어비앤비</strong></td><td>Exclusive Silver</td><td class="num">3억</td><td class="num">3.4억</td><td class="num">−12%</td><td>클립(범퍼) 독점 3억 + 동영상 4천 (eCPM 10,000 × 3,000만 view)</td></tr>
+        <tr><td><strong>오비맥주(카스)</strong></td><td>Exclusive Silver</td><td class="num">3억</td><td class="num">4.4억</td><td class="num">−32%</td><td>주류 브랜드 제한 지면 조정 적용</td></tr>
+        <tr><td><strong>오메가</strong></td><td>Exclusive Bronze</td><td class="num">1억</td><td class="num">1.6억</td><td class="num">−38%</td><td>카운트다운 D-DAY 독점 (IOC 스폰서 워치 브랜드 한정)</td></tr>
+        <tr><td><strong>알리바바</strong></td><td>Exclusive Bronze</td><td class="num">1억</td><td class="num">—</td><td class="num">—</td><td>특집페이지 3종(스페셜템플릿/이슈픽/브랜드트렌드스토리) + 피드 1st + 영상형</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 04. ADVERTISERS -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · Advertisers</span>
+    <h2>판매 광고주 전체 (22개사)</h2>
+    <p class="desc">
+      IOC 공식 파트너 Exclusive 5개 + 공통 GOLD/SILVER/BRONZE/VIDEO 17개 = <strong>총 22개 광고주 판매 완료</strong>. 대기열 24개사 별도 관리.
+    </p>
+
+    <div class="adv-grid">
+      <div class="adv"><span class="adv-tier exclusive">Excl.</span><span class="adv-name">삼성전자</span><span class="adv-amount">5억 / 별도패키지</span><span class="adv-meta">이종철 AM · 펑타이 · SA1557774</span></div>
+      <div class="adv"><span class="adv-tier exclusive">Excl.</span><span class="adv-name">에어비앤비</span><span class="adv-amount">3억 / 별도패키지</span><span class="adv-meta">최유정 AM · ESSENCE · SA1557071</span></div>
+      <div class="adv"><span class="adv-tier exclusive">Excl.</span><span class="adv-name">오비맥주(카스)</span><span class="adv-amount">3억 / 별도패키지</span><span class="adv-meta">노두식 AM · SA1557462</span></div>
+      <div class="adv"><span class="adv-tier exclusive">Excl.</span><span class="adv-name">오메가</span><span class="adv-amount">5천 / 별도패키지</span><span class="adv-meta">주리 AM · 메조미디어 · SA1557426</span></div>
+      <div class="adv"><span class="adv-tier gold">GOLD</span><span class="adv-name">업비트 (두나무)</span><span class="adv-amount">5억 / GOLD</span><span class="adv-meta">이승욱 AM · 1557466 · 치지직 FV 3일 독점</span></div>
+      <div class="adv"><span class="adv-tier tc">TC</span><span class="adv-name">나이키</span><span class="adv-amount">2억 / 트리플크라운</span><span class="adv-meta">김다혜 AM · 1557451 · 2/5~2/6 12-14시</span></div>
+      <div class="adv"><span class="adv-tier bronze">BRZ</span><span class="adv-name">르노코리아</span><span class="adv-amount">1억 / BRONZE</span><span class="adv-meta">홍혜진 AM · 퍼블리시스 · 1557441</span></div>
+      <div class="adv"><span class="adv-tier bronze">BRZ</span><span class="adv-name">알리바바</span><span class="adv-amount">1억 / BRONZE</span><span class="adv-meta">김규동 AM · PTBWA · 1557757</span></div>
+      <div class="adv"><span class="adv-tier bronze">BRZ</span><span class="adv-name">DB손해보험</span><span class="adv-amount">1억 / BRONZE</span><span class="adv-meta">채한승 AM · 메조미디어 · 1557554</span></div>
+      <div class="adv"><span class="adv-tier bronze">BRZ</span><span class="adv-name">엔에이치엔(어비스디아)</span><span class="adv-amount">1억 / BRONZE</span><span class="adv-meta">장윤우 AM · 디플랜360 · 1557951</span></div>
+      <div class="adv"><span class="adv-tier dbcrown">DBC</span><span class="adv-name">바디프랜드</span><span class="adv-amount">2억 / 더블크라운 별도</span><span class="adv-meta">박형준 AM · 메조미디어 · 1557966</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">폭스바겐-아우디</span><span class="adv-amount">3천 / VIDEO</span><span class="adv-meta">홍혜진 AM · 인크로스 · 1556101</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">기아자동차 ×3</span><span class="adv-amount">9천 / VIDEO ×3</span><span class="adv-meta">홍혜진 AM · 나스미디어·디플랜360</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">애플코리아</span><span class="adv-amount">3천 / VIDEO</span><span class="adv-meta">이종철 AM · 메조미디어 · 1556890</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">워너브러더스코리아</span><span class="adv-amount">3천 / VIDEO</span><span class="adv-meta">주리 AM · 메조미디어 · 1557440</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">바이포엠</span><span class="adv-amount">3천 / VIDEO</span><span class="adv-meta">주리 AM · 메조미디어 · 1557437</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">넷플릭스</span><span class="adv-amount">3천 / VIDEO</span><span class="adv-meta">정선지 AM · 메조미디어 · 1557435</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">동아제약 (판피린·콘드로이틴)</span><span class="adv-amount">3천 / VIDEO</span><span class="adv-meta">장윤우 AM · 인크로스 · 1557430</span></div>
+      <div class="adv"><span class="adv-tier video">VIDEO</span><span class="adv-name">동화약품 (화이투벤·판콜) ×2</span><span class="adv-amount">6천 / VIDEO ×2</span><span class="adv-meta">장윤우 AM · 디플랜360 · 1557404/5</span></div>
+    </div>
+
+    <div style="margin-top:48px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;">
+      <h3 style="font-size:16px;">대기열 광고주 (외부 공유 X · 24개사)</h3>
+      <p style="color:var(--text-soft);font-size:14px;line-height:1.8;margin-top:10px;">
+        바디프랜드 · 베스트슬립 · 우리금융지주 · 지엠아시아퍼시픽 · 미래에셋증권 · KB국민카드 · 미래에셋생명보험 · KT · 신한금융지주 · 전국은행연합회 · 폭스바겐 · 엔에이치엔 · 코웨이 · 청호나이스 · 새마을금고중앙회 · 아이더스에프앤비(푸라닭치킨) · 신용협동조합중앙회 · TCL · 유니버셜픽쳐스(휴민트) · 우리은행(취소)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 05. PERFORMANCE -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · Performance Results</span>
+    <h2>메인 광고상품 집행 성과</h2>
+    <p class="desc">
+      4개 주요 DA 광고상품(트리플크라운·더블크라운·타임보드·PC전면) 기준 총 <strong>213.6M+ 노출</strong>, <strong>946K 클릭</strong>. 트리플크라운 CTR 0.88% 최고 성과.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>광고상품</th>
+          <th style="text-align:right;">구좌수</th>
+          <th style="text-align:right;">노출수</th>
+          <th style="text-align:right;">클릭수</th>
+          <th style="text-align:right;">CTR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>트리플크라운</strong></td><td class="num">8</td><td class="num">80,714,877</td><td class="num">706,429</td><td class="num" style="color:var(--accent);">0.88%</td></tr>
+        <tr><td>더블크라운</td><td class="num">8</td><td class="num">42,738,917</td><td class="num">99,344</td><td class="num">0.23%</td></tr>
+        <tr><td>타임보드</td><td class="num">7</td><td class="num">39,225,719</td><td class="num">66,942</td><td class="num">0.17%</td></tr>
+        <tr><td>PC전면</td><td class="num">16</td><td class="num">50,984,327</td><td class="num">73,935</td><td class="num">0.15%</td></tr>
+        <tr style="background:rgba(0,212,255,0.04);"><td><strong>합계</strong></td><td class="num"><strong>39</strong></td><td class="num"><strong>213,663,840</strong></td><td class="num"><strong>946,650</strong></td><td class="num"><strong>0.44%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:56px;font-size:22px;">광고주별 Top 트리플크라운 CTR</h3>
+    <table style="margin-top:16px;">
+      <thead>
+        <tr>
+          <th>광고주</th>
+          <th>지면</th>
+          <th style="text-align:right;">노출수</th>
+          <th style="text-align:right;">클릭수</th>
+          <th style="text-align:right;">CTR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>카스 (오비맥주)</strong></td><td>스페셜영역</td><td class="num">17,443,943</td><td class="num">196,423</td><td class="num" style="color:var(--accent);font-weight:700;">1.12%</td></tr>
+        <tr><td>나이키</td><td>스페셜영역</td><td class="num">20,214,250</td><td class="num">182,477</td><td class="num" style="color:var(--accent);">0.90%</td></tr>
+        <tr><td>삼성전자</td><td>스페셜영역</td><td class="num">17,163,478</td><td class="num">145,838</td><td class="num">0.85%</td></tr>
+        <tr><td>업비트</td><td>스페셜영역</td><td class="num">17,953,455</td><td class="num">157,260</td><td class="num">0.88%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 06. ISSUE RESPONSE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">06 · Issue Response</span>
+    <h2>트래픽 미달 국면 대응</h2>
+    <p class="desc">
+      라이브 시작 후 치지직으로 유입 편중 확인(2~10배 격차) — 특집페이지·영상 노출이 예상 대비 30~50%. "보상/미달" 워딩 대신 "노출 극대화 지원" 프레이밍으로 광고주 케어.
+    </p>
+
+    <div class="metric-bar">
+      <div class="metric"><span class="metric-label">보상 집행 광고주</span><span class="metric-value">22개</span></div>
+      <div class="metric"><span class="metric-label">제공 구좌</span><span class="metric-value">30개</span></div>
+      <div class="metric"><span class="metric-label">피드 보상 (NDP)</span><span class="metric-value" style="color:var(--brand);">388M</span></div>
+      <div class="metric"><span class="metric-label">통합 아웃스트림 (NDP)</span><span class="metric-value" style="color:var(--brand);">262M</span></div>
+      <div class="metric"><span class="metric-label">스페셜DA (NDP)</span><span class="metric-value" style="color:var(--brand);">203M</span></div>
+      <div class="metric"><span class="metric-label">GFA 기회비용 환산</span><span class="metric-value" style="color:var(--gold);">578.3M</span></div>
+    </div>
+
+    <h3 style="margin-top:32px;font-size:20px;">등급별 추가 제공 매트릭스</h3>
+    <table style="margin-top:16px;">
+      <thead>
+        <tr>
+          <th>패키지</th>
+          <th>추가 제공</th>
+          <th>운영 기간</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>실버/골드/별도</strong></td><td>스페셜DA 2구좌 + 영상(스포츠·연예 피드 1st, 통합아웃스트림)</td><td>2/13 00시 ~ 올림픽 종료</td></tr>
+        <tr><td>브론즈</td><td>타임보드 2구좌 + 영상 (초안의 스페셜DA → 타임보드 변경)</td><td>2/13 00시 ~ 올림픽 종료</td></tr>
+        <tr><td>동영상</td><td>영상 인벤토리만 (약 2,000만원 value)</td><td>2/13 00시 ~ 올림픽 종료</td></tr>
+        <tr><td>트리플크라운</td><td>트크 1구좌 추가</td><td>2/13 00시 ~ 올림픽 종료</td></tr>
+        <tr><td>더블크라운</td><td>스페셜DA 2구좌 추가</td><td>2/13 00시 ~ 올림픽 종료</td></tr>
+        <tr><td>연장 옵션</td><td>스페셜DA만 <strong>올림픽 종료 후 7일(2/24~3/2)</strong> 내 활용 가능</td><td>카스 등 주차별 도달 목표 있는 광고주 요청 반영</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:48px;font-size:20px;">커뮤니케이션 프레이밍 (워딩 가이드)</h3>
+    <div class="g2" style="margin-top:16px;">
+      <div class="card" style="border-color:rgba(255,92,124,0.2);">
+        <div class="card-num" style="color:var(--danger);">🚫 금지 워딩</div>
+        <ul>
+          <li>"보상" / "미달" / "부족해서 드리는 것"</li>
+          <li>"사과드리며 ~"</li>
+          <li>"지연되어 죄송"</li>
+          <li>"구좌 X개 중 Y개 남음"</li>
+          <li>"타 광고주 대비 ~"</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(0,255,163,0.2);">
+        <div class="card-num" style="color:var(--accent);">✅ 권장 워딩</div>
+        <ul>
+          <li>"노출 극대화를 위한 추가 상품 제공"</li>
+          <li>"별도 비용 청구 없이 선제적으로 지원"</li>
+          <li>"순차적으로 부킹 진행 중, 금주 내 처리 예정"</li>
+          <li>"내부 보안 이슈로 구좌 수 공유 어려움"</li>
+          <li>"순위 변동 이슈로 개별 순번 안내 어려움"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07. CRISIS CASE -->
+<section>
+  <div class="wrap">
+    <span class="label">07 · Crisis Case</span>
+    <h2>이슈 사례 · 에어비앤비 숏폼 범퍼</h2>
+    <p class="desc">
+      판매 후 인벤토리 구조 변경으로 광고주가 계약 파기를 요청한 대표 사례. 계약 유지 + 대안 재원 추가 제공으로 수용 완료.
+    </p>
+
+    <div class="issue">
+      <div class="issue-label">ISSUE · 2026-01-15</div>
+      <h3>에어비앤비 클립 범퍼 SOV 희석 이슈</h3>
+      <div class="issue-body">
+        <p style="margin-bottom:14px;">
+          <strong>기존 계획</strong>: 네이버 공식 채널 업로드 클립(300~500개)에 1.5초 범퍼 이미지 광고 · 3억 (eCPM 10,000 × 3,000만 view).
+          <br><strong>변동 발생</strong>: JTBC 업로드 클립(1,700개) + 크리에이터 업로드 클립(2,000개) 추가 업로드 예정으로 <strong>SOV 희석</strong>.
+        </p>
+        <p>
+          범퍼 삽입 가능 범위: 네이버 클립 ✅ / JTBC 클립 🔵(협의 가능, 단 JTBC 본인 로고 운영 중이라 광고주 로고 반영 불가) / 크리에이터 클립 ❌(재편집 가공물).
+        </p>
+
+        <div class="issue-flow">
+          <div class="issue-step">
+            <div class="issue-step-num">STEP 01</div>
+            <strong>긴급 내부 협의</strong><br><br>
+            스포츠 제휴·치지직 BM·크리에이터제휴 부서 소집 → JTBC 측 협의 루트 가동.
+          </div>
+          <div class="issue-step">
+            <div class="issue-step-num">STEP 02</div>
+            <strong>JTBC 협의 성공</strong><br><br>
+            JTBC Sports 클립 계정 내 <strong>1.5초 이미지 광고 삽입 가능</strong> 회신 확보. 3종 운영도 수용 수준에서 가능.
+          </div>
+          <div class="issue-step">
+            <div class="issue-step-num">STEP 03</div>
+            <strong>대안 제시 + 추가 재원</strong><br><br>
+            JTBC 클립 범퍼 + <strong>가로형 '로고 상품' 추가 제공</strong> (광고주 선호도 높았던 보류 상품) → 에어비앤비 수용 완료.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px;font-size:20px;">재사용 가능 원칙</h3>
+    <div class="g3" style="margin-top:16px;">
+      <div class="card">
+        <div class="card-num">PRINCIPLE 01</div>
+        <p><strong>계약 파기 대신 대안 우선</strong> — 판매 후 인벤토리 변경 발생 시 '계약 변경' 대신 '기존 유지 + 추가 재원' 방향 선제 검토.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">PRINCIPLE 02</div>
+        <p><strong>보류 상품 풀 관리</strong> — 광고주 제안 단계에서 선호 높았던 보류 상품 리스트 내부 관리. 위기 상황의 보완재로 활용.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">PRINCIPLE 03</div>
+        <p><strong>권리사 협의 루트 사전 확보</strong> — JTBC 등 방송 권리사 측 협의 창구·담당자 맵 사전 구축. 긴급 상황에 즉시 가동.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08. JTBC COLLABORATION -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">08 · JTBC Partnership</span>
+    <h2>JTBC 공동 세일즈 패키지</h2>
+    <p class="desc">
+      네이버가 단독 생중계 플랫폼 · JTBC가 유일 방송사였기에 성립한 상호 결합 상품. 광고 · 콘텐츠 · 가상광고를 묶은 통합 패키지.
+    </p>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-num">01 · CHZZK STREAMING</div>
+        <h3>치지직 실시간 스트리밍</h3>
+        <p>JTBC 동계올림픽 중계화면을 치지직에서 실시간 스트리밍. <strong>JTBC 중간광고 그대로 노출</strong> (치지직 별도 컨트롤 없음). 동계올림픽 단독탭 생성, 스트리머 '같이보기' 채널까지 추천 확장.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">02 · JTBC 가상광고</div>
+        <h3>JTBC 측 제공 재원</h3>
+        <p>올림픽 관련 치지직/네이버 가상광고 제작 및 2월 폐막 전까지 <strong>총 32회(약 3억 Value) 노출</strong>. JTBC 무가광고 금지 규정에 따라 1천만원(VAT별도) 네이버 측에 청구.</p>
+        <ul>
+          <li>아웃트로 가상광고 (프로그램 종료 후 다음 회차 예고 영상 내, 최대 2구좌, 7초)</li>
+          <li>인트로 등급고지 가상광고 (연령 고지 화면 내, 1구좌, 7초, RT 제한)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num">03 · IOC TRACK (PSI)</div>
+        <h3>광고 심의 채널</h3>
+        <p>IOC TRACK 제출은 <strong>JTBC PSI 담당자(정예린 대리)</strong> 경유. 통상 1~2주 소요, 최소 3~5일. 긴급 건은 `[Urgent]` 표기로 우선 처리. 심의 반려 사유는 주로 (a) 선수 이미지 내 제3자 브랜딩, (b) 세로 화면 광고 영역 15% 초과.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">04 · 담당자 MAP</div>
+        <h3>JTBC미디어컴 측 창구</h3>
+        <ul>
+          <li><strong>권순일 국장</strong> (전략기획국) — 본 제휴 총괄</li>
+          <li><strong>이종민 팀장</strong> (캠페인1팀) — 가상광고 제작·구매</li>
+          <li>정예은 사원 — 가상광고 실무</li>
+          <li>정예린 대리 (PSI) — IOC TRACK 심의</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09. AMBUSH -->
+<section>
+  <div class="wrap">
+    <span class="label">09 · Ambush Marketing</span>
+    <h2>비공식 스폰서 앰부쉬 캠페인 운영</h2>
+    <p class="desc">
+      IOC 공식 스폰서가 아닌 경쟁 업종 광고주의 "올림픽 앰부쉬" 의도 구매도 일반 패키지로 수용. 공식 스폰서 전용 지면은 차단하고, 일반 지면은 선착순 공정 판매.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">CASE 01</div>
+        <h3>신한금융지주</h3>
+        <p>브론즈 + 동영상 패키지 활용. "올림픽 앰부쉬" 캠페인으로 2/6~2/22 집행. 광고주(지주) vs 브랜드(자회사) 단위 대기열 혼선 관리(신한금융지주 ↔ 신한은행).</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CASE 02</div>
+        <h3>영화 <휴민트></h3>
+        <p>유니버셜픽쳐스 디스클로저데이 캠페인으로 동영상 패키지 대기열 접수. 올림픽 기간 영화 마케팅 앰부쉬 전형 사례.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CASE 03</div>
+        <h3>KT 브랜딩</h3>
+        <p>동영상 구좌 대기 접수. 통신 업종은 IOC 공식 스폰서 아님.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;">
+      <h3 style="font-size:16px;margin-bottom:12px;">운영 원칙</h3>
+      <ul style="padding-left:20px;color:var(--text-soft);">
+        <li>일반 패키지(G/S/B/Video) — <strong>구매 가능</strong></li>
+        <li>IOC 전용 상품(카운트다운, 특집 배너 3종 등) — <strong>구매 불가</strong></li>
+        <li>소재 심의 — 올림픽 공식 상품명/로고 사용은 IOC TRACK 심의 대상. 소재 확정 후 PSI 경로 개별 확인</li>
+        <li>광고주(지주) vs 브랜드(자회사) 단위 대기열 분리 관리</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10. KEY METRICS -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">10 · Project Metrics</span>
+    <h2>핵심 지표 요약</h2>
+    <p class="desc">
+      4개월에 걸친 프로젝트의 주요 숫자.
+    </p>
+
+    <div class="g4">
+      <div class="card" style="text-align:center;">
+        <div class="card-num">SALES</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;"><span style="background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">28.1억</span></div>
+        <p style="font-size:13px;">공통 + Exclusive 완판 기준</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">ADVERTISERS</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;"><span style="background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">22</span><span style="font-size:14px;color:var(--text-dim);"> / 46</span></div>
+        <p style="font-size:13px;">판매 22 + 대기 24</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">TOTAL IMPRESSIONS</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;color:var(--brand);">213.6M</div>
+        <p style="font-size:13px;">메인 DA 상품 4종 합산</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">BEST CTR</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;color:var(--accent);">1.12<sup style="font-size:18px;">%</sup></div>
+        <p style="font-size:13px;">카스 트리플크라운 스페셜영역</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">IOC SPONSORS</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;">5<span style="font-size:16px;color:var(--text-dim);"> / 9</span></div>
+        <p style="font-size:13px;">선제안 9개사 중 5개사 구매</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">RESPONSE</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;color:var(--warn);">1,572</div>
+        <p style="font-size:13px;">대응 메일 4개월 누적</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">COMPENSATION</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;color:var(--gold);">578M</div>
+        <p style="font-size:13px;">GFA 기회비용 환산</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-num">DECK VERSIONS</div>
+        <div style="font-size:32px;font-weight:800;margin:10px 0;">v0.8<sup style="font-size:16px;color:var(--text-dim);">+α</sup></div>
+        <p style="font-size:13px;">세일즈덱 8차 배포 · 광고주 전용 3종</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. LESSONS -->
+<section>
+  <div class="wrap">
+    <span class="label">11 · Lessons Learned</span>
+    <h2>월드컵 대응 체크리스트 (종합 교훈)</h2>
+    <p class="desc">
+      5개 Phase별 교훈을 월드컵 등 후속 글로벌 이벤트에 바로 적용 가능한 체크리스트로 정리.
+    </p>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-num">PHASE 1 · 판매 준비</div>
+        <h3>킥오프 ~ 공식 공지 D-30</h3>
+        <ul>
+          <li>세일즈덱 v0.8 최종(D-21) / IOC 선제안 개시(D-21) / v0.1 킥오프(D-60) 백워드 플래닝</li>
+          <li>패키지 공시단가·할인율 테이블 사전 확정</li>
+          <li>쿼터 정책 문서화 + 외부 비공개 원칙 일관</li>
+          <li>독점 상품(카운트다운·클립 범퍼) 리스크·상한 value 사전 합의</li>
+          <li>IOC/FIFA 판매안 사전 제출 (최소 1개월 전)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num">PHASE 2 · 판매 개시</div>
+        <h3>공식 공지 ~ 라이브 D-14</h3>
+        <ul>
+          <li>구매수요 1차 취합 (공지 D-2, 15시 마감)</li>
+          <li>NOSP 공지 사전 체크(이미지 깨짐·소재가이드 누락·기간 일관성)</li>
+          <li>위약금 개시일 명시 ("1/22까지 없음, 1/23부터 10%")</li>
+          <li>대기열 운영 — 개별 순번 대신 "5~6위 수준" 대략치만</li>
+          <li>브랜드 미확정 구매 수용 (광고주 → 차주 내 브랜드 확정)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num">PHASE 3 · 세팅·검수</div>
+        <h3>라이브 D-14 ~ D-0</h3>
+        <ul>
+          <li>NOSP vs 제작가이드 스펙 매핑 테이블 사전 배포</li>
+          <li>"제작가이드 우선" 원칙 NOSP 상품 설명 상단 고정</li>
+          <li>라인번호·소재번호 일괄 요청 템플릿 배포</li>
+          <li>IOC/FIFA TRACK 1~2주 소요 + `[Urgent]` 규칙 광고주 공유</li>
+          <li>JTBC 등 권리사 협의 창구 사전 확정</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num">PHASE 4 · 운영·대응</div>
+        <h3>라이브 D-day ~ 종료</h3>
+        <ul>
+          <li>트래픽 미달 시나리오 사전 대응 (치지직 등 타 플랫폼 유입 감안)</li>
+          <li>등급별 보상 템플릿 <strong>선제 제작</strong> (올림픽은 2/11~12에 허둥지둥)</li>
+          <li>워딩: <strong>"보상/미달" 금지, "노출 극대화 지원" 톤</strong></li>
+          <li>"종료 후 7일 내 활용" 연장 옵션 가이드 포함</li>
+          <li>롱폼 조회수 저조 대응 — 매치박스 운영 순서 변경 룰</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num">PHASE 5 · 이슈 대응</div>
+        <h3>상시</h3>
+        <ul>
+          <li>판매 후 인벤토리 구조 변경 리스크 — <strong>대안 패키지 우선 검토</strong></li>
+          <li>앰부쉬 광고주 대응 룰 — 공식 스폰서 전용 지면 방어 + 일반 패키지 판매 허용</li>
+          <li>공식 소통 채널 명시 (월드컵: `dl_naver_2026worldcup_ad@navercorp.com`)</li>
+          <li>보류 상품 풀 관리 — 위기 상황의 보완재</li>
+        </ul>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg, rgba(255,215,0,0.05) 0%, rgba(0,212,255,0.03) 100%);border-color:rgba(255,215,0,0.2);">
+        <div class="card-num" style="color:var(--gold);">KNOWLEDGE BASE</div>
+        <h3>이벤트 Wiki 구조</h3>
+        <ul>
+          <li><strong>FAQ 정리</strong> — 16개 섹션 · 4차 데이터 전체 분석</li>
+          <li><strong>주요 커뮤니케이션 가이드</strong> — 5 Phase 17개 템플릿</li>
+          <li>메일 분석 — 4개 폴더(120~123) · 1,572건 / 쓰레드 210+개</li>
+          <li>월드컵에 동일 구조 복제 가능 → 온보딩 D-day 단축</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. ONE PAGER -->
+<section class="tight">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label gold">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>2026 밀라노-코르티나 동계올림픽 광고세일즈</strong>는 네이버가 단독 생중계 플랫폼, JTBC가 유일 방송 중계사로 확정된 포지션을 살려, 광고세일즈가 설계·운영한 <strong>17일간의 집중 프리미엄 패키지 프로젝트</strong>입니다.
+        공통 패키지 4종(GOLD 5억 / SILVER 3억 / BRONZE 1억 / VIDEO 4천)과 <span class="hl gold">IOC 공식 파트너 Exclusive 5종</span>으로 이원화 설계, 공시단가 대비 평균 32% 할인으로 <span class="hl gold">총 28.1억+ 판매</span> · 대기열 24개사 확보를 달성했습니다.
+        에어비앤비 숏폼 범퍼 이슈처럼 판매 후 인벤토리 구조 변경 발생 시에는 <strong>계약 파기 대신 대안 재원 추가</strong> 원칙으로 전 광고주 유지. 라이브 이후 치지직 편중으로 본 사이트 노출이 30~50% 수준에 머물자, <span class="hl accent">등급별 보상 매트릭스를 즉시 가동해 NDP 기준 873M(GFA 기회비용 578M) 재원을 22개 광고주 × 30개 구좌에 투입</span>했습니다.
+        트리플크라운은 <span class="hl accent">80.7M 노출 / CTR 0.88%</span>로 메인 상품 중 최고 성과. 4개월에 걸쳐 누적 <strong>1,572건의 메일</strong>을 처리하며 만든 운영 Knowledge Base(FAQ · 커뮤니케이션 가이드)는 월드컵 등 후속 글로벌 이벤트의 온보딩 자산으로 이월됩니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>2026 밀라노-코르티나 동계올림픽 광고세일즈</strong>
+      NAVER 광고세일즈 · 세일즈기획실 · 2025.11 – 2026.02
+    </div>
+    <div style="text-align:right;">
+      <strong>Last updated</strong>
+      2026-04-21 · Confluence emc/4607687441 · Mail 1,572건 분석
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

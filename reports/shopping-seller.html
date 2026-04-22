@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>네쇼셀러 Acquisition 부스트 프로그램 — 프로젝트 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-50: #f0fdf4;
+    --green-100: #dcfce7;
+    --green-500: #03c75a;
+    --green-600: #03b051;
+    --green-700: #028a3f;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f7;
+    --gray-200: #eeeef2;
+    --gray-300: #d9d9de;
+    --gray-400: #a7a7ae;
+    --gray-500: #6f6f78;
+    --gray-700: #3c3c43;
+    --gray-900: #17171c;
+    --red-500: #e03131;
+    --red-600: #c92a2a;
+    --blue-500: #1c7ed6;
+    --blue-600: #1971c2;
+    --amber-500: #f59f00;
+    --amber-100: #fff4d6;
+    --shadow-sm: 0 1px 2px rgba(15,15,20,0.04), 0 1px 3px rgba(15,15,20,0.06);
+    --shadow-md: 0 4px 12px rgba(15,15,20,0.06), 0 2px 4px rgba(15,15,20,0.04);
+    --shadow-lg: 0 24px 48px -12px rgba(15,15,20,0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--gray-900);
+    background: var(--gray-50);
+    line-height: 1.65;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0a2e1c 0%, #062818 40%, #03c75a 120%);
+    color: #fff;
+    padding: 88px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(3,199,90,0.35) 0%, transparent 45%),
+                      radial-gradient(circle at 80% 20%, rgba(3,199,90,0.2) 0%, transparent 40%);
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 99px;
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(10px);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .tag::before { content: ''; width: 6px; height: 6px; background: #03c75a; border-radius: 50%; box-shadow: 0 0 12px #03c75a; }
+  h1.hero-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 22px 0 18px;
+    letter-spacing: -0.025em;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 1.5vw, 18px);
+    opacity: 0.82;
+    max-width: 700px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 28px;
+    margin-top: 40px;
+    font-size: 14px;
+  }
+  .hero-meta-item { opacity: 0.78; }
+  .hero-meta-item strong { display: block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 4px; }
+
+  /* Section */
+  section { padding: 72px 0; }
+  section.tight { padding: 48px 0; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green-600);
+    margin-bottom: 10px;
+  }
+  h2.section-title {
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .section-desc { color: var(--gray-500); max-width: 720px; margin-bottom: 40px; }
+
+  /* KPI cards */
+  .kpi-hero {
+    margin-top: -56px; position: relative; z-index: 2;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .kpi {
+    background: #fff; padding: 28px 26px;
+    border-radius: 16px; box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+  }
+  .kpi-label { font-size: 13px; color: var(--gray-500); font-weight: 500; margin-bottom: 10px; }
+  .kpi-value {
+    font-size: clamp(26px, 2.4vw, 32px); font-weight: 800;
+    letter-spacing: -0.02em; color: var(--gray-900);
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi-value .unit { font-size: 0.65em; color: var(--gray-400); font-weight: 600; margin-left: 4px; }
+  .kpi-delta {
+    font-size: 12px; font-weight: 600; margin-top: 8px;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 20px;
+  }
+  .kpi-delta.up { background: var(--green-50); color: var(--green-700); }
+
+  /* Grid blocks */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+
+  .card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 14px; padding: 28px;
+    box-shadow: var(--shadow-sm);
+  }
+  .card h3 { font-size: 18px; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--gray-700); font-size: 14.5px; }
+  .card ul { padding-left: 20px; }
+  .card ul li { margin-bottom: 6px; }
+  .card.highlight { background: linear-gradient(135deg, #fff 0%, var(--green-50) 100%); border-color: var(--green-100); }
+  .card.warn { background: linear-gradient(135deg, #fff 0%, #fff7ed 100%); border-color: #fed7aa; }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    border-left: 2px solid var(--gray-200);
+  }
+  .timeline-item {
+    position: relative; padding-bottom: 36px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: ''; position: absolute;
+    left: -41px; top: 6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--green-500);
+    box-shadow: 0 0 0 4px rgba(3,199,90,0.1);
+  }
+  .timeline-date {
+    font-size: 12px; font-weight: 700;
+    color: var(--green-600); letter-spacing: 0.04em;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .timeline-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .timeline-desc { color: var(--gray-500); font-size: 14px; max-width: 640px; }
+
+  /* Table */
+  table.data {
+    width: 100%; border-collapse: collapse; margin-top: 16px;
+    background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+    font-size: 14px;
+  }
+  table.data th {
+    background: var(--gray-100); color: var(--gray-700);
+    font-weight: 600; font-size: 13px; text-align: left;
+    padding: 12px 16px; letter-spacing: 0.01em;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  table.data td {
+    padding: 12px 16px;
+    border-top: 1px solid var(--gray-200);
+    font-variant-numeric: tabular-nums;
+  }
+  table.data td.num { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+  table.data tr.total td {
+    background: var(--gray-100);
+    font-weight: 700; border-top: 2px solid var(--gray-300);
+  }
+
+  /* Funnel */
+  .funnel {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-top: 16px;
+  }
+  .funnel-step {
+    padding: 22px 18px; border-radius: 12px;
+    background: #fff; border: 1px solid var(--gray-200);
+    position: relative; overflow: hidden;
+  }
+  .funnel-step .label { font-size: 12px; color: var(--gray-500); font-weight: 600; }
+  .funnel-step .num { font-size: 28px; font-weight: 800; margin-top: 6px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .funnel-step .pct { font-size: 12px; font-weight: 600; color: var(--gray-500); margin-top: 4px; }
+  .funnel-step.bottleneck { background: linear-gradient(135deg, #fff 0%, #ffe3e3 100%); border-color: #ffc9c9; }
+  .funnel-step.bottleneck .num { color: var(--red-600); }
+  .funnel-step.success { background: linear-gradient(135deg, #fff 0%, var(--green-50) 100%); border-color: var(--green-100); }
+  .funnel-step.success .num { color: var(--green-600); }
+
+  /* Badge */
+  .badge {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 6px; font-size: 11.5px; font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .badge.green { background: var(--green-100); color: var(--green-700); }
+  .badge.red { background: #ffe3e3; color: var(--red-600); }
+  .badge.blue { background: #e7f5ff; color: var(--blue-600); }
+  .badge.gray { background: var(--gray-200); color: var(--gray-700); }
+  .badge.amber { background: var(--amber-100); color: #7a4300; }
+
+  /* Callout */
+  .callout {
+    padding: 18px 22px; border-radius: 10px;
+    background: var(--green-50); border-left: 4px solid var(--green-500);
+    margin-top: 20px; font-size: 14.5px; color: var(--gray-700);
+  }
+  .callout.warn { background: #fff7ed; border-color: var(--amber-500); }
+  .callout strong { color: var(--gray-900); }
+
+  /* Lesson learned */
+  .lesson {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 14px; padding: 26px 28px;
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .lesson::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--green-500);
+  }
+  .lesson-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .lesson-num {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--gray-900); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .lesson-title { font-size: 16px; font-weight: 700; }
+  .lesson-body { color: var(--gray-700); font-size: 14.5px; padding-left: 38px; }
+  .lesson-takeaway {
+    margin-top: 12px; padding: 12px 16px;
+    background: var(--green-50); color: var(--green-700);
+    border-radius: 8px; font-weight: 600; font-size: 14px;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--gray-900); color: var(--gray-400);
+    padding: 40px 0; margin-top: 40px;
+    font-size: 13px;
+  }
+  footer a { color: var(--gray-300); text-decoration: none; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  /* Stage pill for program structure */
+  .stage-flow {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px; margin-top: 20px;
+  }
+  .stage {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px;
+    position: relative;
+  }
+  .stage-num {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    color: var(--green-600); letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .stage h4 { font-size: 15px; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .stage p { color: var(--gray-500); font-size: 13.5px; line-height: 1.55; }
+
+  @media (max-width: 640px) {
+    .funnel { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 52px 0; }
+    .hero { padding: 68px 0 80px; }
+    .kpi-hero { margin-top: -40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container hero-inner">
+    <span class="tag">Naver · 세일즈 플래닝 · 2025</span>
+    <h1 class="hero-title">네쇼셀러 Acquisition<br/>부스트 프로그램</h1>
+    <p class="hero-sub">
+      광고를 집행해본 적 없는 네이버 쇼핑셀러를 신규 광고주로 유치하기 위해 설계된 페이백 프로그램.
+      광고에 대한 경계심을 제거하고, 전략 대행사를 매칭해 진입 허들을 낮추는 방식으로 운영되었습니다.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>기간</strong>2025.07 – 2025.12</div>
+      <div class="hero-meta-item"><strong>주관</strong>세일즈 플래닝</div>
+      <div class="hero-meta-item"><strong>KPI</strong>리텐션 50%</div>
+      <div class="hero-meta-item"><strong>대상</strong>광고 미집행 브랜드스토어 셀러</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="kpi-hero">
+    <div class="kpi">
+      <div class="kpi-label">총 광고 매출 창출</div>
+      <div class="kpi-value">1.24<span class="unit">억 원</span></div>
+      <div class="kpi-delta up">↗ 투입 대비 2배</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">비즈쿠폰 총 지원액</div>
+      <div class="kpi-value">6,185<span class="unit">만 원</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">평균 리텐션</div>
+      <div class="kpi-value">69<span class="unit">%</span></div>
+      <div class="kpi-delta up">↗ KPI 50% 초과</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">최종 집행 광고주 (12월)</div>
+      <div class="kpi-value">33<span class="unit">개사</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 배경 ====== -->
+<section>
+  <div class="container">
+    <div class="section-label">01 · Background</div>
+    <h2 class="section-title">왜 이 프로그램이 필요했는가</h2>
+    <p class="section-desc">
+      전체 네이버 쇼핑 셀러 35만 중 광고를 집행 중인 셀러는 약 9만 4천개. 나머지 25만 셀러는 신규 광고주 풀로 유입시킬 잠재 고객이었습니다.
+      이 중 거래액 체력을 갖춘 타겟은 약 2,500개 수준이었고, 대행사 관계가 없는 신규 셀러를 우선 공략 대상으로 잡았습니다.
+    </p>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>🛍️ 35만 → 9.4만</h3>
+        <p>전체 쇼핑 셀러 중 광고 집행 셀러는 27% 수준. 그나마도 매출 대비 투입 광고비 비율이 낮았습니다.</p>
+      </div>
+      <div class="card">
+        <h3>📊 25만 미집행 풀</h3>
+        <p>신규 광고주로 전환될 여력이 있는 풀이지만, 거래액 체력이 크지 않아 실제 타겟은 2,500개 수준으로 좁혀짐.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 브랜드스토어 셀러</h3>
+        <p>쇼핑 사업부 직접 관리, 브랜드 보유, 광고 구매력과 거래액이 모두 큰 셀러 — 최적 타겟으로 선정.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>타겟 정의:</strong> 광고를 진행하지 않거나, 매출 대비 광고비 비율이 5% 미만인 그룹의 광고비를 2% → 5% 로 성장시키는 것을 목표.
+      단, 기존 매칭 대행사가 없는 <strong>신규 셀러</strong>에게 집중.
+    </div>
+  </div>
+</section>
+
+<!-- ====== 프로그램 구조 ====== -->
+<section style="background: #fff; border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200);">
+  <div class="container">
+    <div class="section-label">02 · Program Design</div>
+    <h2 class="section-title">어떻게 허들을 제거했는가</h2>
+    <p class="section-desc">
+      광고를 시작하지 않는 이유를 3가지 — 경계심, 효과 불신, 집행 어려움 — 으로 정의하고, 각 허들을 제거할 수 있는 3가지 장치를 프로그램에 담았습니다.
+    </p>
+
+    <div class="stage-flow">
+      <div class="stage">
+        <span class="stage-num">STAGE 01</span>
+        <h4>쇼핑 MD 직접 컨택</h4>
+        <p>관리 중인 브랜드스토어 셀러에게 쇼핑 MD가 직접 소개 → 광고에 대한 <strong>경계심 제거</strong></p>
+      </div>
+      <div class="stage">
+        <span class="stage-num">STAGE 02</span>
+        <h4>전략 대행사 매칭</h4>
+        <p>링크프라이스 · 아인스미디어 대행사가 광고 세팅을 대신 진행 → <strong>집행 어려움 해소</strong></p>
+      </div>
+      <div class="stage">
+        <span class="stage-num">STAGE 03</span>
+        <h4>페이백 (비즈쿠폰)</h4>
+        <p>집행 월 익월에 비즈쿠폰 지급 → 재집행 유도, <strong>락인 효과</strong> 창출</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>동시 KPI 충족:</strong> 쇼핑 사업부는 거래액 증대를, 광고 사업부는 광고비 매출 증대를 동시에 달성할 수 있는 구조로 설계.
+      페이백이 익월에 지급되어 <strong>재집행을 유도</strong>하는 락인 장치가 포함되어 있습니다.
+    </div>
+  </div>
+</section>
+
+<!-- ====== 진행 과정 ====== -->
+<section>
+  <div class="container">
+    <div class="section-label">03 · Execution Timeline</div>
+    <h2 class="section-title">5개월간의 실행 과정</h2>
+    <p class="section-desc">
+      기획 → 1차 메일 발송 → 퍼널 분석 기반 개선 → 추가 세일즈 톡 → 웨비나까지, 데이터 기반으로 단계별 피봇을 반복했습니다.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2025.07</div>
+        <div class="timeline-title">프로그램 설명 문서 제작</div>
+        <div class="timeline-desc">
+          쇼핑 MD를 대상으로 한 프로그램 소개 자료 기획. 스토리라인은 <em>"왜 해야 하는가 → 어떻게 실행하는가 → 누구를 공략하는가"</em> 순으로 구성.
+          전략 대행사 인센티브 구조, 예산 예시, 타겟 셀러 데이터 등을 포함.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025.08 – 09 (1차)</div>
+        <div class="timeline-title">1차 메일 일괄 발송 (664명)</div>
+        <div class="timeline-desc">
+          551개 스토어 · 664명 담당자에게 일괄 공지 발송. 오픈율 42.9%, 최종 전환율 3.5% 기록.
+          초기 신청률이 예상보다 저조해 <strong>퍼널 병목 분석</strong>이 필요한 상황.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025.09.11</div>
+        <div class="timeline-title">퍼널 분석 & 추가 전략 수립</div>
+        <div class="timeline-desc">
+          1차 데이터 분석 결과, 병목은 <strong>메일 미오픈(57%)</strong>. 제목·프리헤더 개선과 타겟별 차별화 메시지 필요성이 드러남.
+          메일 내부에서는 관심 셀러의 전환율(38%)은 오히려 업계 평균보다 높은 편이었음.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025.09 – 11</div>
+        <div class="timeline-title">추가 메일 · 문자 발송 (타겟 세분화)</div>
+        <div class="timeline-desc">
+          타겟을 <strong>미오픈 / 오픈 후 미신청 / 클릭 후 미신청</strong> 3개 그룹으로 분리, 각각 제목·내용을 재구성해 재발송.
+          혜택 · 희소성 · 간편성 · 리스크프리 5가지 스타일의 A/B 후보군을 운영.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025.12.05</div>
+        <div class="timeline-title">부스트 프로그램 웨비나 개최</div>
+        <div class="timeline-desc">
+          메일·문자만으로는 한계가 있다고 판단, 라이브 웨비나로 추가 넛지.
+          구성은 <em>공감 → 장벽 해결 → 가치 → 참여 안내</em> 4단 구조로, 설명 중심이 아닌 <strong>전환 중심</strong>으로 설계.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 퍼널 분석 ====== -->
+<section style="background: #fff; border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200);">
+  <div class="container">
+    <div class="section-label">04 · Funnel Analysis</div>
+    <h2 class="section-title">어디서 이탈이 발생했는가</h2>
+    <p class="section-desc">
+      두 차례 메일 발송 데이터를 퍼널로 분해한 결과, 가장 큰 병목은 <strong>메일을 열람하지 않는 단계</strong>였습니다.
+      일단 메일을 열어본 셀러의 전환율(38%)은 업계 평균 대비 높았기 때문에, 개선 포인트는 <strong>제목·프리헤더</strong>에 집중되었습니다.
+    </p>
+
+    <h3 style="margin-top:28px;margin-bottom:6px;font-size:18px;">1차 발송 퍼널</h3>
+    <div class="funnel">
+      <div class="funnel-step">
+        <div class="label">발송</div>
+        <div class="num">664</div>
+        <div class="pct">&nbsp;</div>
+      </div>
+      <div class="funnel-step bottleneck">
+        <div class="label">열람 <span class="badge red">병목</span></div>
+        <div class="num">285</div>
+        <div class="pct">오픈율 42.9% · 미오픈 57%</div>
+      </div>
+      <div class="funnel-step">
+        <div class="label">폼 클릭</div>
+        <div class="num">60</div>
+        <div class="pct">CTR 21.1%</div>
+      </div>
+      <div class="funnel-step success">
+        <div class="label">신청 완료</div>
+        <div class="num">23</div>
+        <div class="pct">폼 전환 38% (높음)</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:36px;margin-bottom:6px;font-size:18px;">2차 발송 퍼널</h3>
+    <div class="funnel">
+      <div class="funnel-step">
+        <div class="label">발송</div>
+        <div class="num">664</div>
+        <div class="pct">&nbsp;</div>
+      </div>
+      <div class="funnel-step bottleneck">
+        <div class="label">열람</div>
+        <div class="num">323</div>
+        <div class="pct">오픈율 48.6% <span class="badge green">+5.7p</span></div>
+      </div>
+      <div class="funnel-step">
+        <div class="label">폼 클릭</div>
+        <div class="num">55</div>
+        <div class="pct">CTR 17.0%</div>
+      </div>
+      <div class="funnel-step">
+        <div class="label">신청 완료</div>
+        <div class="num">15</div>
+        <div class="pct">폼 전환 27%</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>진단:</strong> 메일을 열어본 셀러의 전환율은 업계 평균을 상회 — 프로그램 자체의 매력도는 높음.
+      <strong>병목은 "메일을 열지 않는다"</strong>에 집중 → 제목·프리헤더의 혜택 강조와 긴급성 문구 삽입이 핵심 개선안.
+    </div>
+  </div>
+</section>
+
+<!-- ====== 개선 과정 ====== -->
+<section>
+  <div class="container">
+    <div class="section-label">05 · Iteration</div>
+    <h2 class="section-title">데이터를 근거로 한 메시지 개선</h2>
+    <p class="section-desc">
+      퍼널 분석 후, 기존 메일의 문제점을 진단하고 타겟별로 메시지를 재구성했습니다.
+    </p>
+
+    <div class="grid-2">
+      <div class="card warn">
+        <h3>❌ AS-IS 제목의 문제점</h3>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:13px;background:#fff;padding:10px 14px;border-radius:8px;border:1px solid var(--gray-200);margin-bottom:14px;">
+          [네이버] 쇼핑 광고+GMV Boost Pilot 프로그램 참여 안내드립니다
+        </p>
+        <ul>
+          <li><strong>내부 전문 용어:</strong> "GMV Boost Pilot" — 셀러에게 즉시 이해 불가</li>
+          <li><strong>혜택 미강조:</strong> 추상적이라 어떤 혜택인지 직관적이지 않음</li>
+          <li><strong>행동 유도 부재:</strong> 선착순 · 마감 · 기한 등의 FOMO 요소 없음</li>
+          <li><strong>발신자 중심 표현:</strong> '참여 안내드립니다' — 상대방 혜택이 아님</li>
+        </ul>
+      </div>
+      <div class="card highlight">
+        <h3>✅ TO-BE 제목 전략</h3>
+        <p style="margin-bottom:12px;">혜택 + 희소성 + 간편성을 전면에 배치</p>
+        <ul>
+          <li>[네이버 쇼핑 부스트] 광고비 <strong>최대 300만원 지원</strong>, 지금 신청하세요</li>
+          <li>[선착순 100개사] 광고비 최대 300만원 지원! <em>(FOMO)</em></li>
+          <li>광고 처음이셔도 괜찮습니다 → <strong>3분 신청</strong>으로 최대 300만원 지원</li>
+          <li>성과 없으면 추가 지원, <strong>손해 없는</strong> 광고 지원 프로그램</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:20px;">
+      <div class="card">
+        <h3 style="font-size:15px;">🎯 타겟 세분화</h3>
+        <p>미오픈 / 오픈 후 미신청 / 폼 클릭 후 미신청 그룹으로 나누어, 그룹별 메시지와 채널을 분리 운영.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;">🔗 멀티채널</h3>
+        <p>메일 단일 채널의 한계 — 카카오 알림톡 · 문자 · 쇼핑 센터 팝업 공지를 병행해 접점 확대.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;">🛡️ 제로 리스크 메시지</h3>
+        <p>"성과가 없더라도 광고 소진액만큼 비즈쿠폰 제공" — 초보 셀러의 가장 큰 불안을 해소.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 성과 ====== -->
+<section style="background: linear-gradient(180deg, #f0fdf4 0%, #fafafa 100%); border-top: 1px solid var(--green-100);">
+  <div class="container">
+    <div class="section-label">06 · Results</div>
+    <h2 class="section-title">성과</h2>
+    <p class="section-desc">
+      KPI인 리텐션 50%를 초과한 <strong>69%</strong>를 달성했고, 총 6,185만원 지원으로 <strong>1억 2,400만원</strong>의 광고 매출을 창출했습니다.
+    </p>
+
+    <h3 style="font-size:18px;margin-top:20px;margin-bottom:12px;">월별 비즈쿠폰 지급 내역</h3>
+    <table class="data">
+      <thead>
+        <tr>
+          <th>월</th>
+          <th>지급 개사수</th>
+          <th style="text-align:right;">지급 금액 (원)</th>
+          <th style="text-align:right;">비중</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>9월</td><td>7개사</td><td class="num">18,432,986</td><td class="num">29.8%</td></tr>
+        <tr><td>10월</td><td>8개사</td><td class="num">10,855,953</td><td class="num">17.6%</td></tr>
+        <tr><td>11월</td><td>14개사</td><td class="num">22,107,151</td><td class="num">35.7%</td></tr>
+        <tr><td>12월</td><td>5개사</td><td class="num">10,450,356</td><td class="num">16.9%</td></tr>
+        <tr class="total"><td>합계</td><td>34건 (누적)</td><td class="num">61,846,446</td><td class="num">100%</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:18px;margin-top:36px;margin-bottom:12px;">전환 & 리텐션</h3>
+    <div class="grid-3">
+      <div class="card">
+        <h3 style="font-size:14px;color:var(--gray-500);font-weight:500;">신청 건수</h3>
+        <div style="font-size:32px;font-weight:800;margin:8px 0;">77<span style="font-size:16px;color:var(--gray-400);"> 건</span></div>
+        <p style="font-size:13px;">전체 신청 완료 건수</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:14px;color:var(--gray-500);font-weight:500;">실제 집행 전환</h3>
+        <div style="font-size:32px;font-weight:800;margin:8px 0;color:var(--blue-600);">47<span style="font-size:16px;color:var(--gray-400);"> 건</span></div>
+        <p style="font-size:13px;">신청 대비 집행 전환율 61%</p>
+      </div>
+      <div class="card highlight">
+        <h3 style="font-size:14px;color:var(--gray-500);font-weight:500;">12월 최종 집행</h3>
+        <div style="font-size:32px;font-weight:800;margin:8px 0;color:var(--green-600);">33<span style="font-size:16px;color:var(--gray-400);"> 개사</span></div>
+        <p style="font-size:13px;"><span class="badge green">리텐션 69%</span> KPI 50% 초과</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>매출 구성:</strong> 쇼핑 셀러 대상이었던 만큼 <strong>쇼핑검색광고(SA)</strong>의 매출이 가장 높았고, 그 다음으로 <strong>GFA</strong> 상품이 주로 활용되었습니다.
+      신청했으나 집행으로 이어지지 않은 경우, 주요 이유는 <em>"유상 선집행 부담"</em>이었습니다.
+    </div>
+  </div>
+</section>
+
+<!-- ====== 회고 ====== -->
+<section>
+  <div class="container">
+    <div class="section-label">07 · Retrospective</div>
+    <h2 class="section-title">Lesson Learned</h2>
+    <p class="section-desc">
+      프로그램을 운영하면서 얻은 가장 큰 교훈 2가지, 그리고 차후 쇼핑 셀러 세일즈에 적용해야 할 방향.
+    </p>
+
+    <div class="lesson">
+      <div class="lesson-head">
+        <div class="lesson-num">01</div>
+        <div class="lesson-title">일괄 컨택은 셀러 개별 특성을 살리지 못한다</div>
+      </div>
+      <div class="lesson-body">
+        초기 가설은 쇼핑 MD가 자신이 담당하는 셀러의 특성을 파악하고 개별 맞춤 세일즈를 진행하는 것이었습니다.
+        그러나 <strong>리소스 이슈</strong>로 쇼핑 MD들의 지적자산이 활용되지 못했고, 일괄 메일 발송으로 대체되었습니다.
+        또한 쇼핑 측에서는 리스크 부담으로 "성과 보장", "리스크 제로" 등의 적극적 표현을 쓸 수 없었습니다.
+        <div class="lesson-takeaway">
+          → 차후에 쇼핑 셀러 세일즈를 진행한다면, 일괄 메일 세일즈가 아닌 <strong>개별 셀러의 특성을 고려한 세일즈</strong>가 필요.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-head">
+        <div class="lesson-num">02</div>
+        <div class="lesson-title">메일 단독 채널의 오픈율 한계</div>
+      </div>
+      <div class="lesson-body">
+        주요 홍보 채널이었던 메일의 오픈율이 예상보다 크게 낮았습니다.
+        미오픈 57%가 가장 큰 병목이었으며, 메일을 열어본 셀러의 전환율 자체는 오히려 업계 평균을 상회했습니다.
+        즉, <strong>제품은 매력적이지만 제품을 알리는 단계가 약했다</strong>는 것.
+        <div class="lesson-takeaway">
+          → 메일 단독 의존 ❌ · 제목 · 프리헤더의 혜택/긴급성 강조, 알림톡 · 문자 · 웨비나 등 <strong>멀티채널 리마케팅</strong> 필수.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-head">
+        <div class="lesson-num">03</div>
+        <div class="lesson-title">유상 선집행 부담이 최종 집행의 허들</div>
+      </div>
+      <div class="lesson-body">
+        신청했으나 실제 집행으로 이어지지 않은 30건의 주 이탈 사유는 <strong>"광고비를 먼저 내야 한다"</strong>는 부담이었습니다.
+        페이백 구조임에도 <em>선집행 → 익월 환급</em>이라는 캐시 플로우가 영세 셀러에게는 여전히 부담으로 작용.
+        <div class="lesson-takeaway">
+          → 다음 프로그램은 <strong>선지급 · 후정산</strong> 구조, 또는 집행 금액 매칭 방식 등으로 개선 검토 필요.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 요약 ====== -->
+<section style="padding: 48px 0 72px;">
+  <div class="container">
+    <div class="card" style="background: var(--gray-900); color:#fff; border:none; padding: 44px 44px;">
+      <div class="section-label" style="color: var(--green-500);">Summary</div>
+      <h2 style="font-size:28px;font-weight:700;letter-spacing:-0.02em;margin-bottom:14px;color:#fff;">One-Pager</h2>
+      <p style="color:#d9d9de;font-size:15.5px;line-height:1.75;max-width:820px;">
+        <strong style="color:#fff;">네쇼셀러 Acquisition 부스트 프로그램</strong>은 광고를 집행해본 적 없는 브랜드스토어 셀러를 타겟으로,
+        쇼핑 MD 컨택 · 전략 대행사 매칭 · 비즈쿠폰 페이백 3단 허들 제거 장치를 통해 신규 광고주로 유치하는 5개월 프로그램이었습니다.
+        1차 메일 발송 후 <strong style="color:#fff;">퍼널 분석</strong>을 통해 오픈율 병목을 진단하고,
+        타겟별 메시지 세분화 · 멀티채널 확장 · 웨비나 개최로 피봇했습니다.
+        최종적으로 <strong style="color:var(--green-500);">6,185만원 지원으로 1.24억 매출</strong>, <strong style="color:var(--green-500);">리텐션 69%</strong>(KPI 50%)를 달성했습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div style="color:#fff;font-weight:600;margin-bottom:4px;">네쇼셀러 Acquisition 부스트 프로그램</div>
+      <div>세일즈 플래닝 · 2025.07 – 2025.12</div>
+    </div>
+    <div style="text-align:right;">
+      <div>Last updated: 2026-04-21</div>
+      <div>Source: Confluence wiki.navercorp.com/emc/3797844156</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RAG Platform — NCP향 Enterprise RAG PaaS 프로젝트 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #10b981;
+    --brand-2: #6366f1;
+    --brand-grad: linear-gradient(135deg, #10b981 0%, #6366f1 100%);
+    --accent: #00ffa3;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(16,185,129,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(99,102,241,0.1) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.22);
+    color: #6ee7b7;
+  }
+  .hero-badge.indigo { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.22); color: #a5b4fc; }
+  .hero-badge.gold { background: rgba(255,183,77,0.08); border-color: rgba(255,183,77,0.2); color: var(--warn); }
+  .hero-badge.cyan { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2); color: #67e8f9; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat {
+    background: var(--bg-2);
+    padding: 28px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(28px, 2.8vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--brand);
+  }
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 780px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(16,185,129,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Architecture */
+  .arch {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+  }
+  .arch-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .arch-row:last-child { margin-bottom: 0; }
+  .arch-row-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .arch-block {
+    padding: 18px 20px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .arch-block strong {
+    display: block;
+    color: var(--text);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .arch-block small {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  .arch-block.primary {
+    background: linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(99,102,241,0.08) 100%);
+    border-color: rgba(16,185,129,0.3);
+  }
+  .arch-arrow {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 18px;
+    margin: 8px 0;
+  }
+
+  /* Timeline */
+  .timeline {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 160px 160px 1fr;
+    align-items: start;
+    gap: 32px;
+    padding: 28px 32px;
+    border-top: 1px solid var(--border);
+  }
+  .timeline-row:first-child { border-top: none; }
+  .timeline-row:hover { background: var(--surface-2); }
+  .timeline-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--brand);
+    background: rgba(16,185,129,0.1);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .timeline-tag.done { color: var(--accent); background: rgba(0,255,163,0.1); }
+  .timeline-tag.ongoing { color: var(--brand-2); background: rgba(99,102,241,0.15); }
+  .timeline-tag.plan { color: var(--warn); background: rgba(255,183,77,0.1); }
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .timeline-note { color: var(--text-soft); font-size: 14px; }
+  .timeline-note strong { color: var(--text); font-weight: 600; }
+
+  /* Feature cards */
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .feature-head {
+    padding: 28px 32px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--brand-grad);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800; font-size: 18px;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .feature-head h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .feature-head p {
+    color: var(--text-soft);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .feature-body { padding: 28px 32px; }
+  .feature-body ul {
+    padding-left: 18px;
+    color: var(--text-soft);
+    font-size: 14.5px;
+  }
+  .feature-body ul li { margin-bottom: 8px; }
+  .feature-body ul li strong { color: var(--text); }
+
+  /* Contribution block */
+  .contrib {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(99,102,241,0.05) 100%);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 28px;
+  }
+  .contrib h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(16,185,129,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6ee7b7;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li {
+    color: var(--text-soft);
+    font-size: 14.5px;
+    margin-bottom: 9px;
+    line-height: 1.6;
+  }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .contrib .insight-box {
+    margin-top: 20px;
+    padding: 20px 24px;
+    background: rgba(0,0,0,0.25);
+    border-left: 3px solid var(--brand);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+  .contrib .insight-box strong { color: var(--text); }
+
+  .perf-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .perf-table th {
+    text-align: left;
+    padding: 14px 18px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .perf-table td {
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    vertical-align: top;
+  }
+  .perf-table td strong { color: var(--text); }
+  .perf-table td.num {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--brand);
+    text-align: right;
+  }
+
+  /* AB compare */
+  .ab-wrap {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    margin-top: 24px;
+  }
+  .ab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .ab-box {
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(0,0,0,0.25);
+  }
+  .ab-box .h {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 700;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .ab-box .big {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .ab-box.winner { border-color: rgba(0,255,163,0.3); background: rgba(0,255,163,0.05); }
+  .ab-box.winner .big { color: var(--accent); }
+  .ab-box.loser { border-color: rgba(255,92,124,0.3); background: rgba(255,92,124,0.05); }
+  .ab-box.loser .big { color: var(--danger); }
+  .ab-box p { color: var(--text-soft); font-size: 13px; line-height: 1.55; }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(16,185,129,0.1) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p {
+    color: var(--text-soft);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 940px;
+  }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .timeline-row { grid-template-columns: 1fr; gap: 12px; }
+    .onepager { padding: 36px 28px; }
+    .contrib, .arch, .ab-wrap { padding: 28px; }
+    .ab-grid { grid-template-columns: 1fr; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <span class="hero-tag"><span class="dot"></span>AI Application Tech · 2024 –</span>
+    <h1 class="hero-title">
+      <span>RAG Platform.</span><br/>
+      고객사 내부 데이터로 HCX를 보강하는<br/>
+      NCP향 Enterprise RAG PaaS
+    </h1>
+    <p class="hero-sub">
+      간단한 설정 몇 번으로 <strong style="color:var(--text);">데이터 연동 → 검색 → HCX 응답</strong>까지 이어지는 RAG 파이프라인을 조립할 수 있는 PaaS 제품.
+      VPC · KMS를 전제로 한 보안 설계, 커스텀 임베딩 지원, 신뢰성 있는 평가 도구를 제공해 <strong style="color:var(--text);">기업이 자기 데이터로 LLM을 쓸 수 있게</strong> 만드는 것이 목표입니다.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">B2B · NCP PaaS</span>
+      <span class="hero-badge">VPC · KMS 연동</span>
+      <span class="hero-badge indigo">HCX 기반</span>
+      <span class="hero-badge indigo">Custom Embedding</span>
+      <span class="hero-badge gold">MVP 개발 중 · PoC 병행</span>
+      <span class="hero-badge cyan">Launcher 연동</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">투입 리소스</div>
+        <div class="stat-num"><span class="grad">10.9</span><span class="sm">MM</span></div>
+        <div class="stat-hint">개발 8.5 · 기획 2.4</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">핵심 서비스</div>
+        <div class="stat-num">5</div>
+        <div class="stat-hint">Document · Retrieval · Orch · Eval · Console</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">MVP 릴리즈</div>
+        <div class="stat-num">24.06</div>
+        <div class="stat-hint">1차 릴리즈 타겟</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">경쟁사 리서치</div>
+        <div class="stat-num">15<span class="sm">+</span></div>
+        <div class="stat-hint">글로벌 · 국내 주요 리드 경쟁사</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. OVERVIEW -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Product Vision</span>
+    <h2>프로덕트 비전 · 배경</h2>
+    <p class="desc">
+      LLM의 가장 큰 한계는 "모델이 갖고 있지 않은 정보"입니다. 이걸 기업이 <strong style="color:var(--text);">자기 데이터로 직접 메우는 파이프라인</strong>을 만드는 것이 RAG Platform의 출발점.
+      단순한 검색 + 생성을 넘어, 보안 · 데이터 연동 · 품질 평가까지 <strong style="color:var(--text);">PaaS 한 세트로 묶는 것</strong>이 차별화 포인트입니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">VISION 01</div>
+        <h3>고객 데이터 보안 환경 우선</h3>
+        <p><strong>VPC 환경 · KMS 연동</strong>을 기본 전제로 설계. 금융 · 공공 · 대기업 등 보안 수준이 높은 B2B 고객이 신뢰할 수 있는 데이터 처리 경로를 제공.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">VISION 02</div>
+        <h3>논스톱 파이프라인</h3>
+        <p>데이터 연동 → 전처리/OCR → 임베딩 → 검색 → LLM 연동 → 평가까지 <strong>하나의 Console에서 설정</strong>. "RAG 구축에 수 개월"이 아니라 "설정 몇 번에 PoC"를 목표로.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">VISION 03</div>
+        <h3>품질 관리 · Evaluation</h3>
+        <p>Generation 품질은 운영 중에 변질되기 쉬운 영역. <strong>정답셋 기반 정기 평가</strong>와 Metric 제공으로 "PaaS로 맡겨도 품질이 흔들리지 않는다"는 신뢰를 확보.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. ARCHITECTURE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Architecture</span>
+    <h2>서비스 구성 · 파이프라인</h2>
+    <p class="desc">
+      Document · Retrieval · Orchestration · Evaluation · Console의 5개 서비스가 유기적으로 연결되어 하나의 RAG 파이프라인을 이룹니다.
+      각 서비스는 독립적으로 업데이트 가능하도록 분리 설계되어 고객사별 커스터마이징 여지를 확보.
+    </p>
+
+    <div class="arch">
+      <div class="arch-row-label">USER &amp; CONSOLE LAYER</div>
+      <div class="arch-row">
+        <div class="arch-block primary">
+          <strong>Console</strong>
+          <small>관리자 Admin · 일반 사용자 Admin · 서비스 생성/목록/테스트 · 평가 UI · API 연동 팝업</small>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+
+      <div class="arch-row-label">PIPELINE CORE</div>
+      <div class="arch-row">
+        <div class="arch-block">
+          <strong>Document</strong>
+          <small>데이터 연동 · 커넥터 · OCR · 파싱 · 청크 · 임베딩</small>
+        </div>
+        <div class="arch-block">
+          <strong>Retrieval</strong>
+          <small>벡터 검색 · 하이브리드 검색 · 커스텀 임베딩 모델</small>
+        </div>
+        <div class="arch-block">
+          <strong>Orchestration</strong>
+          <small>Query Rewriting · 검색 결과 병합 · 프롬프트 · HCX 호출</small>
+        </div>
+        <div class="arch-block">
+          <strong>Evaluation</strong>
+          <small>정답셋 · Metric · 품질 그래프 · A/B 리포트</small>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+
+      <div class="arch-row-label">INFRA (NCP)</div>
+      <div class="arch-row">
+        <div class="arch-block">
+          <strong>VPC</strong>
+          <small>고객별 격리 네트워크</small>
+        </div>
+        <div class="arch-block">
+          <strong>KMS</strong>
+          <small>암호화 키 관리</small>
+        </div>
+        <div class="arch-block">
+          <strong>HCX</strong>
+          <small>Foundation Model · 파운데이션 답변 생성</small>
+        </div>
+        <div class="arch-block">
+          <strong>Object Storage</strong>
+          <small>문서 버킷 · 하위 디렉토리 단위 구독</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. KEY FEATURES -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Key Features</span>
+    <h2>핵심 기능</h2>
+    <p class="desc">
+      PaaS로 "빨리 써보게 하는 것"과 "오래 품질을 지키는 것", 두 축 모두를 제품 기능으로 풀어냈습니다.
+    </p>
+
+    <div class="g3">
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon">Dc</div>
+          <h3>Document Service</h3>
+          <p>데이터 수집 · 전처리 · 임베딩</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>다양한 커넥터</strong> — Object Storage, 링크, 업로드, 버킷 하위 디렉토리 단위 구독</li>
+            <li><strong>OCR 옵션</strong> 설정 가능 (어드민 콘솔에서 토글)</li>
+            <li><strong>파일명 영역 툴팁</strong> — 긴 파일명 전체 노출 UX</li>
+            <li>커스텀 임베딩 모델로 고객 데이터 특화</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#6366f1 0%,#00d4ff 100%);">Re</div>
+          <h3>Retrieval &amp; Orchestration</h3>
+          <p>검색 + LLM 결합의 핵심</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>Query Rewriting</strong> — LLM 기반 질의 재작성으로 검색 정확도 향상</li>
+            <li><strong>쿼리 분해</strong> — 복합 질문을 단계별로 쪼개서 검색 후 병합</li>
+            <li><strong>인용 기반 답변</strong> — 출처 문서 링크 포함</li>
+            <li>파운데이션 모델 + 커스텀 프롬프트 조합 설정</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-head">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#ffb74d 0%,#ff5c7c 100%);">Ev</div>
+          <h3>Evaluation &amp; Console</h3>
+          <p>품질 관리 · 운영 어드민</p>
+        </div>
+        <div class="feature-body">
+          <ul>
+            <li><strong>정답셋 업로드 · 평가 생성</strong> — Metric 기반 정기 품질 확인</li>
+            <li><strong>단계별 실패 시나리오 UX</strong> — 실패 유형별 Next Action 안내</li>
+            <li>서비스 색인 중엔 평가 생성 목록에서 제외</li>
+            <li>관리자 Admin / 일반 사용자 Admin 분리</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04. ROADMAP -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · Roadmap</span>
+    <h2>버전별 릴리즈 계획</h2>
+    <p class="desc">
+      24.06 MVP 1차 타겟 → 24.07 Hotfix → v1.5 → 11월 타겟 버전까지 세밀하게 단계 설계. 빠른 MVP 공개 이후 고객사 PoC 피드백을 반영해 IAM · 평가 가시화 등 엔터프라이즈 기능을 채워 가는 순서.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-row">
+        <span class="timeline-tag done">완료</span>
+        <span class="timeline-date">착수 단계</span>
+        <div class="timeline-note">
+          <strong>마켓 리서치 · 레퍼런스 조사 · 아키텍처 설계</strong> — 글로벌/국내 주요 경쟁사의 비즈니스 모델, 요금제, Killer Feature를 매트릭스로 정리. v1.0 시스템 구성도 확정, 개발 태스크 및 R&amp;R 분배.
+        </div>
+      </div>
+      <div class="timeline-row">
+        <span class="timeline-tag ongoing">진행 중</span>
+        <span class="timeline-date">2024.06</span>
+        <div class="timeline-note">
+          <strong>MVP 1차 릴리즈 타겟 (24.06)</strong> — NCP 상품 활용으로 빠른 구현. Document · Retrieval · Orchestration · Evaluation · Console 5개 서비스 MVP. 관리자 Admin 최소 스펙 중심 (서비스 생성 → 데이터 연동 → 테스트 → 평가).
+        </div>
+      </div>
+      <div class="timeline-row">
+        <span class="timeline-tag ongoing">진행 중</span>
+        <span class="timeline-date">2024.07</span>
+        <div class="timeline-note">
+          <strong>Hotfix_0725 · MVP 공개 이후</strong> — 사용자 로그 트래킹 포맷, API 적용 팝업 문구(서비스 ID → Collection ID), 서비스 목록 system prompt 접힘 처리, 서비스 생성 description 20→40자, 데이터 소스 파일명 툴팁, 테스트 화면 스크롤 이슈.
+        </div>
+      </div>
+      <div class="timeline-row">
+        <span class="timeline-tag plan">예정</span>
+        <span class="timeline-date">2024 H2 (11월 전)</span>
+        <div class="timeline-note">
+          <strong>v1.5</strong> — 버킷 하위 디렉토리 대응 · 대용량 데이터 대비, Generation 전체 프롬프트 노출 여부 재설계 (필수값은 하드코딩, 일부만 노출), 여러 type의 prompt 제공, 평가 Metric 다양화, 평가 결과 기반 재테스트 플로우.
+        </div>
+      </div>
+      <div class="timeline-row">
+        <span class="timeline-tag plan">예정</span>
+        <span class="timeline-date">2024.11</span>
+        <div class="timeline-note">
+          <strong>11월 타겟 엔터프라이즈 버전</strong> — <strong>IAM 체계 도입</strong>, 평가 결과의 <strong>그래프 가시화</strong>, 운영 대시보드 확장. 고객사 N개 대상 PoC 결과를 반영해 공식 상품 출시 단계로 이행.
+        </div>
+      </div>
+      <div class="timeline-row">
+        <span class="timeline-tag plan">예정</span>
+        <span class="timeline-date">Post-MVP</span>
+        <div class="timeline-note">
+          <strong>상품 출시 · Launcher 연동</strong> — 사내외 레퍼런스 확보, NCP 인프라에 최적화된 상품 패키징, Launcher (shook)의 HCX 답변 품질 강화용 사내 데이터 소스로 활용.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. RESOURCES -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · Team &amp; Resources</span>
+    <h2>참여 조직 · 리소스 구성</h2>
+    <p class="desc">
+      뉴로서치의 깊은 검색 엔진 역량과 AI Solution의 B2B 프로덕트 기획/프론트 구현이 결합된 교차 조직 프로젝트. PaaS 제품을 만들기 위한 <strong style="color:var(--text);">검색 전문성 + PM + FE</strong>의 최소 세트.
+    </p>
+
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>담당</th>
+          <th style="text-align:right;">투입 MM</th>
+          <th>역할</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>개발 (BE)</strong></td>
+          <td>뉴로서치</td>
+          <td class="num">7.5</td>
+          <td>Document · Retrieval · Orchestration · Evaluation · 커스텀 임베딩</td>
+        </tr>
+        <tr>
+          <td><strong>개발 (FE)</strong></td>
+          <td>AI Solution</td>
+          <td class="num">1.0</td>
+          <td>Admin Console · 설정 UI · 테스트/평가 화면</td>
+        </tr>
+        <tr>
+          <td><strong>기획</strong></td>
+          <td>AI Solution</td>
+          <td class="num">2.4</td>
+          <td>프로덕트 방향 · 경쟁사 리서치 · PoC · 실패 시나리오 · 평가 설계</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim);">합계</td>
+          <td style="color:var(--text-dim);">—</td>
+          <td class="num" style="font-weight:700;">10.9 MM</td>
+          <td style="color:var(--text-dim);">NCP 상품 출시 프로세스 병행</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 06. 경쟁사 리서치 -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">06 · Market Research</span>
+    <h2>글로벌 · 국내 경쟁사 요금제 매트릭스</h2>
+    <p class="desc">
+      제품 방향과 PaaS 요금 모델을 설계하기 위해 엔터프라이즈 검색 · 클라우드 RAG 마켓을 조사.
+      <strong style="color:var(--text);">직접 경쟁자</strong>(동일 문제 · 유사 방식)와 <strong style="color:var(--text);">간접 경쟁자</strong>(유사 고객 · 다른 방식)로 분류하고, 과금 기준과 제공 형태를 매트릭스로 정리.
+    </p>
+
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>기업</th>
+          <th>과금 기준</th>
+          <th>제공 형태</th>
+          <th>전략</th>
+          <th style="text-align:right;">대표 가격</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Mindbreeze</strong></td>
+          <td>인덱싱된 문서/자료</td>
+          <td>SaaS / On-premise / Hybrid / Docker</td>
+          <td>연 과금, 200만개까지 요금 정책 구비, 무제한 요금제 존재</td>
+          <td class="num">USD 103,700/yr (100만개 SaaS)</td>
+        </tr>
+        <tr>
+          <td><strong>Coveo</strong></td>
+          <td>기본=쿼리수 · 기업=인덱싱 문서</td>
+          <td>SaaS</td>
+          <td>월 과금, 요금제별 기능/보안 차등 (RAG은 Enterprise부터)</td>
+          <td class="num">$175/mo (Enterprise)</td>
+        </tr>
+        <tr>
+          <td><strong>Elastic</strong></td>
+          <td>기능 / 보안 / 검색 기능</td>
+          <td>PaaS (Elastic Stack On-prem 별도)</td>
+          <td>검색 + Observability + Security 통합</td>
+          <td class="num">$7.68/hr (Storage Optimized L2)</td>
+        </tr>
+        <tr>
+          <td><strong>Sinequa</strong></td>
+          <td>인덱싱된 문서/자료</td>
+          <td>Cloud / On-premise / Hybrid</td>
+          <td>3-5년 라이센스 구독 갱신</td>
+          <td class="num">비공개 (문의)</td>
+        </tr>
+        <tr>
+          <td><strong>Amazon Bedrock</strong></td>
+          <td>토큰 수 (모델별)</td>
+          <td>SaaS (Serverless)</td>
+          <td>On-demand / Batch / Provisioned / Model Evaluation 분리</td>
+          <td class="num">$0.0005/1K 입력 (Titan Text Premier)</td>
+        </tr>
+        <tr>
+          <td><strong>Amazon Kendra</strong></td>
+          <td>문서 스토리지 · 쿼리 수</td>
+          <td>SaaS</td>
+          <td>KDE(개발자) / KEE(엔터프라이즈) 2종</td>
+          <td class="num">$1,008/mo (KEE, 10만 문서/8천 쿼리)</td>
+        </tr>
+        <tr>
+          <td><strong>Google Vertex AI Search</strong></td>
+          <td>쿼리 수</td>
+          <td>SaaS (Agent Builder 일부)</td>
+          <td>Standard / Enterprise + LLM 부가기능</td>
+          <td class="num">$2 ~ $14/1K 쿼리</td>
+        </tr>
+        <tr>
+          <td><strong>Azure AI Search</strong></td>
+          <td>저장 공간 / 인덱스 수</td>
+          <td>PaaS</td>
+          <td>용량제 (총 7개 티어)</td>
+          <td class="num">최대 48TB · 인덱스 10개 (L2)</td>
+        </tr>
+        <tr>
+          <td><strong>Upstage</strong></td>
+          <td>토큰 수 / 페이지 수</td>
+          <td>API</td>
+          <td>Groundness Check 별도 판매, OCR·Layout·KIE 기능 단위 과금</td>
+          <td class="num">$0.005/1K (Chat), $0.01/1장 (Layout)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:28px; color:var(--text-dim); font-size:14px; line-height:1.7;">
+      <strong style="color:var(--text-soft);">리서치 인사이트:</strong> 글로벌 리더들은 <strong>인덱싱 문서 수 × 쿼리 수</strong>의 이중 과금을 쓰거나, HCX처럼 LLM을 별도 토큰 과금하는 구조가 표준.
+      RAG Platform은 NCP HCX 과금과의 정합성과 고객의 사용 예측 가능성을 동시에 확보하는 요금 구조를 준비 중입니다.
+    </p>
+  </div>
+</section>
+
+<!-- 07. 정효주 기여 -->
+<section>
+  <div class="wrap">
+    <span class="label">07 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      AI Solution의 기획 리소스로 프로덕트 방향성 수립부터 경쟁사 리서치, Query Rewriting 프롬프트 엔지니어링, Nomura PoC, ESS Orchestration 개선 피드백까지 <strong style="color:var(--text);">마켓-아키텍처-품질</strong> 3축을 모두 담당.
+    </p>
+
+    <div class="contrib">
+      <span class="role">Market Research · Pricing</span>
+      <h3>경쟁사 매트릭스 · 요금제 리서치</h3>
+      <ul>
+        <li><strong>직접/간접 경쟁자 프레임 정의</strong> — "동일 문제 + 유사 방식 vs. 고객 겹침 + 다른 방식"으로 9개사 분류.</li>
+        <li><strong>15+ 경쟁사 요금 매트릭스</strong> — Mindbreeze · Lucidworks · Sinequa · Elastic · Coveo · Lucy · Amazon Bedrock · Kendra · Google Vertex · Azure AI Search · Upstage를 과금 기준 · 제공 형태 · 전략 · 실제 가격까지 비교.</li>
+        <li><strong>RAG Platform 과금 기준 제안을 위한 근거 확보</strong> — 각 경쟁사 전략(연 과금 vs 월 · 문서 수 vs 쿼리 vs 토큰 · SaaS vs PaaS vs On-prem)을 매핑해 HCX 과금과 정합성 있는 모델 후보를 설계.</li>
+      </ul>
+      <div class="insight-box">
+        <strong>핵심 인사이트:</strong> "인덱싱 문서 수로 과금하면 고객이 사전 예측하기 쉽지만 실 사용량과 괴리. 쿼리 수로 과금하면 실 사용량과 맞지만 예측 어려움. → <strong>기본 월 요금 + 인덱싱 문서 티어 + 쿼리 초과분 추가 과금</strong>의 하이브리드가 B2B 고객에게 가장 안전한 구조."
+      </div>
+    </div>
+
+    <div class="contrib">
+      <span class="role">Prompt Engineering</span>
+      <h3>Query Rewriting 기획 · 프롬프트 실험</h3>
+      <ul>
+        <li><strong>"Rewrite-Retrieve-Read" 프레임워크 논문 정독 후 기획자 관점으로 정리</strong> — 기존 "Retrieve-Then-Read"의 한계(입력 텍스트와 필요 지식의 격차, 고정 쿼리, 복잡 질문 처리 어려움, 적응형 검색 부재)를 조직에 공유.</li>
+        <li><strong>프롬프트 품질 조건 5가지 정의</strong> — 구체적 지시, 역할 부여, 예시 제공, 조건·제한, 요구사항 반복. 각 조건별 실제 프롬프트 예시와 함께 "AS-IS / 모두 강화 / 1~5 강화" 비교 실험 설계.</li>
+        <li><strong>테스트 방법론 · 지표 · 신뢰 수준 정의 태스크 도출</strong> — 단순 프롬프트 변경이 아닌 "좋은 Query Rewriting이 나오게 하려면 어떤 테스트를 해야 하는가"의 방법론 체계화.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">PoC · Pre-Sales</span>
+      <h3>Nomura (노무라) 도입 가능 영역 리서치</h3>
+      <ul>
+        <li><strong>일본 노무라 홀딩스 전수 리서치</strong> — 3대 사업(Wealth Management / Investment Management / Wholesale)과 17개 국내 자회사 · 4개 해외 자회사 구조 파악.</li>
+        <li><strong>검색 + LLM 시너지 프레임 설계</strong> — 검색 핵심가치(정확성·효율성·확장성·사용자 제어) × LLM 핵심가치(언어처리·의도추론·데이터통합·비정형처리·결과생성·상호작용) 매트릭스로 "어디서 가치를 줄 수 있는가"를 구조화.</li>
+        <li><strong>4개 도입 시나리오 설계</strong>
+          <ul style="margin-top:6px;">
+            <li>멀티모달 데이터 통합 검색 플랫폼 (SaaS, 사내)</li>
+            <li>시나리오 기반 성과 예측 분석 플랫폼 (SaaS, 사내+사외)</li>
+            <li>정책/시장 변화 실시간 알림 영향 분석 (API/MTS, 사내+사외)</li>
+            <li>내 손 안의 금융 컨설팅 (APP/MTS, 사외)</li>
+          </ul>
+        </li>
+        <li>각 시나리오의 <strong>타겟 · 제공 가치 · 차별화 포인트 · input/output 예시</strong>까지 구체화 — "최근 일본 은행의 금리 변화가 주요 부동산 펀드에 미친 영향 차트를 보여줘" 같은 실제 쿼리 예시 작성.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">Quality Evaluation</span>
+      <h3>ESS Orchestration 모델 개선 피드백</h3>
+      <p style="color:var(--text-soft); margin-bottom:14px;">
+        기존 ESS Orchestrator vs 개선안 A (싱글 에이전트) vs 개선안 B (멀티 에이전트) 18개 쿼리 A/B 평가.
+        <strong style="color:var(--text);">관련성/유용성 3점 스케일</strong>로 정성 평가 후 조직에 의사결정 근거로 제공.
+      </p>
+
+      <div class="ab-wrap" style="margin-top:0;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-dim); letter-spacing:0.08em;">18개 쿼리 평가 · 관련성 기준 순위</div>
+        <div class="ab-grid">
+          <div class="ab-box loser">
+            <div class="h">기존 ESS</div>
+            <div class="big">1</div>
+            <p>18개 중 1개만 최다 관련성으로 선정. "관련 정보를 찾을 수 없습니다" 반복.</p>
+          </div>
+          <div class="ab-box">
+            <div class="h">개선안 A</div>
+            <div class="big">7</div>
+            <p>요약 성능 · 질의응답 구체성이 높음. 간결한 답변 선호 케이스에서 강세.</p>
+          </div>
+          <div class="ab-box winner">
+            <div class="h">개선안 B</div>
+            <div class="big">9</div>
+            <p>구조화 · 볼드 · 넘버링 · 목차 생성 우수. 복잡한 요청을 쪼개 처리하는 능력 우위.</p>
+          </div>
+        </div>
+      </div>
+
+      <ul style="margin-top:18px;">
+        <li><strong>13 · 15번 제외 16/18 쿼리에서 개선 확인</strong> — "기존에는 답할 수 없었던 비교/차트/다중 요청 처리"가 핵심 개선 포인트.</li>
+        <li><strong>개선안 B의 한계점도 함께 보고</strong> — 일부 질문에서 결론이 뒤로 밀려 즉답성 떨어짐, 표의 텍스트 깨짐 이슈.</li>
+        <li><strong>의사결정 프레임 제시</strong> — "내부 정성 기준으로 외부 모델(GPT-4o) 사용 여부 결정 + 답변 고도화 단계 정의"가 기획의 역할임을 명시.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">UX · Error Handling</span>
+      <h3>단계별 실패 대응 시나리오 정의</h3>
+      <ul>
+        <li><strong>RAG 파이프라인 각 단계별 실패 유형 · Next Action 카탈로그 작성</strong> — 문서 파싱 실패(지원하지 않는 형식, 암호화/읽기 전용, 파일 크기 초과), 임베딩 생성 실패(데이터 품질, 텍스트 길이 한계, 서버 부하, 파라미터 설정, 인터넷 연결, 모델 로드 실패), 색인 생성 실패.</li>
+        <li><strong>유저에게 시킬 Next Action을 1안/2안으로 분기 제안</strong> — 예: 암호화 파일의 경우 "암호 입력 유도 vs 해당 파일 삭제 안내" 중 프로덕트 정책에 맞춰 선택.</li>
+        <li>개발팀과 "<strong>가능한지 확인 필요</strong>" 플래그로 기술 feasibility 체크 루프까지 설계에 포함.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">Competitive Research</span>
+      <h3>협업 툴 마켓 AI 기능 조사 (WORKS 확장 맥락)</h3>
+      <ul>
+        <li><strong>4개 카테고리 분류</strong> — 메신저형 협업툴 · 통합 업무 관리 툴 · 노트형 툴 · 프로젝트 매니징 툴.</li>
+        <li><strong>16+ 경쟁사 AI 기능 전수 조사</strong> — Kakao Work · Jandi · Slack · Dooray · MS Teams · Google Workspace · 플로우 · Trello · Asana · ClickUp · Confluence · Notion · Monday · Jira 등.</li>
+        <li><strong>3가지 공통 기능 카테고리 도출</strong> — ① 통합 검색 및 개인화/추천 ② 메시지/컨텐츠 생성·요약 ③ third-party app 연동. 특히 Dooray의 DLP(데이터 유출 방지) 같은 <strong>차별화 기능</strong>을 RAG Platform 보안 설계에 역참조.</li>
+      </ul>
+    </div>
+
+    <div class="contrib">
+      <span class="role">Product Planning</span>
+      <h3>프로덕트 · 로드맵 · 릴리즈 기획</h3>
+      <ul>
+        <li>RAG Platform <strong>프로덕트 정의 · 특장점 · 비전 3종 · 주요 일정 계획</strong> 작성.</li>
+        <li>24.06 MVP 타겟 · 24.07 Hotfix · v1.5 · 11월 엔터프라이즈 버전의 <strong>단계별 릴리즈 로드맵</strong> 수립.</li>
+        <li>Console의 관리자 Admin 최소 스펙 정의, 서비스 생성/데이터 연동/테스트/평가 플로우의 UX 설계.</li>
+        <li>뉴로서치(BE) · AI Solution(FE) 간 개발 태스크 분배와 R&amp;R 조율.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08. ONEPAGER -->
+<section class="tight">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>RAG Platform</strong>은 고객사 내부 데이터로 HCX를 보강하여 정확하고 최신의 맞춤형 응답을 생성하는 <strong>NCP향 Enterprise RAG PaaS</strong>.
+        Document · Retrieval · Orchestration · Evaluation · Console의 <span class="hl">5개 서비스 구조</span>로 데이터 연동부터 평가까지 한 세트.
+        <strong>VPC · KMS 기반 보안</strong>, <strong>커스텀 임베딩</strong>, <strong>정답셋 기반 정기 평가</strong>로 B2B 엔터프라이즈 기준을 충족.
+        <span class="hl">24.06 MVP</span> → 24.07 Hotfix → v1.5 → <span class="hl">24.11 엔터프라이즈 버전(IAM · 평가 가시화)</span>의 단계별 릴리즈로 진행 중.
+        정효주는 AI Solution 기획(2.4MM)으로 <strong>프로덕트 방향성 수립 · 경쟁사/요금제 매트릭스(15+) · Query Rewriting 프롬프트 실험 · Nomura PoC 시나리오 4종 · ESS Orchestration A/B 평가(18 쿼리) · 실패 대응 시나리오 · 로드맵</strong>을 담당.
+        또한 RAG Platform은 <strong>Launcher (shook)</strong>의 HCX 답변 강화를 위한 사내 데이터 소스로 연동될 예정입니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>RAG Platform · Enterprise RAG PaaS</strong>
+      NAVER Cloud · AI Application Tech · 2024 –
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence AIPLATFORM/2500938449 · AIAPPTECH/2364973067
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
