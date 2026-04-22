@@ -310,33 +310,100 @@
   .chip.active .count { opacity: 0.8; }
 
   /* ============ BOOK SPREAD ============ */
-  .book-wrap { max-width: 1100px; margin: 0 auto; }
+  .book-wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 10px 12px 18px;
+    position: relative;
+  }
+  /* Page stack peeking from under the open book — left & right edges */
+  .book-wrap::before,
+  .book-wrap::after {
+    content: '';
+    position: absolute;
+    top: 18px; bottom: 28px;
+    width: 10px;
+    border-radius: 2px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .book-wrap::before {
+    left: 4px;
+    background:
+      linear-gradient(to right, rgba(43,24,22,0.22) 0%, rgba(43,24,22,0.08) 40%, transparent 100%),
+      repeating-linear-gradient(to bottom, var(--paper) 0 1px, var(--paper-edge) 1px 2px);
+    box-shadow: inset -1px 0 0 rgba(43,24,22,0.1);
+  }
+  .book-wrap::after {
+    right: 4px;
+    background:
+      linear-gradient(to left, rgba(43,24,22,0.22) 0%, rgba(43,24,22,0.08) 40%, transparent 100%),
+      repeating-linear-gradient(to bottom, var(--paper) 0 1px, var(--paper-edge) 1px 2px);
+    box-shadow: inset 1px 0 0 rgba(43,24,22,0.1);
+  }
+
   .book {
     background: var(--paper);
-    border-radius: 8px;
-    box-shadow: var(--shadow);
+    border-radius: 6px 6px 4px 4px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     position: relative;
     overflow: hidden;
     border: 0.5px solid var(--paper-edge);
+    z-index: 1;
+    /* Layered shadows: book thickness + ambient + ground shadow */
+    box-shadow:
+      0 1px 0 rgba(43,24,22,0.08),
+      0 2px 0 rgba(220,205,170,0.9),
+      0 3px 0 rgba(43,24,22,0.06),
+      0 4px 0 rgba(220,205,170,0.8),
+      0 5px 0 rgba(43,24,22,0.05),
+      0 30px 60px -10px rgba(91,63,59,0.22),
+      0 50px 100px -20px rgba(91,63,59,0.18),
+      0 8px 20px rgba(43,24,22,0.08);
   }
+  /* Centre binding — darker crease shadow */
   .book::before {
     content: '';
     position: absolute; top: 0; bottom: 0; left: 50%;
-    width: 1px;
-    background: linear-gradient(180deg, transparent 0%, rgba(43,24,22,0.2) 15%, rgba(43,24,22,0.25) 50%, rgba(43,24,22,0.2) 85%, transparent 100%);
-    z-index: 3;
-    transform: translateX(-0.5px);
+    width: 2px;
+    background: linear-gradient(180deg, rgba(43,24,22,0.15) 0%, rgba(43,24,22,0.35) 50%, rgba(43,24,22,0.15) 100%);
+    z-index: 4;
+    transform: translateX(-1px);
   }
+  /* Spine gradient — page curl toward the gutter */
   .book::after {
     content: '';
     position: absolute; top: 0; bottom: 0; left: 50%;
-    width: 46px;
-    background: linear-gradient(90deg, rgba(43,24,22,0.08) 0%, transparent 42%, transparent 58%, rgba(43,24,22,0.08) 100%);
+    width: 80px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(43,24,22,0.03) 30%,
+      rgba(43,24,22,0.12) 48%,
+      rgba(43,24,22,0.18) 50%,
+      rgba(43,24,22,0.12) 52%,
+      rgba(43,24,22,0.03) 70%,
+      transparent 100%);
     transform: translateX(-50%);
     pointer-events: none;
+    z-index: 3;
+  }
+  /* Subtle outer shadow fade on book edges */
+  .book-page::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 20px;
+    pointer-events: none;
     z-index: 2;
+  }
+  .book-page.left::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(43,24,22,0.08) 0%, transparent 100%);
+  }
+  .book-page.right::before {
+    right: 0;
+    background: linear-gradient(-90deg, rgba(43,24,22,0.08) 0%, transparent 100%);
   }
 
   .book-page {
