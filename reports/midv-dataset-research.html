@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MIDV Dataset Research — 공개 ID카드 데이터셋 리서치 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #00d4ff;
+    --brand-2: #00ffa3;
+    --brand-grad: linear-gradient(135deg, #00d4ff 0%, #00ffa3 100%);
+    --accent: #ffd96b;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(0,212,255,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(0,255,163,0.08) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand-2);
+    box-shadow: 0 0 14px var(--brand-2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(40px, 6.5vw, 72px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.22);
+    color: #67e8f9;
+  }
+  .hero-badge.green { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.2); color: var(--brand-2); }
+  .hero-badge.gold { background: rgba(255,217,107,0.08); border-color: rgba(255,217,107,0.22); color: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat { background: var(--bg-2); padding: 28px; }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before { content: ''; width: 24px; height: 1px; background: var(--brand); }
+
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 800px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(0,212,255,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  .compare-table th {
+    text-align: left;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .compare-table td {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    vertical-align: top;
+  }
+  .compare-table td strong { color: var(--text); }
+
+  .chiprow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .minichip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: #67e8f9;
+  }
+  .minichip.warn { background: rgba(255,183,77,0.08); border-color: rgba(255,183,77,0.22); color: var(--warn); }
+  .minichip.green { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.2); color: var(--brand-2); }
+
+  .contrib {
+    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,255,163,0.05) 100%);
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .contrib h3 { font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0,212,255,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #67e8f9;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li { color: var(--text-soft); font-size: 14.5px; margin-bottom: 9px; line-height: 1.6; }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(0,212,255,0.1) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p { color: var(--text-soft); font-size: 16px; line-height: 1.8; max-width: 940px; }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .backlink:hover { color: var(--brand); }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .onepager { padding: 36px 28px; }
+    .contrib { padding: 32px 28px; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <a href="../index.html" class="backlink">← Back to portfolio</a>
+    <span class="hero-tag"><span class="dot"></span>Data Foundation · 2022</span>
+    <h1 class="hero-title">
+      <span>MIDV Dataset Research.</span><br/>
+      공개할 수 없는 신분증을,<br/>
+      공개 데이터셋으로.
+    </h1>
+    <p class="hero-sub">
+      신분증은 개인정보의 집합체라 공개 데이터셋이 사실상 없습니다. eKYC 모델을 <strong style="color:var(--text);">"어떻게 공정하게 평가할 것인가"</strong>라는 질문에서 출발해,
+      학계에서 만든 <strong style="color:var(--text);">MIDV-500 / MIDV-2019</strong> 데이터셋을 뜯어 보고 Clova EyeD의 eKYC 평가셋 설계 원칙을 정리한 리서치.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">Public Benchmark Research</span>
+      <span class="hero-badge green">eKYC / IDCard</span>
+      <span class="hero-badge gold">Clova EyeD Evaluation Strategy</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">분석 데이터셋</div>
+        <div class="stat-num"><span class="grad">2종</span></div>
+        <div class="stat-hint">MIDV-500 · MIDV-2019</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">총 비디오 클립</div>
+        <div class="stat-num">700<span class="sm">+</span></div>
+        <div class="stat-hint">500 + 200 신규 추가</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">신분증 종류</div>
+        <div class="stat-num">50<span class="sm">종</span></div>
+        <div class="stat-hint">ID 17 · PP 14 · DL 13 · etc 6</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">도출한 평가축</div>
+        <div class="stat-num">5<span class="sm">축</span></div>
+        <div class="stat-hint">화질·조명·블러·포커스·반사</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. WHY -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Why</span>
+    <h2>왜 공개 데이터셋을 먼저 뜯어 봐야 했나</h2>
+    <p class="desc">
+      Clova EyeD는 일본 PayPay · LinePay · 네이버 파이낸셜 등 금융/eKYC 환경에 배포되는 SDK입니다.
+      "신분증을 정확히 인식했다"는 주장을 하려면 <strong style="color:var(--text);">공정한 벤치마크</strong>가 있어야 하는데, 신분증 자체가 민감정보라 자체 데이터로만은 내부 확신을 넘어서는 신뢰도를 만들기 어려웠습니다.
+      MIDV 시리즈는 학계에서 <strong style="color:var(--text);">Wikimedia의 sample/specimen 문서와 퍼블릭 데이터만으로</strong> 이 문제를 우회한 몇 안 되는 공개 데이터셋이었고, 이 설계 논리를 그대로 Clova EyeD의 평가셋 설계 원칙으로 이식할 수 있다고 판단했습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">CONSTRAINT 01</div>
+        <h3>민감정보 · 공개 불가</h3>
+        <p>실제 신분증은 개인정보 포함으로 외부 공유 불가. <strong>모델 성능의 외부 검증 경로</strong>가 사실상 막혀 있음.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CONSTRAINT 02</div>
+        <h3>학계 벤치마크 부재</h3>
+        <p>Face / OCR / 문서 영역에 비해 <strong>IDCard 특화 공개 셋이 극히 제한적</strong>. Face Detection · Text Line · Document Data Extraction 세 개 태스크를 한번에 다룰 수 있는 셋이 없음.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CONSTRAINT 03</div>
+        <h3>실환경 조건 결여</h3>
+        <p>MIDV-500조차 <strong>왜곡·조명 변수는 고려되지 않음</strong>. 모바일 eKYC 시나리오의 핵심 난이도를 담기 부족.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. MIDV-500 / MIDV-2019 비교 -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Dataset Breakdown</span>
+    <h2>MIDV-500 → MIDV-2019, 무엇이 바뀌었나</h2>
+    <p class="desc">
+      두 데이터셋을 나란히 놓고 보면 학계가 <strong style="color:var(--text);">"실환경 조건을 하나씩 추가해가며"</strong> 벤치마크를 성숙시킨 흐름이 보입니다.
+      이 확장의 축이 곧 Clova EyeD의 평가셋이 다뤄야 할 변수의 목록이 됩니다.
+    </p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:20%;">항목</th>
+          <th style="width:40%;">MIDV-500 (2018)</th>
+          <th style="width:40%;">MIDV-2019</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>비디오 클립</strong></td>
+          <td>500개</td>
+          <td>500 + <strong>200개 신규</strong> = 700+ 고화질 클립</td>
+        </tr>
+        <tr>
+          <td><strong>ID 종류</strong></td>
+          <td>50종 (ID·여권·운전면허 등)</td>
+          <td>동일 50종 유지 (17 ID · 14 여권 · 13 면허 · 6 기타)</td>
+        </tr>
+        <tr>
+          <td><strong>촬영 환경</strong></td>
+          <td>테이블 · 키보드 · 손 · 일부 가림 · 잡동사니 배경</td>
+          <td>+ <strong>Projective Distortion</strong> · <strong>어두운 조명</strong> 조건 추가</td>
+        </tr>
+        <tr>
+          <td><strong>촬영 디바이스</strong></td>
+          <td>아이폰 · 갤럭시 (실모바일 환경)</td>
+          <td>고화질 비디오 클립 (해상도 업)</td>
+        </tr>
+        <tr>
+          <td><strong>데이터 출처</strong></td>
+          <td>Wikimedia sample/specimen 문서 · 퍼블릭 데이터만</td>
+          <td>동일 원칙 승계 (개인정보 회피)</td>
+        </tr>
+        <tr>
+          <td><strong>한계</strong></td>
+          <td>왜곡 · 조명 변수 미반영</td>
+          <td>일부 해소 · 블러/포커스/반사는 여전히 약함</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:24px; color:var(--text-dim); font-size:13.5px; font-family:'JetBrains Mono',monospace;">
+      원 논문: arxiv.org/pdf/1807.05786 · FTP: smartengines.com/midv-500/extra/midv-2019/
+    </p>
+  </div>
+</section>
+
+<!-- 03. FIVE AXES -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Five Evaluation Axes</span>
+    <h2>Clova EyeD 평가셋이 다뤄야 할 5개 변수</h2>
+    <p class="desc">
+      MIDV-500의 한계("왜곡 · 조명이 없다")와 MIDV-2019의 보완분을 종합해, eKYC SDK 평가셋이 반드시 교차 검증해야 하는 축을 <strong style="color:var(--text);">5개로 정리</strong>했습니다.
+      이 축은 곧 Clova EyeD 평가셋의 샘플링 룰 · 알체라 외주 데이터 구축 가이드의 근거가 됩니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">AXIS 01</div>
+        <h3>저화질 (Low-resolution)</h3>
+        <p>저가 단말/저조도 상황 카메라 노이즈. MIDV-500의 폰 촬영분과 유사 · <strong>이미 커버됨</strong>.</p>
+        <div class="chiprow"><span class="minichip green">MIDV 커버</span></div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">AXIS 02</div>
+        <h3>조명 (Lighting)</h3>
+        <p>어두운 실내 · 역광 · 플래시. <strong>MIDV-2019에서 어두운 조명 추가</strong>되었으나 역광/스팟라이트는 부족.</p>
+        <div class="chiprow"><span class="minichip">부분 커버</span><span class="minichip warn">자체 확장</span></div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">AXIS 03</div>
+        <h3>블러 (Motion / Focus Blur)</h3>
+        <p>손떨림 · 셔터 타이밍. MIDV 계열에서 체계적 커버 안 됨 → <strong>자체 데이터에 명시 포함 필요</strong>.</p>
+        <div class="chiprow"><span class="minichip warn">자체 확장</span></div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">AXIS 04</div>
+        <h3>포커스 (Out-of-focus)</h3>
+        <p>피사체 근접 실패 · AF 지연. 블러와 구분해 관리 — 원인이 다르므로 <strong>실패 모드도 다름</strong>.</p>
+        <div class="chiprow"><span class="minichip warn">자체 확장</span></div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">AXIS 05</div>
+        <h3>반사 (Reflection)</h3>
+        <p>홀로그램 · 코팅 반사 · 스크린 반사. eKYC 현장의 가장 빈번한 실패 원인 중 하나 — <strong>반드시 확장</strong>.</p>
+        <div class="chiprow"><span class="minichip warn">자체 확장</span></div>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg, rgba(0,212,255,0.06) 0%, rgba(0,255,163,0.03) 100%); border-color:rgba(0,212,255,0.22);">
+        <div class="card-num" style="color:var(--brand-2);">OUTCOME</div>
+        <h3>평가셋 샘플링 룰</h3>
+        <p>5축 × 신분증 종류를 교차 매트릭스로 구성, <strong>모든 셀에 최소 샘플 수</strong>를 강제해 평가 편향 제거.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04. MULTI-TASK -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · Multi-task Utility</span>
+    <h2>하나의 셋, 세 개의 태스크</h2>
+    <p class="desc">
+      MIDV 시리즈의 가장 큰 설계 이점은 <strong style="color:var(--text);">단일 데이터셋으로 3개 태스크를 동시에 평가</strong>할 수 있다는 점입니다.
+      Clova EyeD가 다루는 태스크 구성과 1:1로 정렬되어, 그대로 내부 평가셋 설계 템플릿으로 이식했습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">TASK A</div>
+        <h3>Face Detection</h3>
+        <p>신분증 내 <strong>얼굴 영역 검출</strong>. 포커스/조명 조건이 까다로울수록 실패율이 드러남.</p>
+        <p style="margin-top:10px; color:var(--text-dim); font-size:13px;">→ Clova EyeD Face SDK 평가 루틴과 정렬</p>
+      </div>
+      <div class="card">
+        <div class="card-num">TASK B</div>
+        <h3>Text Line Recognition</h3>
+        <p>신분증 내 <strong>문자 라인 인식</strong>. 왜곡·반사가 섞일 때 OCR 성능 저하 지점을 드러냄.</p>
+        <p style="margin-top:10px; color:var(--text-dim); font-size:13px;">→ Clova OCR / eKYC 통합 파이프라인 평가와 정렬</p>
+      </div>
+      <div class="card">
+        <div class="card-num">TASK C</div>
+        <h3>Document Data Extraction</h3>
+        <p>라벨/필드 추출. MRZ · 성명 · 생년월일 · 발행국 등 <strong>구조화 필드 추출</strong> 정확도 검증.</p>
+        <p style="margin-top:10px; color:var(--text-dim); font-size:13px;">→ eKYC 최종 결과물 정합성 평가와 정렬</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. 정효주 기여 -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      데이터 조사 → 평가 설계 → 외주 데이터 사양으로 이어지는 <strong style="color:var(--text);">업스트림 연결</strong>을 담당.
+      "공개 데이터셋을 쓸 수 있는가"가 아니라 "공개 데이터셋의 설계 논리를 우리 데이터 사양에 어떻게 이식할 것인가"로 문제를 재정의했습니다.
+    </p>
+
+    <div class="contrib">
+      <span class="role">Data Strategy · Product Planning</span>
+      <h3>공개 데이터셋의 설계 논리를 내부 평가셋 원칙으로 이식</h3>
+      <ul>
+        <li><strong>MIDV-500/2019 논문 · FTP 아카이브 정독</strong> — 700+ 클립 · 50종 ID 구성의 샘플링 설계, Wikimedia specimen 기반 데이터 수집 원칙, projective distortion 추가 의도 분석.</li>
+        <li><strong>MIDV 한계 → Clova EyeD 자체 데이터 요구사항 역산</strong> — 왜곡 · 조명 · 블러 · 포커스 · 반사 <strong>5개 평가축</strong>을 도출해 eKYC SDK 평가셋의 최소 커버리지 조건으로 확정.</li>
+        <li><strong>3-태스크 평가 템플릿 정렬</strong> — Face Detection · Text Line · Document Extraction 3개 태스크가 단일 셋으로 교차 평가되도록, Clova EyeD 내부 평가 파이프라인 구조와 1:1 정렬.</li>
+        <li><strong>민감정보 회피 설계 가이드</strong> — Wikimedia specimen 원칙을 사내 데이터 구축 시 적용할 수 있는 형태로 정리, 외주(알체라) 계약서의 데이터 수집 조항 근거로 활용.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06. ONEPAGER -->
+<section class="tight alt">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>MIDV Dataset Research</strong>는 신분증이라는 <strong>공개 불가능한 도메인</strong>에서 eKYC 모델을 공정하게 평가하기 위한 리서치 프로젝트였습니다.
+        학계의 <strong>MIDV-500 / MIDV-2019</strong>를 정독해 700+ 클립 · 50종 ID · Wikimedia specimen 기반 설계 논리를 해체하고,
+        그 한계(왜곡 · 조명 · 블러 · 포커스 · 반사)를 <span class="hl">5개 평가축</span>으로 역산해 Clova EyeD의 <strong>내부 평가셋 설계 원칙</strong>과 외주 데이터 구축 가이드의 근거로 이식했습니다.
+        단일 데이터셋으로 <span class="hl">Face Detection · Text Line · Document Extraction 3개 태스크</span>를 동시에 평가하는 템플릿은 이후 Clova EyeD 평가 파이프라인 구조와 그대로 정렬되었습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>MIDV Dataset Research</strong>
+      Clova Visual AI · Data Foundation · 2022
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence ClovaVisualAI/1203467728
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

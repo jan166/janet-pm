@@ -690,6 +690,26 @@
   .block-dan .photo-ph { aspect-ratio: 1/1; }
   .block-dan .block-title { font-size: 20px; }
 
+  /* ============ DATA & MODEL BLOCKS (compact) ============ */
+  .block-data {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 0.9fr 1.4fr;
+    gap: 18px;
+    align-items: start;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(43,24,22,0.1);
+  }
+  .block-data .photo-ph { aspect-ratio: 5/3.2; }
+  .block-data .block-title { font-size: 20px; line-height: 1.15; }
+  .block-data .block-body { font-size: 12.5px; }
+
+  /* Data-theme gradient placeholders */
+  .ph-teal   { background: linear-gradient(135deg, #6DC0B9 0%, #2F6D67 100%); }
+  .ph-amber  { background: linear-gradient(135deg, #D7A55E 0%, #8A5A21 100%); }
+  .ph-rose   { background: linear-gradient(135deg, #C98296 0%, #7A3F51 100%); }
+  .ph-forest { background: linear-gradient(135deg, #8BAE84 0%, #4C6F48 100%); }
+
   .block-ad {
     grid-column: span 2;
     padding-top: 16px;
@@ -999,7 +1019,7 @@
     .foot-brand { font-size: 56px; }
     .page { padding: 14px 14px 0; }
     .hero { padding: 52px 12px 32px; }
-    .block-main, .block-milan, .block-shop, .block-dan, .block-launcher { grid-template-columns: 1fr; }
+    .block-main, .block-milan, .block-shop, .block-dan, .block-launcher, .block-data { grid-template-columns: 1fr; }
     .block-rag-inner { grid-template-columns: 1fr; }
     .block-ad .block-body { column-count: 1; }
   }
@@ -1133,6 +1153,38 @@
           </a>
         </div>
 
+        <!-- MIDV DATASET RESEARCH -->
+        <div class="block block-data" data-category="data" data-report="reports/midv-dataset-research.html">
+          <div class="photo-ph ph-teal">
+            <div class="ph-note" data-i18n="blocks.midv.caption">MIDV · public ID dataset breakdown</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.midv.kicker">Data foundation</div>
+            <div class="block-meta"><b>NAVER CLOUD · Clova Visual AI</b><span>·</span><span>2022</span></div>
+            <h3 class="block-title" data-i18n="blocks.midv.title">MIDV Dataset — designing an eval set for a dataset you can't publish.</h3>
+            <p class="block-body" data-i18n="blocks.midv.body">Dissected the academic MIDV-500 / MIDV-2019 ID-card datasets (700+ clips, 50 ID types) to derive five axes — resolution, lighting, blur, focus, reflection — that became Clova EyeD's evaluation set and vendor data spec.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- VERTEX AI BENCHMARKING -->
+        <div class="block block-data" data-category="data" data-report="reports/vertex-ai-research.html">
+          <div class="photo-ph ph-amber">
+            <div class="ph-note" data-i18n="blocks.vertex.caption">Vertex AI · MLOps benchmark</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.vertex.kicker">ML platform research</div>
+            <div class="block-meta"><b>NAVER CLOUD · Clova Visual AI</b><span>·</span><span>2021</span></div>
+            <h3 class="block-title" data-i18n="blocks.vertex.title">Vertex AI Benchmarking — taking Google's MLOps apart before drawing ours.</h3>
+            <p class="block-body" data-i18n="blocks.vertex.body">Built an end-to-end PoC on Vertex AI (20-image AutoML, 22-image eval, ≈95% accuracy) and mapped 16+ features to in-house assets, flagging 8 gaps that became inputs for Flova planning.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
         <div class="folio" data-i18n="folio.left">— folio recto · 04 —</div>
       </div>
 
@@ -1202,6 +1254,54 @@
           </a>
         </div>
 
+        <!-- SENSETIME PATENT RESEARCH -->
+        <div class="block block-data" data-category="data" data-report="reports/sensetime-patent-research.html">
+          <div class="photo-ph ph-rose">
+            <div class="ph-note" data-i18n="blocks.patent.caption">SenseTime · patent taxonomy</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.patent.kicker">Competitive intelligence</div>
+            <div class="block-meta"><b>NAVER CLOUD · Clova Visual AI</b><span>·</span><span>2022</span></div>
+            <h3 class="block-title" data-i18n="blocks.patent.title">SenseTime Patent Research — a taxonomy for reading the competition.</h3>
+            <p class="block-body" data-i18n="blocks.patent.body">A 4-domain × 8-category × 60+ keyword taxonomy designed so legal, modellers, and PM could request SenseTime patent scans in a single shared vocabulary — and map Clova Eyes' jittering / AR / recognition pain points onto it.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- VISION DATA OPERATIONS -->
+        <div class="block block-data" data-category="data" data-report="reports/vision-data-ops.html">
+          <div class="photo-ph ph-forest">
+            <div class="ph-note" data-i18n="blocks.dataops.caption">Vision Data Ops · vendor + PT pipeline</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.dataops.kicker">Data pipeline</div>
+            <div class="block-meta"><b>NAVER CLOUD · Clova Visual AI</b><span>·</span><span>2022</span></div>
+            <h3 class="block-title" data-i18n="blocks.dataops.title">Vision Data Operations — four tracks, one standard process.</h3>
+            <p class="block-body" data-i18n="blocks.dataops.body">Ran Face/Hair Segmentation · Hair Matte · Body Keypoints · Datatang QA in parallel. Stood up a 6-step task-agnostic process and an in-house PT pipeline so the ops load didn't scale with the number of contracts.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- CAMERA & IMAGE PROCESSING RESEARCH -->
+        <div class="block block-data" data-category="data" data-report="reports/camera-imaging-research.html">
+          <div class="photo-ph ph-violet">
+            <div class="ph-note" data-i18n="blocks.camera.caption">Camera &amp; ISP · 1784 FaceSign preprocessing</div>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.camera.kicker">R&amp;D research</div>
+            <div class="block-meta"><b>NAVER CLOUD · Clova Visual AI</b><span>·</span><span>2022</span></div>
+            <h3 class="block-title" data-i18n="blocks.camera.title">Camera &amp; Image Processing — preprocessing doesn't start in software.</h3>
+            <p class="block-body" data-i18n="blocks.camera.body">Mapped the full 5-stage preprocessing pipeline from sensor to model input, and cracked 1784 FaceSign's backlight detection failure with a dual-path fix — polarizing-film + RGB-Thermal hardware plus per-sample backlight annotation.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
         <div class="folio" data-i18n="folio.right">— folio verso · 05 —</div>
       </div>
 
@@ -1215,7 +1315,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 4v14m0 0l-6-6m6 6l6-6"/></svg>
     </a>
     <div class="booknav-page">
-      <span id="pageCurrent">01</span><span class="total"> / 05</span>
+      <span id="pageCurrent">01</span><span class="total"> / 06</span>
     </div>
     <div class="booknav-arrows">
       <button class="booknav-arrow" id="pagePrev" aria-label="Previous">
@@ -1328,6 +1428,7 @@
     return [
       { id: 'all',    label: get('all') },
       { id: 'ai',     label: get('ai') },
+      { id: 'data',   label: get('data') },
       { id: 'sales',  label: get('sales') },
       { id: 'growth', label: get('growth') },
       { id: 'events', label: get('events') }
@@ -1471,13 +1572,13 @@
   const pagePrev = document.getElementById('pagePrev');
   const pageNext = document.getElementById('pageNext');
   function updatePageCounter() {
-    const order = ['all', 'ai', 'sales', 'growth', 'events'];
+    const order = ['all', 'ai', 'data', 'sales', 'growth', 'events'];
     const idx = order.indexOf(activeCategory);
     const num = String(idx + 1).padStart(2, '0');
     if (pageCurrent) pageCurrent.textContent = num;
   }
   function cycleCategory(dir) {
-    const order = ['all', 'ai', 'sales', 'growth', 'events'];
+    const order = ['all', 'ai', 'data', 'sales', 'growth', 'events'];
     const idx = order.indexOf(activeCategory);
     activeCategory = order[(idx + dir + order.length) % order.length];
     renderFilters();

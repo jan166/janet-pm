@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SenseTime Patent Research — 경쟁사 기술 특허 분류 체계 설계</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #ff5c7c;
+    --brand-2: #8b5cf6;
+    --brand-grad: linear-gradient(135deg, #ff5c7c 0%, #8b5cf6 100%);
+    --accent: #ffd96b;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(255,92,124,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(139,92,246,0.1) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 14px var(--brand);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(40px, 6.5vw, 72px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(255,92,124,0.1);
+    border: 1px solid rgba(255,92,124,0.22);
+    color: #ffc1cd;
+  }
+  .hero-badge.violet { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.22); color: #c4b5fd; }
+  .hero-badge.gold { background: rgba(255,217,107,0.08); border-color: rgba(255,217,107,0.22); color: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat { background: var(--bg-2); padding: 28px; }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before { content: ''; width: 24px; height: 1px; background: var(--brand); }
+
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 800px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(255,92,124,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Taxonomy tree block */
+  .taxon {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .taxon-head {
+    padding: 22px 28px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .taxon-head h3 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .taxon-head .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: rgba(255,92,124,0.1);
+    color: #ffc1cd;
+    border: 1px solid rgba(255,92,124,0.22);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .taxon-body { padding: 24px 28px 32px; }
+  .taxon-row {
+    display: grid;
+    grid-template-columns: 180px 200px 1fr;
+    gap: 20px;
+    padding: 14px 0;
+    border-top: 1px dashed var(--border);
+  }
+  .taxon-row:first-child { border-top: none; }
+  .taxon-row .l1 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .taxon-row .l2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .taxon-row .kw {
+    color: var(--text-soft);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .taxon-row .kw code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: rgba(139,92,246,0.08);
+    color: #c4b5fd;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-right: 6px;
+    margin-bottom: 4px;
+    display: inline-block;
+    border: 1px solid rgba(139,92,246,0.18);
+  }
+
+  .note {
+    margin-top: 20px;
+    padding: 18px 22px;
+    background: rgba(255,217,107,0.04);
+    border: 1px solid rgba(255,217,107,0.18);
+    border-radius: 12px;
+    color: var(--text-soft);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .note strong { color: var(--accent); font-weight: 700; }
+
+  .contrib {
+    background: linear-gradient(135deg, rgba(255,92,124,0.08) 0%, rgba(139,92,246,0.05) 100%);
+    border: 1px solid rgba(255,92,124,0.22);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .contrib h3 { font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,92,124,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffc1cd;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li { color: var(--text-soft); font-size: 14.5px; margin-bottom: 9px; line-height: 1.6; }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(255,92,124,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p { color: var(--text-soft); font-size: 16px; line-height: 1.8; max-width: 940px; }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .backlink:hover { color: var(--brand); }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .onepager { padding: 36px 28px; }
+    .contrib { padding: 32px 28px; }
+    section { padding: 80px 0; }
+    .taxon-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <a href="../index.html" class="backlink">← Back to portfolio</a>
+    <span class="hero-tag"><span class="dot"></span>Competitive Intelligence · 2022</span>
+    <h1 class="hero-title">
+      <span>SenseTime Patent Research.</span><br/>
+      경쟁사가 어떤 특허로<br/>
+      어려운 문제를 풀었는지 본다.
+    </h1>
+    <p class="hero-sub">
+      Clova Eyes의 <strong style="color:var(--text);">지터링 · AR · 얼굴 인식</strong> 같은 "풀기 까다로운 문제"를 경쟁사 <strong style="color:var(--text);">SenseTime</strong>은 어떤 특허로 해결해 왔는가.
+      특허 검토 의뢰를 위한 <strong style="color:var(--text);">기술 분류 체계와 키워드 사전</strong>을 설계해, R&D 방향성 논의의 공통 언어를 만든 프로젝트.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">Patent Taxonomy</span>
+      <span class="hero-badge violet">Clova Eyes R&D Input</span>
+      <span class="hero-badge gold">Keyword Dictionary</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">1차 분류 도메인</div>
+        <div class="stat-num"><span class="grad">4개</span></div>
+        <div class="stat-hint">Face · Video · Avatar · SDK</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">2차 세부 카테고리</div>
+        <div class="stat-num">8<span class="sm">+</span></div>
+        <div class="stat-hint">Recognition · Security · Beauty&AR · 3D · Pose · 최적화 · Temporal · etc.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">키워드 사전</div>
+        <div class="stat-num">60<span class="sm">+</span></div>
+        <div class="stat-hint">영문 기술 키워드 수집</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">활용 범위</div>
+        <div class="stat-num">R&D<span class="sm">· 전략</span></div>
+        <div class="stat-hint">특허 의뢰 · 연구방향 논의</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. WHY -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Why</span>
+    <h2>왜 경쟁사 특허를 "분류부터" 시작했나</h2>
+    <p class="desc">
+      Clova Eyes는 얼굴 인식 · 안티스푸핑 · 아바타 등 다수 기술이 스택된 제품입니다.
+      "SenseTime의 특허를 조사해달라"고 법무에 의뢰하려면, 우선 <strong style="color:var(--text);">"어떤 카테고리의 특허인지"</strong>를 합의해야 비로소 의미 있는 검색이 가능합니다.
+      기술자마다 쓰는 단어가 다르고, 검색어 한 개만 바꿔도 결과가 달라지는 특허 검색 특성상,
+      <strong style="color:var(--text);">공통 분류 체계 + 키워드 사전</strong>을 먼저 설계하는 것이 이 프로젝트의 본 목표였습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">GOAL 01</div>
+        <h3>의뢰 공통 언어 구축</h3>
+        <p>특허 담당자 · 모델러 · 기획이 <strong>같은 분류표를 보고 같은 키워드로 대화</strong>하도록 정렬.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">GOAL 02</div>
+        <h3>문제별 레퍼런스 확보</h3>
+        <p>지터링 · AR · 얼굴 인식 등 <strong>현재 겪고 있는 기술 난제</strong>별로 SenseTime의 특허 해결책을 맵핑.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">GOAL 03</div>
+        <h3>R&D 방향성 입력</h3>
+        <p>특허 동향을 보고 <strong>Clova Eyes 연구 방향</strong>을 정하는 논의의 출발점 제공.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. TAXONOMY -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Taxonomy</span>
+    <h2>4 도메인 × 세부 카테고리 × 키워드 사전</h2>
+    <p class="desc">
+      분류 체계를 <strong style="color:var(--text);">Face · Video · Avatar · SDK</strong> 4개 도메인으로 설계했습니다.
+      각 도메인 하위에 세부 카테고리를 두고, 각 카테고리마다 특허 검색에 직접 넣을 수 있는 <strong style="color:var(--text);">영문 키워드 사전</strong>을 부록으로 붙였습니다.
+    </p>
+
+    <!-- FACE -->
+    <div class="taxon" style="margin-bottom:22px;">
+      <div class="taxon-head">
+        <h3>Face</h3>
+        <span class="badge">Domain 01 · 얼굴 중심 기술</span>
+      </div>
+      <div class="taxon-body">
+        <div class="taxon-row">
+          <div class="l1">Face Recognition</div>
+          <div class="l2">인식 · 검출</div>
+          <div class="kw"><code>Face Detection</code> <code>Face Recognition</code> <code>Image</code> <code>IR</code> <code>Depth</code></div>
+        </div>
+        <div class="taxon-row">
+          <div class="l1">Security</div>
+          <div class="l2">위·변조 방지</div>
+          <div class="kw"><code>Anti-spoofing</code> <code>Image</code> <code>Video</code> <code>+IR</code> <code>+Thermal</code> <code>DeepFake Detection</code></div>
+        </div>
+        <div class="taxon-row">
+          <div class="l1">Beauty &amp; AR</div>
+          <div class="l2">분할 · 키포인트 · 재구성</div>
+          <div class="kw"><code>Face Segmentation</code> <code>Hair Segmentation (matting)</code> <code>2D/3D Face Keypoint</code> <code>2D/3D Body-Keypoint</code> <code>Face 3D Reconstruction</code></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="taxon" style="margin-bottom:22px;">
+      <div class="taxon-head">
+        <h3>Video</h3>
+        <span class="badge" style="background:rgba(139,92,246,0.1); color:#c4b5fd; border-color:rgba(139,92,246,0.22);">Domain 02 · 공간 재구성</span>
+      </div>
+      <div class="taxon-body">
+        <div class="taxon-row">
+          <div class="l1">3D Reconstruction</div>
+          <div class="l2">렌더링 · 모델링</div>
+          <div class="kw"><code>morphable model</code> <code>differentiable rendering</code> <code>volumetric rendering</code> <code>3d mesh</code> <code>ray tracing</code> <code>multi-view stereo</code> <code>structure from motion</code></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVATAR -->
+    <div class="taxon" style="margin-bottom:22px;">
+      <div class="taxon-head">
+        <h3>Avatar</h3>
+        <span class="badge" style="background:rgba(0,255,163,0.08); color:#6de3b4; border-color:rgba(0,255,163,0.22);">Domain 03 · 신체 동작</span>
+      </div>
+      <div class="taxon-body">
+        <div class="taxon-row">
+          <div class="l1">Body / Hand Pose</div>
+          <div class="l2">포즈 · 제스처 · 충돌</div>
+          <div class="kw">
+            <code>pose estimation</code> <code>bounding box</code> <code>bbox tracker</code>
+            <code>IK</code> <code>Inverse Kinematics</code> <code>gesture</code>
+            <code>smooth filter</code> <code>smoothing filter</code>
+            <code>collision detection</code> <code>collision avoidance</code> <code>collision handler</code>
+          </div>
+        </div>
+        <div class="taxon-row">
+          <div class="l1">키워드 확장 규칙</div>
+          <div class="l2">prefix</div>
+          <div class="kw">각 키워드 앞에 <code>human</code> · <code>body</code> · <code>hand</code>를 붙여 <strong>검색 범위를 확장</strong>. 예: <code>hand pose estimation</code>, <code>body bbox tracker</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SDK -->
+    <div class="taxon">
+      <div class="taxon-head">
+        <h3>SDK</h3>
+        <span class="badge" style="background:rgba(0,212,255,0.08); color:#67e8f9; border-color:rgba(0,212,255,0.22);">Domain 04 · 경량화 · 운영</span>
+      </div>
+      <div class="taxon-body">
+        <div class="taxon-row">
+          <div class="l1">Model Optimization</div>
+          <div class="l2">경량화 · 양자화</div>
+          <div class="kw">
+            <code>integer quantization</code> <code>float16 quantization</code> <code>bfloat16 quantization</code>
+            <code>post-training quantization</code> <code>model optimization</code>
+            <code>lightweight model</code> <code>mobile model</code> <code>model compression</code>
+          </div>
+        </div>
+        <div class="taxon-row">
+          <div class="l1">Temporal Consistency</div>
+          <div class="l2">프레임 일관성</div>
+          <div class="kw">
+            <code>temporal consistency</code> <code>frame consistency</code>
+            <code>consistency in video</code>
+            <code>motion vector</code> <code>optical flow</code>
+            <code>video stream</code> <code>video recognition</code>
+          </div>
+        </div>
+        <div class="taxon-row">
+          <div class="l1">etc.</div>
+          <div class="l2">기타</div>
+          <div class="kw"><code>gaze tracking</code> <code>animal face recognition</code> <code>dynamic gesture</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>설계 규칙</strong> — "서비스가 있을 경우 함께 조사" 항을 모든 카테고리에 붙여, <strong>특허 번호뿐 아니라 실제 제품 구현체</strong>까지 함께 추적 가능하도록 의뢰 템플릿 구성. 분류표는 특허 담당자가 그대로 복사해 검색 가이드로 쓸 수 있는 형태로 제공.
+    </div>
+  </div>
+</section>
+
+<!-- 03. USE CASES -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Use Cases</span>
+    <h2>이 분류 체계가 어디에 쓰였나</h2>
+    <p class="desc">
+      분류표는 문서 하나로 끝나지 않고, 다음 3개의 의사결정 라인에서 실제로 소비되었습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">USE 01</div>
+        <h3>특허 검토 의뢰 가이드</h3>
+        <p>법무/특허 담당자에게 <strong>"이 분류표에 따라 SenseTime 특허를 조사해달라"</strong>고 의뢰. 검색어 혼선 제거, 중복 조사 방지.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">USE 02</div>
+        <h3>기술 난제별 레퍼런스 맵핑</h3>
+        <p>Clova Eyes의 <strong>지터링 이슈 · AR · 얼굴 인식</strong> 등 현재 난제별로 SenseTime 특허를 대조해 <strong>문제 해결 접근법</strong>을 후보군으로 확보.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">USE 03</div>
+        <h3>R&D 방향성 논의의 출발점</h3>
+        <p>특허 동향 요약이 모델팀 · 기획 간 <strong>"다음에 뭘 연구할까"</strong>를 이야기하는 공통 프레임으로 재사용.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04. 정효주 기여 -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      경쟁사 특허를 직접 읽는 것이 아니라, <strong style="color:var(--text);">특허를 "읽을 수 있게 만드는 프레임"</strong>을 설계한 역할.
+      기획이 R&D · 법무 · 모델팀 사이에서 공통 언어를 만드는 전형적인 브리지 업무였습니다.
+    </p>
+
+    <div class="contrib">
+      <span class="role">Competitive Intelligence · Taxonomy Design</span>
+      <h3>4 도메인 × 세부 카테고리 × 키워드 사전 설계</h3>
+      <ul>
+        <li><strong>4개 상위 도메인 확정</strong> — Face · Video · Avatar · SDK. Clova Eyes 제품 구성과 경쟁사 기술 구성을 모두 커버하는 최소 분류 단위로 정의.</li>
+        <li><strong>세부 카테고리 8+ 매핑</strong> — Face Recognition · Security(Anti-spoofing, DeepFake) · Beauty&AR · 3D Reconstruction · Body/Hand Pose · Model Optimization · Temporal Consistency · 기타로 분기.</li>
+        <li><strong>영문 키워드 사전 60+ 수집</strong> — 특허 검색에 그대로 투입 가능한 원문 표현(<em>differentiable rendering</em>, <em>post-training quantization</em> 등)으로 정리. 파생 확장 규칙("human/body/hand prefix 추가")을 명시해 검색 범위 자동 확장 가능.</li>
+        <li><strong>"연결 서비스 함께 조사" 항 부가</strong> — 특허 번호만이 아닌 실제 제품 구현체까지 대조되도록 의뢰 템플릿 재설계.</li>
+        <li><strong>난제-특허 매핑 워크샵 주도</strong> — 지터링 · AR · 얼굴 인식 등 Clova Eyes의 현재 난제를 <strong>분류표 각 칸에 매핑</strong>해 R&D · 법무 · 모델팀이 공통 분류 위에서 논의하도록 정렬.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05. ONEPAGER -->
+<section class="tight">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>SenseTime Patent Research</strong>는 경쟁사 특허를 직접 읽은 프로젝트가 아니라, <strong>경쟁사 특허를 "의미있게 읽을 수 있는 분류 체계"</strong>를 설계한 리서치였습니다.
+        <span class="hl">Face · Video · Avatar · SDK 4개 도메인</span> 아래 <strong>8+ 세부 카테고리</strong>와 <strong>60+ 영문 키워드 사전</strong>을 구성해,
+        법무 · 모델팀 · 기획이 같은 분류표 위에서 특허 의뢰를 주고받고, 지터링 · AR · 얼굴 인식 등의 기술 난제를 <strong>특정 카테고리에 매핑</strong>해 Clova Eyes R&D 방향성 논의의 출발점으로 사용했습니다.
+        <span class="hl">"검색어 한 개로 결과가 흔들리는"</span> 특허 검색의 특성상, 기획이 만든 분류/사전은 이후 의뢰 품질의 일관성을 지키는 기준 문서 역할을 했습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>SenseTime Patent Research</strong>
+      Clova Visual AI · Competitive Intelligence · 2022
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence ClovaVisualAI/1203465113
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

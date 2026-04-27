@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Camera & Image Processing Research — 비전 모델 전처리의 하드웨어 경계</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #8b5cf6;
+    --brand-2: #00d4ff;
+    --brand-grad: linear-gradient(135deg, #8b5cf6 0%, #00d4ff 100%);
+    --accent: #ffd96b;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(139,92,246,0.14) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(0,212,255,0.08) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 14px var(--brand);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(40px, 6.5vw, 72px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.22);
+    color: #c4b5fd;
+  }
+  .hero-badge.cyan { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2); color: #67e8f9; }
+  .hero-badge.gold { background: rgba(255,217,107,0.08); border-color: rgba(255,217,107,0.22); color: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat { background: var(--bg-2); padding: 28px; }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before { content: ''; width: 24px; height: 1px; background: var(--brand); }
+
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 800px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(139,92,246,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Pipeline visual */
+  .pipeline {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+  }
+  .pipeline .stage {
+    padding: 0 14px;
+    position: relative;
+  }
+  .pipeline .stage:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 22px;
+    color: var(--text-dim);
+    font-size: 16px;
+  }
+  .pipeline .stage .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+  }
+  .pipeline .stage h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 6px 0 4px;
+  }
+  .pipeline .stage p { color: var(--text-soft); font-size: 12.5px; line-height: 1.45; }
+  @media (max-width: 900px) {
+    .pipeline { grid-template-columns: 1fr 1fr; }
+    .pipeline .stage:not(:last-child)::after { display: none; }
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  .table th {
+    text-align: left;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .table td {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    vertical-align: top;
+  }
+  .table td strong { color: var(--text); }
+
+  .contrib {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(0,212,255,0.05) 100%);
+    border: 1px solid rgba(139,92,246,0.22);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .contrib h3 { font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(139,92,246,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #c4b5fd;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li { color: var(--text-soft); font-size: 14.5px; margin-bottom: 9px; line-height: 1.6; }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(139,92,246,0.1) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p { color: var(--text-soft); font-size: 16px; line-height: 1.8; max-width: 940px; }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .backlink:hover { color: var(--brand); }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .onepager { padding: 36px 28px; }
+    .contrib { padding: 32px 28px; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <a href="../index.html" class="backlink">← Back to portfolio</a>
+    <span class="hero-tag"><span class="dot"></span>Preprocessing Research · 2022</span>
+    <h1 class="hero-title">
+      <span>Camera &amp; Image Processing.</span><br/>
+      전처리는 소프트웨어에서<br/>
+      시작되지 않는다.
+    </h1>
+    <p class="hero-sub">
+      "카메라 세팅은 전처리인가?"라는 질문에서 출발한 리서치.
+      비전 모델이 먹을 <strong style="color:var(--text);">원본 프레임</strong>이 어떻게 만들어지는지를 이미지 센서 · 전처리 스테이지 · 특화 디바이스 수준에서 해체하고,
+      네이버 신사옥 <strong style="color:var(--text);">1784 FaceSign 카메라</strong>의 역광 검출 이슈를 해결하기 위해 <strong style="color:var(--text);">편광 필름 · RGB+Thermal 듀얼</strong> 접근을 실험한 기록.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">Hardware × Software Preprocessing</span>
+      <span class="hero-badge cyan">1784 FaceSign</span>
+      <span class="hero-badge gold">Polarizing Camera Experiment</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">대상 프로젝트</div>
+        <div class="stat-num"><span class="grad">1784</span></div>
+        <div class="stat-hint">네이버 신사옥 FaceSign 카메라</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">전처리 이슈 타입</div>
+        <div class="stat-num">5<span class="sm">종</span></div>
+        <div class="stat-hint">셰이딩 · 불량화소 · 암전류 · 선형화 · 녹색불균형</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">실험한 하드웨어</div>
+        <div class="stat-num">3<span class="sm">종</span></div>
+        <div class="stat-hint">일반 · 편광 · RGB+Thermal</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">해결 이슈</div>
+        <div class="stat-num">역광</div>
+        <div class="stat-hint">출퇴근 시간대 얼굴 검출 실패</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. WHY -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Why</span>
+    <h2>비전 모델이 먹을 프레임의 "진짜 전처리 경계"</h2>
+    <p class="desc">
+      Clova EyeD는 신사옥 1784의 출입 FaceSign 카메라, eKYC의 모바일 카메라, 일본 PayPay의 인증 단말기 등
+      <strong style="color:var(--text);">다양한 센서 위에서 같은 모델이 돌아야</strong> 합니다.
+      센서 · 렌즈 · ISP 단계를 넘어 들어오는 이미지가 제각각이면 모델이 "편향되지 않는 입력"을 받지 못합니다.
+      "전처리는 어디서 시작하는가"라는 질문을 <strong style="color:var(--text);">소프트웨어 밖으로 확장</strong>해, 카메라 세팅 · 편광 필터 · 센서 보정까지 포함한 전체 전처리 스택을 정리한 리서치 프로젝트.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">GOAL 01</div>
+        <h3>전처리 경계의 재정의</h3>
+        <p>"카메라 세팅도 전처리인가?"에 답을 내리고, 하드웨어-소프트웨어 경계에 있는 <strong>처리 단계들의 목록</strong> 확정.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">GOAL 02</div>
+        <h3>1784 FaceSign 이슈 해결</h3>
+        <p>출퇴근 시간대 <strong>역광 조건</strong>에서의 얼굴 검출 실패를 하드웨어/소프트웨어 양쪽에서 접근.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">GOAL 03</div>
+        <h3>미래 센서 대비</h3>
+        <p>화소가 점점 작아지는 추세 — 현재 전처리로 커버 안 되는 미래 요구를 예견해 <strong>이미징 아키텍처 설계</strong>의 입력으로 활용.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. PIPELINE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · The Real Preprocessing Pipeline</span>
+    <h2>전처리는 소프트웨어에서 시작되지 않는다</h2>
+    <p class="desc">
+      비전 모델 입력까지의 전처리를 다섯 단계로 풀어내면, <strong style="color:var(--text);">3개 단계가 이미 센서/ISP 안에서 끝나 있습니다</strong>.
+      모델 팀이 건드릴 수 있는 영역은 마지막 2단계뿐 — 그래서 <strong style="color:var(--text);">초기 3단계 설계가 잘못되면 소프트웨어로 회복 불가</strong>.
+    </p>
+
+    <div class="pipeline">
+      <div class="stage">
+        <div class="n">STAGE 01</div>
+        <h4>센서 · 렌즈</h4>
+        <p>CCD/CMOS로 빛→전기신호 변환. 렌즈 구면 형상 · 렌즈 셰이딩이 이미 입력 편향 생성.</p>
+      </div>
+      <div class="stage">
+        <div class="n">STAGE 02</div>
+        <h4>카메라 세팅</h4>
+        <p>노출 · 화이트밸런스 · 편광 필터 유무. <strong>이 시점에 데이터를 걸러 찍는</strong> 의미에서 이미 전처리.</p>
+      </div>
+      <div class="stage">
+        <div class="n">STAGE 03</div>
+        <h4>ISP (센서 내부)</h4>
+        <p>셰이딩 보정 · 불량화소 · 암전류 제거 등. raw format 유지하며 센서/이미지 프로세서가 처리.</p>
+      </div>
+      <div class="stage">
+        <div class="n">STAGE 04</div>
+        <h4>SW 전처리</h4>
+        <p>리사이즈 · 크롭 · 색공간 변환 · 정규화. 모델 팀이 주로 관리하는 영역.</p>
+      </div>
+      <div class="stage">
+        <div class="n">STAGE 05</div>
+        <h4>모델 입력</h4>
+        <p>Face Detection · Keypoint · Recognition 등. 여기에 들어오는 프레임의 품질이 여기서 좌우.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. ISP CORRECTION -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · ISP Corrections</span>
+    <h2>센서 안에서 이미 일어나는 5가지 보정</h2>
+    <p class="desc">
+      모델 팀에게 "raw 이미지"로 들어오기 전에 이미 센서 · ISP가 수행하는 보정들.
+      이 단계 각각에서 설계 실수가 있으면 소프트웨어로 뒤집기 어렵습니다.
+    </p>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:24%;">보정 종류</th>
+          <th style="width:38%;">왜 필요한가 (원인)</th>
+          <th style="width:38%;">처리 방식 / 메모</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Shading Compensation</strong><br/><span style="color:var(--text-dim);font-size:12.5px;">셰이딩 보정</span></td>
+          <td>렌즈 구면 형상 때문에 <strong>중심부와 가장자리의 도달 광량</strong>이 다름. 균일한 밝기 피사체조차 가장자리가 어두워 보이는 왜곡 발생.</td>
+          <td>서로 다른 셰이딩을 보이는 복수 영상에서 동일 위치 값들을 비교해 <strong>보정 함수</strong>를 생성, 이후 영상에 일괄 적용.</td>
+        </tr>
+        <tr>
+          <td><strong>Dead Pixel Correction</strong><br/><span style="color:var(--text-dim);font-size:12.5px;">불량 화소 보정</span></td>
+          <td>생산 시 발견 못한 초기 불량 + 노후 · 온도 · 습도 · 먼지 · 전원 이상으로 발생하는 <strong>Hot / Dead / Stuck Pixel</strong>.</td>
+          <td>주변 화소 값을 기반으로 결함 픽셀을 추정/대체. 센서 레벨 상시 보정.</td>
+        </tr>
+        <tr>
+          <td><strong>Dark Current Elimination</strong><br/><span style="color:var(--text-dim);font-size:12.5px;">암전류 제거</span></td>
+          <td>빛이 없어도 흐르는 전류 노이즈. 저조도 환경에서 특히 문제.</td>
+          <td>무광 상태 캘리브레이션 프레임으로 노이즈 베이스라인 측정 후 차감.</td>
+        </tr>
+        <tr>
+          <td><strong>Pixel Linearization</strong><br/><span style="color:var(--text-dim);font-size:12.5px;">화소 선형화</span></td>
+          <td>센서 응답이 비선형 — 밝기에 따라 감도가 다름.</td>
+          <td>룩업 테이블 기반 선형화로 후단 프로세싱의 예측 가능성 확보.</td>
+        </tr>
+        <tr>
+          <td><strong>Green Imbalance Filtering</strong><br/><span style="color:var(--text-dim);font-size:12.5px;">녹색 불균형 필터링</span></td>
+          <td>베이어 패턴의 Gr · Gb 간 응답 차이로 <strong>체커 패턴 아티팩트</strong> 발생.</td>
+          <td>필터링 단계에서 Gr/Gb 정합 → 고주파 아티팩트 제거.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 04. 1784 PROJECT -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · 1784 Case Study</span>
+    <h2>네이버 신사옥의 FaceSign 카메라를 다시 짠다</h2>
+    <p class="desc">
+      1784는 네이버 신사옥 · 테크 컨버전스 빌딩. 출입/근태를 FaceSign으로 처리합니다.
+      이 환경에서 <strong style="color:var(--text);">가장 자주 터진 이슈는 출퇴근 시간대의 역광 조건</strong>에서 얼굴 검출 실패.
+      "데이터만 더 넣으면 된다"는 소프트웨어적 해결을 넘어, <strong style="color:var(--text);">특화 디바이스(RGB+Thermal · 편광 필름)</strong>로 하드웨어 차원에서도 접근했습니다.
+    </p>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">HARDWARE 01</div>
+        <h3>RGB + Thermal 듀얼 카메라</h3>
+        <p>1784 FaceSign 디바이스는 <strong>RGB 카메라에 Thermal 카메라를 병행</strong> 탑재. Thermal로 얼굴 영역을 1차 확보해 RGB 검출 실패 시의 안전장치를 구성.</p>
+        <p style="margin-top:10px; color:var(--text-dim); font-size:13px;">→ 모델 이중 스택: Thermal ROI → RGB Fine-grained</p>
+      </div>
+      <div class="card">
+        <div class="card-num" style="color:var(--brand);">HARDWARE 02</div>
+        <h3>편광 필름 실험</h3>
+        <p>일반 카메라로 조절 불가능한 <strong>빛 반사 · 역광 조건</strong>을 하드웨어 수준에서 필터링. 편광의 방향/정도를 독립 조절해 이미지가 PC로 전송되기 전에 오브젝트 특징이 살아나도록 함.</p>
+        <p style="margin-top:10px; color:var(--text-dim); font-size:13px;">→ 1784 카메라에 편광 필름 부착 실험 · 역광 검출 개선 확인</p>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg, rgba(139,92,246,0.06) 0%, rgba(0,212,255,0.03) 100%); border-color:rgba(139,92,246,0.22);">
+        <div class="card-num" style="color:var(--brand-2);">SOFTWARE 03</div>
+        <h3>역광 데이터 개별 어노테이션</h3>
+        <p>하드웨어 접근으로 다 해결되지 않는 변수는 <strong>원거리 역광 데이터 개별 어노테이션</strong>으로 트레인셋 확장. 모델이 역광 조건을 직접 학습.</p>
+        <p style="margin-top:10px; color:var(--text-dim); font-size:13px;">→ 데이터 파이프라인과 연계 (<a href="vision-data-ops.html" style="color:var(--brand); text-decoration:none; border-bottom:1px dotted var(--brand);">Vision Data Ops 참조</a>)</p>
+      </div>
+      <div class="card">
+        <div class="card-num">ISSUE LOG</div>
+        <h3>역광 ← → 해결법 매트릭스</h3>
+        <ul>
+          <li><strong>Issue</strong> — 출퇴근 시간대 역광으로 얼굴 검출 실패</li>
+          <li><strong>Approach A</strong> — data added: 원거리 역광 데이터 개별 어노테이션으로 트레인셋 보강</li>
+          <li><strong>Approach B</strong> — camera setting: 편광 필름 / 노출 세팅 실험</li>
+          <li><strong>Outcome</strong> — 하드웨어+소프트웨어 이중 접근이 단일 접근보다 재발률을 낮춤</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. 정효주 기여 -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      모델 팀이 익숙한 "데이터 + 학습 루틴" 프레임을 넘어, <strong style="color:var(--text);">센서/ISP/특화 디바이스 층까지 포함한 전처리 스택</strong>을 PM이 이해하고 정리한 R&D 리서치.
+      기획이 이 영역을 알고 있어야 하드웨어 팀과 모델 팀 사이의 의사결정이 "누구 책임이냐"가 아닌 "어디서 풀 것이냐"로 정렬됩니다.
+    </p>
+
+    <div class="contrib">
+      <span class="role">R&D Research · Hardware-aware Planning</span>
+      <h3>전처리 경계를 하드웨어까지 확장한 리서치</h3>
+      <ul>
+        <li><strong>"전처리는 어디서 시작하는가"에 답을 내린 파이프라인 정의</strong> — 센서 · 카메라 세팅 · ISP · SW 전처리 · 모델 입력의 <strong>5단계 파이프라인</strong>으로 스택을 해체.</li>
+        <li><strong>ISP 5개 보정 정리</strong> — Shading · Dead Pixel · Dark Current · Pixel Linearization · Green Imbalance Filtering. 각각 원인과 해결법을 표로 문서화해 모델 팀과 하드웨어 팀의 공통 언어 제공.</li>
+        <li><strong>1784 FaceSign 이슈 대응</strong> — 출퇴근 역광 검출 실패 이슈를 하드웨어/소프트웨어 이중 접근으로 재정의. <strong>RGB+Thermal 듀얼 · 편광 필름 실험</strong>을 데이터 어노테이션 확장과 병행.</li>
+        <li><strong>편광 카메라 실험 설계 지원</strong> — 일반 카메라로는 조절 불가능한 반사/역광 이슈를 하드웨어 레벨에서 필터링하는 경로를 탐색. 실험 근거와 기대 효과 문서화.</li>
+        <li><strong>Vision Data Ops와 연결</strong> — 하드웨어가 잡지 못하는 변수는 <strong>데이터 구축 룰</strong>로 흡수하도록, 역광 조건 별도 어노테이션을 Vision Data Ops의 구축 가이드에 반영.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06. ONEPAGER -->
+<section class="tight alt">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>Camera &amp; Image Processing Research</strong>는 "비전 모델이 먹을 프레임은 <strong>어디서부터 전처리되는가</strong>"를 해체한 리서치 프로젝트였습니다.
+        센서 · 카메라 세팅 · ISP · SW 전처리 · 모델 입력의 <span class="hl">5단계 파이프라인</span>을 정리하고, 센서 내부에서 이미 일어나는 <span class="hl">5가지 보정</span>(셰이딩 · 불량화소 · 암전류 · 선형화 · 녹색불균형)을 PM이 이해 가능한 형태로 문서화했습니다.
+        네이버 신사옥 <strong>1784 FaceSign 카메라</strong>의 역광 검출 이슈에는 <strong>RGB+Thermal 듀얼 · 편광 필름 실험 · 역광 데이터 개별 어노테이션</strong>의 이중 접근으로 대응.
+        이 리서치는 이후 Clova EyeD가 하드웨어 맥락이 다른 복수 고객사(1784, eKYC 모바일, 일본 결제 단말 등)에 배포될 때 <strong>"어디까지 하드웨어에서 흡수할 것인가"</strong>의 의사결정 기반이 되었습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>Camera &amp; Image Processing Research</strong>
+      Clova Visual AI · R&D · 2022
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence ClovaVisualAI/1203467947
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vision Data Operations — 얼굴·키포인트 데이터 파이프라인 운영 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #00ffa3;
+    --brand-2: #00d4ff;
+    --brand-grad: linear-gradient(135deg, #00ffa3 0%, #00d4ff 100%);
+    --accent: #ffd96b;
+    --warn: #ffb74d;
+    --danger: #ff5c7c;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(0,255,163,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(0,212,255,0.08) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 14px var(--brand);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(40px, 6.5vw, 72px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(0,255,163,0.08);
+    border: 1px solid rgba(0,255,163,0.22);
+    color: #6de3b4;
+  }
+  .hero-badge.cyan { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2); color: #67e8f9; }
+  .hero-badge.gold { background: rgba(255,217,107,0.08); border-color: rgba(255,217,107,0.22); color: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat { background: var(--bg-2); padding: 28px; }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before { content: ''; width: 24px; height: 1px; background: var(--brand); }
+
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 800px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(0,255,163,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Process 6 step */
+  .process {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .process .step {
+    padding: 22px 18px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .process .step:last-child { border-right: none; }
+  .process .step .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+  }
+  .process .step h4 {
+    font-size: 14.5px;
+    font-weight: 700;
+    margin: 8px 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .process .step p { color: var(--text-soft); font-size: 12.5px; line-height: 1.5; }
+  @media (max-width: 900px) {
+    .process { grid-template-columns: 1fr 1fr; }
+    .process .step { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  .track-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  .track-table th {
+    text-align: left;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .track-table td {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    vertical-align: top;
+  }
+  .track-table td strong { color: var(--text); }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .pill.ext    { background: rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.22); color:#67e8f9; }
+  .pill.inh    { background: rgba(0,255,163,0.08); border:1px solid rgba(0,255,163,0.22); color:#6de3b4; }
+  .pill.plan   { background: rgba(255,183,77,0.08); border:1px solid rgba(255,183,77,0.22); color:#ffd1a4; }
+
+  .contrib {
+    background: linear-gradient(135deg, rgba(0,255,163,0.08) 0%, rgba(0,212,255,0.05) 100%);
+    border: 1px solid rgba(0,255,163,0.22);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .contrib h3 { font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0,255,163,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6de3b4;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li { color: var(--text-soft); font-size: 14.5px; margin-bottom: 9px; line-height: 1.6; }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .learned {
+    margin-top: 28px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .learned p { color: var(--text-soft); font-size: 14.5px; line-height: 1.8; }
+  .learned p strong { color: var(--text); }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(0,255,163,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p { color: var(--text-soft); font-size: 16px; line-height: 1.8; max-width: 940px; }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .backlink:hover { color: var(--brand); }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .onepager { padding: 36px 28px; }
+    .contrib { padding: 32px 28px; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <a href="../index.html" class="backlink">← Back to portfolio</a>
+    <span class="hero-tag"><span class="dot"></span>Data Pipeline Ops · 2022</span>
+    <h1 class="hero-title">
+      <span>Vision Data Operations.</span><br/>
+      모델은 결국<br/>
+      데이터 파이프라인의 품질이다.
+    </h1>
+    <p class="hero-sub">
+      Clova EyeD의 Anti-spoofing 외주 계약과 별개로, <strong style="color:var(--text);">Segmentation · Hair Matte · Body Keypoints · Datatang 2차 검수</strong> 같은 여러 Vision 데이터셋을
+      외주/사내 혼합 체계로 돌려낸 기록.
+      6-스텝 표준 프로세스와 PT 채용·교육·KPI 파이프라인을 정립해, 개별 계약이 끝나도 <strong style="color:var(--text);">다음 계약이 자동으로 같은 규격으로 돌아가는 운영 체계</strong>를 구축했습니다.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">Data Pipeline Operations</span>
+      <span class="hero-badge cyan">Vendor + In-house Hybrid</span>
+      <span class="hero-badge gold">6-Step Standard Process</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">관리 트랙</div>
+        <div class="stat-num"><span class="grad">4개</span></div>
+        <div class="stat-hint">Segmentation · Hair Matte · Body KP · Datatang</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">표준 프로세스</div>
+        <div class="stat-num">6<span class="sm">Step</span></div>
+        <div class="stat-hint">리서치→수량→가이드→포맷→업체→견적</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">관리 노트북</div>
+        <div class="stat-num">3<span class="sm">대</span></div>
+        <div class="stat-hint">PT 작업용 · 가용량 관리</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">PT 관리</div>
+        <div class="stat-num">채용→교육</div>
+        <div class="stat-hint">신규 채용/면접/합격/교육 사이클</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. WHY -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Why</span>
+    <h2>외주 계약 한 건만으로는 모델이 안 돌아간다</h2>
+    <p class="desc">
+      Clova EyeD가 SDK로 배포되는 다양한 Vision 태스크(얼굴 세그먼트 · 머리카락 매팅 · 바디 키포인트 · 신분증 인식 등)는 각각 다른 라벨 포맷 · 다른 외주사 · 다른 KPI를 요구합니다.
+      <strong style="color:var(--text);">각 태스크마다 새 계약을 새로 설계</strong>하는 대신,
+      어떤 태스크에도 적용 가능한 6-스텝 표준 프로세스와 PT 채용·교육 파이프라인을 만들어 <strong style="color:var(--text);">"운영 부담이 계약 수에 비례하지 않게"</strong> 만드는 것이 이 프로젝트의 목표였습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">GOAL 01</div>
+        <h3>태스크-불가지 표준화</h3>
+        <p>Face Segmentation이든 Body Keypoint든, <strong>동일 6-스텝</strong>을 따라 착수 · 납품 · 검수되도록 표준화.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">GOAL 02</div>
+        <h3>PT 인력 자산화</h3>
+        <p>외주사에 의존하지 않고 사내에서도 검수/구축 가능한 <strong>PT(시간제 작업자) 풀</strong>을 채용·교육·노트북 할당으로 상시 운영.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">GOAL 03</div>
+        <h3>검수 오류 정량화</h3>
+        <p>외주 납품 품질을 감에 맡기지 않고 <strong>오류 통계로 정량화</strong>, 벤더 재협상의 근거로 활용.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. 6-STEP PROCESS -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · Standard Process</span>
+    <h2>데이터 구축 6-스텝 표준 프로세스</h2>
+    <p class="desc">
+      "어떤 데이터를 어떻게 만들까"를 매 계약마다 다시 고민하지 않도록, <strong style="color:var(--text);">착수부터 견적까지 6단계</strong>로 흐름을 박제했습니다.
+      이 프로세스는 Segmentation · Body Keypoint · 안티스푸핑 등 모든 트랙에 동일하게 적용되었습니다.
+    </p>
+
+    <div class="process">
+      <div class="step">
+        <div class="n">STEP 01</div>
+        <h4>데이터 리서치</h4>
+        <p>형식 · 형태를 전반적으로 조사. 공개 데이터셋 구조 참조.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 02</div>
+        <h4>수량 · 목적 정리</h4>
+        <p>학습용/검증용 수량, 모델 목적을 분명히 정리.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 03</div>
+        <h4>가이드 제작</h4>
+        <p>작업 가이드 작성. 작업자와 검수자가 동시에 쓸 수 있는 형태.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 04</div>
+        <h4>포맷 정의</h4>
+        <p>확장자 · 폴더 depth · 파일명 규칙 확정. depth는 얕게.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 05</div>
+        <h4>업체 선정</h4>
+        <p>2~3개 업체 후보 리스트업, 가격 및 역량 비교.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 06</div>
+        <h4>컨택 · 견적</h4>
+        <p>가이드 공유 → 견적 수령 → 계약서 수정 → 체결.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:28px; color:var(--text-dim); font-size:13.5px; font-family:'JetBrains Mono', monospace;">
+      파일명/폴더 규칙 · PNG/JPG 포맷 · 파일명 기반 분류 권장 — 폴더 depth가 깊을수록 운영 비용 증가.
+    </p>
+  </div>
+</section>
+
+<!-- 03. TRACKS -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Tracks</span>
+    <h2>동시 운영한 4개 데이터 트랙</h2>
+    <p class="desc">
+      2022년 상반기 기준, 4개의 Vision 데이터 트랙이 동시에 돌고 있었습니다.
+      각각 다른 벤더 · 다른 KPI · 다른 납품 사이클을 한 프로세스 위에서 병렬 운영한 기록.
+    </p>
+
+    <table class="track-table">
+      <thead>
+        <tr>
+          <th style="width:20%;">트랙</th>
+          <th style="width:15%;">모드</th>
+          <th style="width:25%;">KPI</th>
+          <th style="width:40%;">주요 업무</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Face / Hair Segmentation</strong></td>
+          <td><span class="pill ext">외주 + PT</span></td>
+          <td>작업자별 일일 처리량 · 검수 통과율</td>
+          <td>신규 PT 교육 · 검수 가이드 제작 · 계약 종료 follow-up · 엑셀 재정리 · matted data 2차 검수</td>
+        </tr>
+        <tr>
+          <td><strong>Hair Matte Data</strong></td>
+          <td><span class="pill ext">외주</span></td>
+          <td>매팅 경계 오차율 · 배경 관통도</td>
+          <td>KPI 설정 · 추가 가이드 변경사항 정리 · 2차 검수 피드백 루프 · 납품 수량 추적</td>
+        </tr>
+        <tr>
+          <td><strong>Body Keypoints</strong></td>
+          <td><span class="pill plan">기획 단계</span></td>
+          <td>관절 정확도 · 가림 처리 일관성</td>
+          <td>가이드 직접 시작 테스트 · KPI 결정 · 서비스 팀 미팅으로 가이드 검증 · PT 채용 · 벤더 선정</td>
+        </tr>
+        <tr>
+          <td><strong>Datatang 신분증 데이터</strong></td>
+          <td><span class="pill ext">외주 2차 검수</span></td>
+          <td>주당 정확률 97%↑</td>
+          <td>CVA 세팅/사용 · 자주 발생하는 오류 통계 정량화 · 재검수 feedback · 재작업 조항 기준화(3,000장 × 23주 기준 주당 오류 ≤ 2,070개)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="learned">
+      <p>
+        <strong>벤더별 품질 기준의 문서화</strong> — "97% 정확도"라는 수치가 기존에는 구두로만 있었는데, 주당 납품량 대비 오류 허용 개수(예: 주당 3,000장 × 23주 기준 <strong>오류 ≤ 2,070개 / 주</strong>)로 변환해 외주 담당자와 합의.
+        수치화된 기준이 있어야 1차 검수 피드백 때 <strong>"통과/재작업"</strong>을 기획 판단이 아닌 산식으로 결정할 수 있었습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 04. PT PIPELINE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">04 · In-house PT Pipeline</span>
+    <h2>외주가 아닌, 사내 PT 운영 파이프라인</h2>
+    <p class="desc">
+      외주는 규모는 크지만 품질 변동성이 큽니다. 사내 검수와 자체 데이터 정제가 필요한 경우를 대비해
+      <strong style="color:var(--text);">PT(시간제 작업자) 풀</strong>을 상시 운영했습니다. 채용·교육·노트북 할당·스케줄 관리가 모두 기획 소관.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">STAGE 01</div>
+        <h3>채용 & 면접</h3>
+        <p>신규 PT 채용 절차 설계 · 면접 안내 · 합격 통보. 대부분 Segmentation/매팅/신분증 검수 업무에 투입.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">STAGE 02</div>
+        <h3>교육 & 가이드 숙달</h3>
+        <p>신규 PT에게 가이드 직접 교육 · 초기 KPI 합의 (예: Anti-spoofing 기준 <strong>500~700장/일 → 1,500~2,000장/일</strong>).</p>
+      </div>
+      <div class="card">
+        <div class="card-num">STAGE 03</div>
+        <h3>노트북 · 도구 할당</h3>
+        <p>PT용 노트북 3대 가용 · CVA 툴 세팅 · 계정 권한 부여 · 서버 접근 설정.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">STAGE 04</div>
+        <h3>작업 스케줄 관리</h3>
+        <p>검수 일정 페이지 관리 · 트랙별 인원 배치 · 일정에 맞춘 추가 작업자 투입/조절.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">STAGE 05</div>
+        <h3>CVA 툴 운영</h3>
+        <p>CVA 사용법 step-by-step 정리 · edit 이후 save 안 되는 이슈 등 <strong>운영 이슈 피드백을 OSS 등록 예정</strong>.</p>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg, rgba(0,255,163,0.06) 0%, rgba(0,212,255,0.03) 100%); border-color:rgba(0,255,163,0.22);">
+        <div class="card-num" style="color:var(--brand-2);">PRINCIPLE</div>
+        <h3>지치지 않는 KPI 설계</h3>
+        <p>KPI를 <strong>작업자가 지치지 않는 수준</strong>에서 시작해 숙달에 따라 단계적으로 상향. 품질은 <strong>절대량이 아닌 지속 가능성</strong>에 비례.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. 정효주 기여 -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      외주 계약 한 건을 협상하는 것을 넘어, <strong style="color:var(--text);">여러 데이터 트랙을 동시에 돌릴 수 있는 운영 체계</strong>를 만드는 역할.
+      프로세스 · PT 파이프라인 · 검수 기준의 문서화가 중심 업무였습니다.
+    </p>
+
+    <div class="contrib">
+      <span class="role">Data Ops · Planner Lead</span>
+      <h3>4 트랙 병렬 운영 · 표준 프로세스 정립</h3>
+      <ul>
+        <li><strong>Face/Hair Segmentation 트랙 운영</strong> — 신규 PT 교육, 검수 가이드 제작, 외주 계약 종료 follow-up, matted data 2차 검수 피드백, 엑셀 기반 수량/날짜 트래킹.</li>
+        <li><strong>Body Keypoints 착수 기획</strong> — 가이드를 직접 작업해보며 KPI 결정, 실제 서비스 팀과의 사전 미팅으로 가이드 검증, PT 채용 및 기반업무 체계 확립. 업체 통한 구축으로 최종 방향 결정.</li>
+        <li><strong>Datatang 외주 검수 품질 관리</strong> — CVA 툴 세팅 및 사용법 step-by-step 정리, 자주 발생하는 오류를 <strong>정량 통계로 전환</strong>, 주당 오류 허용 기준(예: 주당 3,000장 × 23주 기준 오류 ≤ 2,070개) 합의.</li>
+        <li><strong>데이터 구축 6-스텝 표준 프로세스 정립</strong> — 리서치 → 수량/목적 → 가이드 → 포맷 → 업체 선정 → 견적의 6단계. 태스크 불가지 적용 가능.</li>
+        <li><strong>PT 운영 파이프라인 구축</strong> — 신규 PT 채용/면접/합격 절차 설계, 가이드 교육, 노트북 3대 할당, KPI 단계적 설정(500~700→1,500~2,000장/일), 스케줄 관리.</li>
+        <li><strong>납품 품질 기준의 수치화</strong> — "97% 정확도"를 주당 허용 오류 개수로 환산해 외주 담당과 합의. 기획 판단에 의존하지 않고 산식으로 통과/재작업을 결정할 수 있도록 계약 품질 기준을 구체화.</li>
+      </ul>
+    </div>
+
+    <div class="learned">
+      <p>
+        <strong>운영에서의 교훈 1</strong> — "데이터가 어떤 모델의 어떤 문제를 풀기 위한 것인지"를 작업자까지 이해하게 만드는 것이 결과물 품질의 핵심. 수량 관리만으로는 품질이 확보되지 않음.
+        <br/><br/>
+        <strong>운영에서의 교훈 2</strong> — 벤더와의 "97%" 같은 정성적 수치는 반드시 <strong>주당 오류 허용량</strong>처럼 산식으로 변환해 둬야 현장 운영이 가능. 기획이 검수 과정에 직접 들어가 룰을 작동시켜야 외주 계약이 살아있는 문서가 됨.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 06. ONEPAGER -->
+<section class="tight alt">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>Vision Data Operations</strong>은 Clova EyeD 제품 팀이 2022년 동시에 돌린 <span class="hl">4개 Vision 데이터 트랙</span>(Face/Hair Segmentation · Hair Matte · Body Keypoints · Datatang 2차 검수)의 병렬 운영 기록입니다.
+        "계약 한 건"이 아니라 "계약이 끝나도 다음 계약이 같은 규격으로 돌아가는 체계"를 만드는 것이 목표였고,
+        <span class="hl">6-스텝 표준 프로세스</span>(리서치→수량→가이드→포맷→업체→견적), <span class="hl">PT 운영 파이프라인</span>(채용·교육·노트북·KPI), <strong>검수 품질 수치화</strong>(주당 오류 허용량 산식) 세 개 축을 정립해 데이터 운영의 지속 가능성을 확보했습니다.
+        Anti-spoofing 알체라 외주(¥207M)는 <a href="clova-eyed.html" style="color:var(--brand); text-decoration:none; border-bottom:1px dotted var(--brand);">Clova EyeD 리포트</a>에서 별도로 다룹니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>Vision Data Operations</strong>
+      Clova Visual AI · Data Pipeline · 2022
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence ClovaVisualAI/1203466775
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vertex AI Benchmarking — 사내 ML 플랫폼 기획을 위한 MLOps 리서치</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-2: #12151c;
+    --surface: #1a1f2b;
+    --surface-2: #232a39;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #ffb74d;
+    --brand-2: #ff5c7c;
+    --brand-grad: linear-gradient(135deg, #ffb74d 0%, #ff5c7c 100%);
+    --accent: #ffd96b;
+    --warn: #ffb74d;
+    --grid-color: rgba(255,255,255,0.03);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    position: relative;
+    padding: 120px 0 96px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 0%, rgba(255,183,77,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 500px at 90% 30%, rgba(255,92,124,0.08) 0%, transparent 50%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .hero-tag .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 14px var(--brand);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.hero-title {
+    font-size: clamp(40px, 6.5vw, 72px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    margin: 28px 0 24px;
+  }
+  h1.hero-title span {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--text-soft);
+    max-width: 780px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 36px;
+  }
+  .hero-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(255,183,77,0.1);
+    border: 1px solid rgba(255,183,77,0.22);
+    color: #ffd1a4;
+  }
+  .hero-badge.pink { background: rgba(255,92,124,0.08); border-color: rgba(255,92,124,0.2); color: #ffc1cd; }
+  .hero-badge.gold { background: rgba(255,217,107,0.08); border-color: rgba(255,217,107,0.22); color: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .stat { background: var(--bg-2); padding: 28px; }
+  .stat-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .stat-num {
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+  }
+  .stat-num .sm { font-size: 0.55em; color: var(--text-dim); font-weight: 600; margin-left: 4px; }
+  .stat-num .grad {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-hint { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  section { padding: 112px 0; position: relative; }
+  section.tight { padding: 72px 0; }
+  section.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+  }
+  .label::before { content: ''; width: 24px; height: 1px; background: var(--brand); }
+
+  h2 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+  }
+  .desc {
+    color: var(--text-soft);
+    max-width: 800px;
+    font-size: 16px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+  .g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:hover { border-color: rgba(255,183,77,0.3); }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .card p, .card li { color: var(--text-soft); font-size: 14.5px; }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+  .card ul li { margin-bottom: 5px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+  }
+  .flow-step .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--brand);
+  }
+  .flow-step h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 8px 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .flow-step p { color: var(--text-soft); font-size: 13px; }
+
+  .feature-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  .feature-table th {
+    text-align: left;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .feature-table td {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    vertical-align: top;
+  }
+  .feature-table td strong { color: var(--text); }
+  .feature-table td.tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .pill.naver  { background: rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.22); color:#67e8f9; }
+  .pill.gap    { background: rgba(255,92,124,0.08); border:1px solid rgba(255,92,124,0.22); color:#ffc1cd; }
+  .pill.future { background: rgba(255,183,77,0.08); border:1px solid rgba(255,183,77,0.22); color:#ffd1a4; }
+
+  .poc-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 22px;
+  }
+  .poc-bar .cell { text-align: left; }
+  .poc-bar .cell .k { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; }
+  .poc-bar .cell .v {
+    font-size: 22px;
+    font-weight: 800;
+    margin-top: 6px;
+    letter-spacing: -0.02em;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .poc-bar .cell .n { color: var(--text-soft); font-size: 13px; margin-top: 4px; }
+
+  .contrib {
+    background: linear-gradient(135deg, rgba(255,183,77,0.08) 0%, rgba(255,92,124,0.05) 100%);
+    border: 1px solid rgba(255,183,77,0.22);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .contrib h3 { font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .contrib .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,183,77,0.15);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffd1a4;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .contrib ul { padding-left: 20px; }
+  .contrib ul li { color: var(--text-soft); font-size: 14.5px; margin-bottom: 9px; line-height: 1.6; }
+  .contrib ul li strong { color: var(--text); font-weight: 600; }
+
+  .onepager {
+    padding: 56px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(255,183,77,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .onepager h2 { font-size: 32px; margin: 12px 0 20px; }
+  .onepager p { color: var(--text-soft); font-size: 16px; line-height: 1.8; max-width: 940px; }
+  .onepager strong { color: var(--text); font-weight: 700; }
+  .onepager .hl {
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .backlink:hover { color: var(--brand); }
+
+  footer {
+    padding: 48px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  footer strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; }
+  .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .onepager { padding: 36px 28px; }
+    .contrib { padding: 32px 28px; }
+    section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <a href="../index.html" class="backlink">← Back to portfolio</a>
+    <span class="hero-tag"><span class="dot"></span>ML Platform Benchmarking · 2021</span>
+    <h1 class="hero-title">
+      <span>Vertex AI Benchmarking.</span><br/>
+      사내 ML 플랫폼을 그리기 위해<br/>
+      구글의 것을 먼저 뜯었다.
+    </h1>
+    <p class="hero-sub">
+      Google I/O'21에서 공개된 <strong style="color:var(--text);">Vertex AI</strong>를 end-to-end로 직접 사용해 보며,
+      AutoML · Feature Store · Model Monitoring · Pipelines의 UX와 구조를 해체하고,
+      사내 ML 플랫폼(Clova / Flova)이 갖추어야 할 <strong style="color:var(--text);">피처 목록과 설계 원칙</strong>을 역산한 벤치마킹 리서치.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">MLOps Benchmark</span>
+      <span class="hero-badge pink">Flova Input</span>
+      <span class="hero-badge gold">End-to-End Walkthrough</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">분석 피처</div>
+        <div class="stat-num"><span class="grad">16+</span></div>
+        <div class="stat-hint">Vertex 전체 기능 매핑</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">실습 태스크</div>
+        <div class="stat-num">5<span class="sm">개</span></div>
+        <div class="stat-hint">Dataset · AutoML · Endpoint · Feature Store · Pipeline</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">PoC 결과</div>
+        <div class="stat-num">95<span class="sm">%</span></div>
+        <div class="stat-hint">20장 학습 · 22장 테스트 · 1개 오답</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">도출한 갭</div>
+        <div class="stat-num">8<span class="sm">건</span></div>
+        <div class="stat-hint">사내 미보유 기능 정리</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01. WHY -->
+<section>
+  <div class="wrap">
+    <span class="label">01 · Why</span>
+    <h2>왜 벤치마킹부터 했나</h2>
+    <p class="desc">
+      당시 사내 ML 인프라는 <strong style="color:var(--text);">NSML · CVA</strong> 등 개별 도구가 따로 돌고 있었고, 학습/서빙/데이터 라벨링/파이프라인을 한 제품 아래에서 묶는 통합 플랫폼은 아직 없었습니다.
+      "우리도 플랫폼을 만들자"라는 논의가 있었지만, 무엇을 먼저 만들지 정하려면 <strong style="color:var(--text);">업계 표준 UX를 한 번 돌려 본 사람</strong>이 필요했습니다.
+      Vertex AI는 AutoML · Custom Training · Feature Store · Monitoring · Pipelines · Metadata까지 <strong style="color:var(--text);">MLOps 전 스펙트럼</strong>을 한 콘솔에서 제공하는 가장 최신 사례였기에, 이를 실제로 돌려보고 피처 단위로 해부하는 벤치마킹 리서치를 진행했습니다.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">PURPOSE 01</div>
+        <h3>Flova 피처 설계의 근거</h3>
+        <p>사내 ML 플랫폼이 필수로 가져야 할 피처 목록을 외부 표준과 대조해 확정.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">PURPOSE 02</div>
+        <h3>UX 레퍼런스</h3>
+        <p>"설명서 없이도 순서가 보이는 대시보드" 같은 UX 원칙을 직접 체험해 사내 플랫폼 정보 구조 설계에 반영.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">PURPOSE 03</div>
+        <h3>갭 분석</h3>
+        <p>Vertex의 각 기능을 사내 자산(NSML · CVA · PAF · NCP 등)과 매핑해 <strong>갭을 시각화</strong>, 우선순위 제안.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. PoC WALKTHROUGH -->
+<section class="alt">
+  <div class="wrap">
+    <span class="label">02 · End-to-End PoC</span>
+    <h2>신분증 분류 모델을 Vertex에서 직접 돌려봤다</h2>
+    <p class="desc">
+      페이퍼로만 읽어서는 얻을 수 없는 것들이 있기에, <strong style="color:var(--text);">"주민등록증/운전면허증을 구분하는 이미지 분류 모델"</strong>을 Vertex AI 위에서 처음부터 끝까지 직접 구축했습니다.
+      Dataset 생성 → AutoML 학습 → Endpoint 배포 → 단건/배치 테스트까지 전 구간을 실측해, 실제 운영 시 예상되는 병목과 UX 특성을 기록했습니다.
+    </p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">STEP 01</div>
+        <h4>Dataset 생성</h4>
+        <p>이미지/테이블/텍스트/동영상 유형 선택. 어노테이션 방식 변경 가능.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 02</div>
+        <h4>이미지 가져오기</h4>
+        <p>PC 업로드 또는 Cloud Storage 참조. 학습용 Cloud Storage로 일원화.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 03</div>
+        <h4>라벨링 작업</h4>
+        <p>라벨 정의 · 가이드 업로드 · 작업자 수 설정. 권장 샘플 100장+.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 04</div>
+        <h4>AutoML 학습</h4>
+        <p>Train/Valid/Test 분할 + 학습 자원 지정. 20장 기준 18분 39초.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 05</div>
+        <h4>Evaluation</h4>
+        <p>Test Set 기반 Precision/Recall by threshold. 소규모 셋에서는 정보량 제한.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 06</div>
+        <h4>Endpoint 배포</h4>
+        <p>엔드포인트 이름 + 컴퓨팅 지정. 몇 클릭으로 서빙. GCP 로그 연계 자동.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 07</div>
+        <h4>단건/배치 테스트</h4>
+        <p>UI에서 이미지 업로드 또는 API 호출. 배치는 GCS 경로 지정.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 08</div>
+        <h4>모니터링</h4>
+        <p>Google Cloud 로깅과 연계. 데이터 편향/편차 alert 자동.</p>
+      </div>
+    </div>
+
+    <div class="poc-bar">
+      <div class="cell">
+        <div class="k">TRAIN SET</div>
+        <div class="v">20장</div>
+        <div class="n">크롤링 주민등록증 · 운전면허증</div>
+      </div>
+      <div class="cell">
+        <div class="k">AUTO-ML 학습</div>
+        <div class="v">18분 39초</div>
+        <div class="n">이미지 분류 · 기본 설정</div>
+      </div>
+      <div class="cell">
+        <div class="k">TEST SET</div>
+        <div class="v">22장</div>
+        <div class="n">실제 수집 신분증 이미지</div>
+      </div>
+      <div class="cell">
+        <div class="k">정확도</div>
+        <div class="v">21 / 22</div>
+        <div class="n">오답 1개 · ≈95%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03. FEATURE MAPPING -->
+<section>
+  <div class="wrap">
+    <span class="label">03 · Feature-by-Feature Mapping</span>
+    <h2>Vertex의 16개 기능, 사내 자산과 갭 분석</h2>
+    <p class="desc">
+      Vertex AI의 전체 기능을 하나씩 해체해 사내 자산(Clova · Flova · NSML · CVA · NCP 등)과 1:1로 매핑한 뒤,
+      <strong style="color:var(--text);">이미 있음 · 갭 있음 · 향후 필요</strong>의 3단계로 우선순위를 정리했습니다.
+      이 표는 이후 사내 ML 플랫폼 로드맵 논의의 출발점이 되었습니다.
+    </p>
+
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th style="width:22%;">Vertex 기능</th>
+          <th style="width:48%;">설명</th>
+          <th style="width:30%;">사내 매핑</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>AutoML</strong></td><td>코드 없이 전이학습/하이퍼파라미터 탐색 기반 모델 생성</td><td class="tag"><span class="pill gap">갭 — BROS 고도화 방향</span></td></tr>
+        <tr><td><strong>Deep Learning VM</strong></td><td>주요 AI 프레임워크가 사전 설치된 VM 이미지</td><td class="tag"><span class="pill naver">NSML 유사</span></td></tr>
+        <tr><td><strong>Notebooks</strong></td><td>VM 기반 JupyterLab, 주요 프레임워크 사전 설치</td><td class="tag"><span class="pill gap">사내 미보유</span></td></tr>
+        <tr><td><strong>Matching Engine</strong></td><td>대규모 · 저지연 벡터 유사도 매칭 서비스</td><td class="tag"><span class="pill gap">사내 미보유</span></td></tr>
+        <tr><td><strong>Data Labeling</strong></td><td>사람이 수행하는 고정확 라벨링 서비스</td><td class="tag"><span class="pill naver">CVA</span></td></tr>
+        <tr><td><strong>Deep Learning Containers</strong></td><td>이식성 있는 환경으로 모델 빌드/배포</td><td class="tag"><span class="pill future">향후 PAF</span></td></tr>
+        <tr><td><strong>Edge Manager</strong></td><td>유연한 API를 통한 에지 추론 배포/모니터링</td><td class="tag"><span class="pill future">NCP 방향</span></td></tr>
+        <tr><td><strong>Explainable AI</strong></td><td>예측 근거를 시각화, 편향 인식·개선 지원</td><td class="tag"><span class="pill gap">Evaluation 분석 기능 확장 필요</span></td></tr>
+        <tr><td><strong>Feature Store</strong></td><td>ML 특징값을 제공/공유/재사용하는 관리형 저장소</td><td class="tag"><span class="pill future">Flova 후보</span></td></tr>
+        <tr><td><strong>ML Metadata</strong></td><td>워크플로의 아티팩트/계보/실행 추적</td><td class="tag"><span class="pill future">Flova 후보</span></td></tr>
+        <tr><td><strong>Model Monitoring</strong></td><td>데이터 편향/개념 편차 등 자동 알림</td><td class="tag"><span class="pill future">Flova 후보</span></td></tr>
+        <tr><td><strong>Neural Architecture Search</strong></td><td>어플리케이션 요구에 맞춘 아키텍처 자동 탐색</td><td class="tag"><span class="pill gap">사내 미보유</span></td></tr>
+        <tr><td><strong>Pipelines</strong></td><td>TFX · Kubeflow 기반 관리형 파이프라인</td><td class="tag"><span class="pill gap">사내 미보유</span></td></tr>
+        <tr><td><strong>Prediction</strong></td><td>온라인/배치 예측 서빙 통합 프레임워크</td><td class="tag"><span class="pill future">Flova 후보</span></td></tr>
+        <tr><td><strong>TensorBoard</strong></td><td>모델 학습 시각화/추적</td><td class="tag"><span class="pill naver">NSML 유사</span></td></tr>
+        <tr><td><strong>Training</strong></td><td>사전 빌드/커스텀 코드 기반 완전관리형 학습</td><td class="tag"><span class="pill gap">사내 미보유</span></td></tr>
+        <tr><td><strong>Vizier</strong></td><td>하이퍼파라미터 최적화</td><td class="tag"><span class="pill naver">NSML 부분 커버</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 03b. DEEPER COMPARISON -->
+<section>
+  <div class="wrap" style="border-top: 1px dashed var(--border); padding-top: 56px;">
+    <span class="label">03b · Follow-up · Nov 2021</span>
+    <h2>2차 스프린트 — CLOVA 자산과의 피처-바이-피처 정밀 매핑</h2>
+    <p class="desc">
+      1차 벤치마킹 후 <strong style="color:var(--text);">11월 추가 스프린트</strong>에서는 Vertex AI의 각 기능을 CLOVA 기존 자산(<strong>BROS · CVA · CVE</strong>)과 더 세밀하게 매핑하고,
+      객체 인식 시나리오 기반으로 콘솔 스크린별 운영 제약(최소 학습 시간 · 지원 리전 · 라벨링 포맷 제약)까지 실측했습니다.
+    </p>
+
+    <table class="feature-table" style="margin-bottom: 28px;">
+      <thead>
+        <tr>
+          <th style="width:18%;">대분류</th>
+          <th style="width:36%;">세부 기능</th>
+          <th style="width:10%;">Vertex AI</th>
+          <th style="width:10%;">CLOVA</th>
+          <th style="width:26%;">CLOVA 매핑 · 비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="4"><strong>데이터세트</strong></td>
+          <td>데이터 유형 / 목표 선택 (분류 · 객체 인식)</td>
+          <td class="tag"><span class="pill future">O</span></td>
+          <td class="tag"><span class="pill gap">▵</span></td>
+          <td>BROS — 유형 선택 UI 부재</td>
+        </tr>
+        <tr>
+          <td>데이터 세트 가져오기 · 목록 관리</td>
+          <td class="tag"><span class="pill future">O</span></td>
+          <td class="tag"><span class="pill gap">×</span></td>
+          <td>CVE (예정)</td>
+        </tr>
+        <tr>
+          <td>데이터 찾아보기 (라벨 유무 필터)</td>
+          <td class="tag"><span class="pill future">O</span></td>
+          <td class="tag"><span class="pill gap">×</span></td>
+          <td>CVE (예정)</td>
+        </tr>
+        <tr>
+          <td>데이터 라벨링</td>
+          <td class="tag"><span class="pill future">O</span></td>
+          <td class="tag"><span class="pill naver">O</span></td>
+          <td>CVA — 동등 수준</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-num">CONSOLE NOTE 01</div>
+        <h3>지원 리전 제약</h3>
+        <p>대시보드에서 <strong>리전을 '서울'로 설정하면 아직 사용 불가능한 기능이 다수</strong>. 글로벌 리전 우선 설계를 전제로 기능이 롤아웃되는 구조 — 사내 플랫폼은 역순이 되어야 한다는 판단 근거.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CONSOLE NOTE 02</div>
+        <h3>라벨링 데이터 업로드 제약</h3>
+        <p>이미 라벨링된 결과물을 <strong>그대로 업로드할 수는 없음</strong>. 단순 이미지만 올릴 수 있고, 라벨링은 Vertex 내부에서만 수행. 외부 라벨링 도구와의 연동이 막힌다는 한계.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CONSOLE NOTE 03</div>
+        <h3>학습 시간 최소치</h3>
+        <p><strong>AutoML 최소 20시간 / Auto Edge ML 최소 1시간</strong>의 강제 하한. 작은 데이터셋 PoC라도 비용 · 시간 구조를 예측 가능하게 만드는 설계지만, <strong>단발성 실험</strong>에는 무거운 편.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">CONSOLE NOTE 04</div>
+        <h3>일괄 예측의 번거로움</h3>
+        <p>테스트 데이터를 <strong>JSON으로 GCS에 업로드 → 예측 → JSON으로 반출</strong>. 한 장 테스트도 꽤 느리고, 테스트 결과를 콘솔에서 바로 보여주는 UI는 부재. <strong>일회성 검수용 UX 보강 여지</strong>가 있음.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04. UX INSIGHTS -->
+<section>
+  <div class="wrap">
+    <span class="label">04 · UX Insights</span>
+    <h2>PM이 실제로 배운 UX 원칙 5가지</h2>
+    <p class="desc">
+      피처 매핑은 숫자놀이지만, <strong style="color:var(--text);">콘솔을 직접 쓰는 몇 시간</strong>이 피처 리스트로는 절대 보이지 않는 설계 원칙을 드러냈습니다.
+      Flova/사내 ML 플랫폼 UX 회의에서 반복 인용된 원칙 5개를 정리.
+    </p>
+
+    <div class="g3">
+      <div class="card">
+        <div class="card-num">INSIGHT 01</div>
+        <h3>Dashboard에서 "순서"가 보여야 한다</h3>
+        <p>Dataset → Training → Inference의 흐름을 <strong>설명서 없이도 이해</strong>할 수 있도록 Dashboard가 스스로 안내. 초심자에게 학습 곡선을 낮추는 핵심 UX.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">INSIGHT 02</div>
+        <h3>Storage 경로의 일원화</h3>
+        <p>이미지 · 데이터셋 · 모델 패키지가 전부 <strong>Cloud Storage 경로로 일원화</strong>. 모델과 데이터는 동일 리전 강제. "저장 위치의 단일성"이 운영 복잡도를 크게 낮춤.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">INSIGHT 03</div>
+        <h3>Dataset : Model = 1 : 1</h3>
+        <p>Raw data가 다양해도 <strong>Dataset이라는 중간 단계</strong>에서 필요한 것만 골라 합친 뒤, Dataset과 Model을 1:1로 묶어 학습. 관리 주체의 책임 경계가 명확.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">INSIGHT 04</div>
+        <h3>Background job의 상태 복원력</h3>
+        <p>업로드 · 로딩 · 학습 같은 백그라운드 작업이 <strong>화면을 벗어났다 돌아와도 상태가 정확</strong>. 장시간 작업에서 사용자 신뢰를 유지하는 기반.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">INSIGHT 05</div>
+        <h3>배포는 "몇 번의 클릭"이어야 한다</h3>
+        <p>엔드포인트 이름 + 노드 타입만 지정하면 배포. <strong>GCP 기존 서비스(로그 · 모니터링)와 자동 엮임</strong>. 배포 단계를 "선택의 문제"로 축소시키는 설계.</p>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg, rgba(255,183,77,0.06) 0%, rgba(255,92,124,0.03) 100%); border-color:rgba(255,183,77,0.22);">
+        <div class="card-num" style="color:var(--brand-2);">COUNTER</div>
+        <h3>사내 제약 — 학습 속도</h3>
+        <p>Vertex는 학습 데이터를 항상 GCS에서 로딩. 사내는 학습 속도 이슈로 <strong>Object Storage(Nubes, Verda)를 쓰지 않음</strong>. "경로 일원화" 원칙은 좋지만, 네이버는 스토리지 구조부터 다른 제약이 있음을 확인.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. 정효주 기여 -->
+<section>
+  <div class="wrap">
+    <span class="label">05 · My Contribution</span>
+    <h2>정효주 기여 영역</h2>
+    <p class="desc">
+      "ML 플랫폼을 만들자"라는 논의에 실제 사용 경험과 피처 매핑 근거를 제공하는 <strong style="color:var(--text);">프로덕트 리서처 역할</strong>.
+      슬라이드 한 장의 벤치마크가 아니라, 콘솔을 직접 돌려본 사람만 쓸 수 있는 리포트를 남겼습니다.
+    </p>
+
+    <div class="contrib">
+      <span class="role">Product Research · ML Platform Planning</span>
+      <h3>Vertex AI 전 구간 실측 → Flova 피처/UX 설계 입력</h3>
+      <ul>
+        <li><strong>End-to-End PoC 직접 실행</strong> — 신분증 분류 모델을 Dataset → AutoML → Endpoint → 단건/배치 테스트까지 전 구간 구축. <strong>20장 학습 / 22장 테스트 / 1개 오답(≈95%)</strong> 결과를 실측 기록.</li>
+        <li><strong>16+ 기능 단위 매핑표 작성</strong> — Vertex의 각 기능을 NSML · CVA · PAF · NCP · BROS · Flova 후보와 1:1 매핑. <strong>사내 미보유 기능 8건</strong>을 갭으로 특정.</li>
+        <li><strong>UX 원칙 5개 정리</strong> — Dashboard의 순서성, Storage 경로 일원화, Dataset:Model 1:1, Background 복원력, 원-클릭 배포. 이후 사내 ML 플랫폼 UI/정보구조 논의에서 반복 인용.</li>
+        <li><strong>사내 제약과의 충돌 지점 식별</strong> — "GCS 일원화" UX 원칙이 네이버의 학습 속도 · Object Storage 기피와 충돌한다는 점을 짚어, 단순 모방이 아닌 <strong>네이버 맞춤 재설계가 필요한 영역</strong>을 미리 표시.</li>
+        <li><strong>Feature Store · Pipelines · Notebook · Model Monitoring</strong>을 사내 우선 구축 후보로 제안, 피처 데이터 공유 · 파이프라인 자동화 · 데이터 편향 알림 등의 킬러 기능을 사내 플랫폼 초기 설계 후보로 올림.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06. ONEPAGER -->
+<section class="tight alt">
+  <div class="wrap">
+    <div class="onepager">
+      <span class="label">One-Pager</span>
+      <h2>요약</h2>
+      <p>
+        <strong>Vertex AI Benchmarking</strong>은 사내 ML 플랫폼(Flova 후보) 기획의 기초자료를 만들기 위한 리서치 프로젝트였습니다.
+        Google I/O'21에 공개된 <strong>Vertex AI</strong>를 신분증 분류 모델 PoC로 end-to-end 구축(<span class="hl">20장 학습 · 18분 39초 · 22/21 정확도</span>)해 실측 경험을 확보했고,
+        이를 근거로 Vertex의 <span class="hl">16+ 기능을 사내 자산과 1:1로 매핑</span>해 <strong>사내 미보유 8건</strong>의 갭을 시각화했습니다.
+        Dashboard의 순서성 · Storage 경로 일원화 · Dataset:Model 1:1 · 원-클릭 배포 등 <strong>5개 UX 원칙</strong>은 이후 사내 ML 플랫폼 UI 설계 논의의 공통 레퍼런스가 되었습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong>Vertex AI Benchmarking</strong>
+      Clova Visual AI · ML Platform Research · 2021
+    </div>
+    <div style="text-align:right;">
+      <strong>Source</strong>
+      Confluence ClovaVisualAI/1203467357
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

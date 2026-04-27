@@ -64,6 +64,12 @@
       "ja": "AIプロダクト",
       "es": "Productos de IA"
     },
+    "data": {
+      "en": "Data & Model",
+      "ko": "데이터 & 모델",
+      "ja": "データ & モデル",
+      "es": "Datos y modelos"
+    },
     "sales": {
       "en": "Ad sales",
       "ko": "광고 세일즈",
@@ -338,6 +344,136 @@
         "ko": "DAN25 · Biz Lounge, 서울",
         "ja": "DAN25 · Biz Lounge, ソウル",
         "es": "DAN25 · Biz Lounge, Seúl"
+      }
+    },
+    "midv": {
+      "kicker": {
+        "en": "Data foundation",
+        "ko": "데이터 파운데이션",
+        "ja": "データ基盤",
+        "es": "Fundación de datos"
+      },
+      "title": {
+        "en": "MIDV Dataset — designing an eval set for IDs you can't publish.",
+        "ko": "MIDV 데이터셋 — 공개할 수 없는 신분증을 공정하게 평가하기.",
+        "ja": "MIDV データセット — 公開できない身分証の評価セット設計。",
+        "es": "Dataset MIDV — diseñar un set de evaluación para IDs no publicables."
+      },
+      "body": {
+        "en": "Dissected MIDV-500 / MIDV-2019 (700+ clips, 50 ID types) to derive five evaluation axes — resolution, lighting, blur, focus, reflection — that became Clova EyeD's eval set and vendor data spec.",
+        "ko": "학계가 만든 MIDV-500 / MIDV-2019 (700+ 클립 · 50종 ID)를 해체해 화질·조명·블러·포커스·반사 5개 평가축을 도출, Clova EyeD 내부 평가셋과 외주 데이터 사양의 근거로 이식했습니다.",
+        "ja": "MIDV-500 / MIDV-2019(700+クリップ・50種ID)を解体し、解像度・照明・ブラー・フォーカス・反射の5軸を導出。Clova EyeD 評価セットと外注データ仕様の根拠に。",
+        "es": "Disección de MIDV-500 / MIDV-2019 (700+ clips, 50 tipos de ID) para derivar cinco ejes de evaluación — resolución, iluminación, desenfoque, enfoque, reflejo — que alimentaron el set de evaluación y las especs de proveedor de Clova EyeD."
+      },
+      "caption": {
+        "en": "MIDV · public ID dataset breakdown",
+        "ko": "MIDV · 공개 신분증 데이터셋 분석",
+        "ja": "MIDV · 公開ID データセット分析",
+        "es": "MIDV · análisis de dataset público de IDs"
+      }
+    },
+    "vertex": {
+      "kicker": {
+        "en": "ML platform research",
+        "ko": "ML 플랫폼 리서치",
+        "ja": "ML プラットフォーム調査",
+        "es": "Investigación de plataforma ML"
+      },
+      "title": {
+        "en": "Vertex AI Benchmarking — taking Google's MLOps apart before drawing ours.",
+        "ko": "Vertex AI 벤치마킹 — 사내 ML 플랫폼을 그리기 위해 구글의 것을 먼저 뜯었다.",
+        "ja": "Vertex AI ベンチマーキング — 社内ML プラットフォームを描く前にGoogle を分解する。",
+        "es": "Benchmarking de Vertex AI — desarmar el MLOps de Google antes de dibujar el nuestro."
+      },
+      "body": {
+        "en": "Built an end-to-end PoC on Vertex AI (20-image AutoML, 22-image eval, ≈95% accuracy) and mapped 16+ features to in-house assets, flagging 8 gaps that became inputs for Flova planning.",
+        "ko": "Vertex AI 위에 End-to-End PoC를 직접 구축(20장 AutoML · 22장 평가 · ≈95%)하고, 16+ 기능을 사내 자산과 1:1로 매핑해 8건의 갭을 Flova 기획 입력으로 정리했습니다.",
+        "ja": "Vertex AI でエンドツーエンドPoC を構築(20枚AutoML・22枚評価・約95%)し、16+機能を社内資産と1:1マッピング。8件のギャップを Flova 企画の入力に。",
+        "es": "PoC end-to-end sobre Vertex AI (AutoML con 20 imágenes, evaluación con 22, ≈95%) y mapeo de 16+ funcionalidades contra activos internos; 8 gaps identificados como insumo para Flova."
+      },
+      "caption": {
+        "en": "Vertex AI · MLOps benchmark",
+        "ko": "Vertex AI · MLOps 벤치마크",
+        "ja": "Vertex AI · MLOps ベンチマーク",
+        "es": "Vertex AI · benchmark de MLOps"
+      }
+    },
+    "patent": {
+      "kicker": {
+        "en": "Competitive intelligence",
+        "ko": "경쟁사 리서치",
+        "ja": "競合インテリジェンス",
+        "es": "Inteligencia competitiva"
+      },
+      "title": {
+        "en": "SenseTime Patent Research — a taxonomy for reading the competition.",
+        "ko": "SenseTime 특허 리서치 — 경쟁사를 읽기 위한 분류 체계.",
+        "ja": "SenseTime 特許リサーチ — 競合を読むための分類体系。",
+        "es": "Investigación de patentes de SenseTime — una taxonomía para leer a la competencia."
+      },
+      "body": {
+        "en": "A 4-domain × 8-category × 60+ keyword taxonomy so legal, modellers, and PM could request SenseTime patent scans in one shared vocabulary, and map Clova Eyes' jittering / AR / recognition pain points onto it.",
+        "ko": "법무 · 모델러 · 기획이 같은 분류표 위에서 특허 의뢰를 주고받도록, 4 도메인 × 8 세부 카테고리 × 60+ 영문 키워드 사전을 설계. Clova Eyes의 지터링 · AR · 얼굴 인식 난제를 그 위에 매핑했습니다.",
+        "ja": "法務・モデラー・PM が同じ分類表上で特許調査依頼をやり取りできるよう、4ドメイン×8サブカテゴリ×60+キーワードの辞書を設計。Clova Eyes の技術課題をその上にマッピング。",
+        "es": "Taxonomía de 4 dominios × 8 subcategorías × 60+ keywords para que legal, modelers y PM pidieran búsquedas de patentes de SenseTime en un vocabulario común, y mapearan los dolores técnicos de Clova Eyes sobre ella."
+      },
+      "caption": {
+        "en": "SenseTime · patent taxonomy",
+        "ko": "SenseTime · 특허 분류 체계",
+        "ja": "SenseTime · 特許分類体系",
+        "es": "SenseTime · taxonomía de patentes"
+      }
+    },
+    "dataops": {
+      "kicker": {
+        "en": "Data pipeline",
+        "ko": "데이터 파이프라인",
+        "ja": "データパイプライン",
+        "es": "Pipeline de datos"
+      },
+      "title": {
+        "en": "Vision Data Operations — four tracks, one standard process.",
+        "ko": "Vision Data Operations — 4개 트랙, 하나의 표준 프로세스.",
+        "ja": "Vision Data Operations — 4トラック、1つの標準プロセス。",
+        "es": "Vision Data Operations — cuatro tracks, un proceso estándar."
+      },
+      "body": {
+        "en": "Ran Face/Hair Segmentation · Hair Matte · Body Keypoints · Datatang QA in parallel. Stood up a 6-step task-agnostic process and an in-house PT pipeline so ops load didn't scale with contract count.",
+        "ko": "Segmentation · Hair Matte · Body Keypoints · Datatang 2차 검수 4개 트랙을 병렬 운영. 6-스텝 표준 프로세스와 사내 PT(시간제) 운영 파이프라인으로, 계약 수가 늘어도 운영 부담이 따라 늘지 않게 만들었습니다.",
+        "ja": "Segmentation・Hair Matte・Body Keypoints・Datatang 検収の4トラックを並行運営。6ステップの標準プロセスと社内PT パイプラインで、契約数に比例しない運用負荷を実現。",
+        "es": "Ejecución paralela de cuatro tracks (Face/Hair Segmentation · Hair Matte · Body Keypoints · QA de Datatang). Proceso estándar de 6 pasos y pipeline interno de PT para que la carga operativa no escalara con el número de contratos."
+      },
+      "caption": {
+        "en": "Vision Data Ops · vendor + PT pipeline",
+        "ko": "Vision Data Ops · 외주 + PT 파이프라인",
+        "ja": "Vision Data Ops · 外注+PT パイプライン",
+        "es": "Vision Data Ops · proveedor + pipeline PT"
+      }
+    },
+    "camera": {
+      "kicker": {
+        "en": "R&D research",
+        "ko": "R&D 리서치",
+        "ja": "R&D リサーチ",
+        "es": "Investigación de I+D"
+      },
+      "title": {
+        "en": "Camera & Image Processing — preprocessing doesn't start in software.",
+        "ko": "Camera & Image Processing — 전처리는 소프트웨어에서 시작되지 않는다.",
+        "ja": "Camera & Image Processing — 前処理はソフトウェアから始まらない。",
+        "es": "Cámara e Image Processing — el preprocesamiento no empieza en software."
+      },
+      "body": {
+        "en": "Mapped the 5-stage preprocessing pipeline from sensor to model input, and cracked 1784 FaceSign's backlight detection failure with a dual-path fix — polarizing-film + RGB-Thermal hardware plus per-sample backlight annotation.",
+        "ko": "센서부터 모델 입력까지 5단계 전처리 파이프라인을 해체하고, 1784 FaceSign 카메라의 출퇴근 시간대 역광 검출 실패 이슈를 편광 필름 · RGB+Thermal 듀얼 하드웨어와 역광 데이터 개별 어노테이션의 이중 접근으로 해결했습니다.",
+        "ja": "センサーからモデル入力までの5段階前処理パイプラインを解体し、1784 FaceSign カメラの逆光検出失敗を偏光フィルム+RGB+Thermal ハードウェアと個別アノテーションの二重アプローチで解決。",
+        "es": "Mapeo del pipeline de preprocesamiento de 5 etapas desde sensor hasta entrada del modelo, y resolución del fallo de detección con contraluz en 1784 FaceSign mediante enfoque dual — hardware (filtro polarizador + RGB-Térmico) y anotación específica de contraluz."
+      },
+      "caption": {
+        "en": "Camera & ISP · 1784 FaceSign preprocessing",
+        "ko": "Camera & ISP · 1784 FaceSign 전처리",
+        "ja": "Camera & ISP · 1784 FaceSign 前処理",
+        "es": "Cámara e ISP · preprocesamiento 1784 FaceSign"
       }
     }
   },
