@@ -1271,6 +1271,7 @@
   }
 
   /* ============ Edit mode ============ */
+  body:not([data-edit-ui]) .edit-btn { display: none !important; }
   .edit-btn.active { background: var(--coral); color: var(--paper); }
   body[data-edit-on] [data-i18n],
   body[data-edit-on] [data-i18n-html] {
@@ -2104,6 +2105,21 @@
   const EDIT_REPO = { owner: 'jan166', name: 'janet-pm', branch: 'main' };
   const EDIT_FILE = 'content/main.json';
   const TOKEN_KEY = 'hyoju.gh.token';
+  const UI_FLAG_KEY = 'hyoju.edit.ui';
+
+  function isEditUiOn() { return localStorage.getItem(UI_FLAG_KEY) === '1'; }
+  function applyEditUi() {
+    document.body.toggleAttribute('data-edit-ui', isEditUiOn());
+  }
+  function toggleEditUi() {
+    const next = !isEditUiOn();
+    if (next) localStorage.setItem(UI_FLAG_KEY, '1');
+    else localStorage.removeItem(UI_FLAG_KEY);
+    applyEditUi();
+    if (!next && editMode) setEditMode(false);
+    console.log(next ? '[edit] UI revealed' : '[edit] UI hidden');
+  }
+  applyEditUi();
   let ORIGINAL_CONTENT = null;
   let editMode = false;
   let dirtyPaths = new Set();
@@ -2269,8 +2285,13 @@
     if (e.target.id === 'patModal') hidePatModal();
   });
 
-  // Keyboard: Cmd/Ctrl+S to save while in edit mode
+  // Keyboard: Cmd/Ctrl+Shift+E toggles edit-UI visibility; Cmd/Ctrl+S saves while editing
   document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.code === 'KeyE' || e.key === 'E' || e.key === 'e')) {
+      e.preventDefault();
+      toggleEditUi();
+      return;
+    }
     if (editMode && (e.metaKey || e.ctrlKey) && e.key === 's') {
       e.preventDefault();
       saveEdits();
