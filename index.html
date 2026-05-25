@@ -2160,17 +2160,34 @@
   }
 
   function onEditKeydown(e) {
-    if (e.key === 'Enter' && !e.shiftKey && !e.currentTarget.hasAttribute('data-i18n-html')) {
-      e.preventDefault();
-      e.currentTarget.blur();
+    const isHtml = e.currentTarget.hasAttribute('data-i18n-html');
+    if (e.key === 'Enter' && !e.shiftKey) {
+      if (isHtml) {
+        // Insert <br> instead of letting browser create <div>
+        e.preventDefault();
+        document.execCommand('insertHTML', false, '<br>');
+      } else {
+        e.preventDefault();
+        e.currentTarget.blur();
+      }
     }
+  }
+
+  function normalizeEditableHtml(html) {
+    let s = html;
+    s = s.replace(/<\/div>\s*<div[^>]*>/gi, '<br/>');
+    s = s.replace(/<div[^>]*>/gi, '<br/>');
+    s = s.replace(/<\/div>/gi, '');
+    s = s.replace(/^(<br\s*\/?>\s*)+/i, '');
+    s = s.replace(/(<br\s*\/?>\s*){2,}/gi, '<br/>');
+    return s.trim();
   }
 
   function onEditInput(e) {
     const el = e.currentTarget;
     const isHtml = el.hasAttribute('data-i18n-html');
     const path = el.getAttribute(isHtml ? 'data-i18n-html' : 'data-i18n');
-    const val = isHtml ? el.innerHTML : el.textContent;
+    const val = isHtml ? normalizeEditableHtml(el.innerHTML) : el.textContent;
     setAtPath(CONTENT, path, activeLang, val);
     dirtyPaths.add(path);
     updateBar();

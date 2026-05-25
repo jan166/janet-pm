@@ -44,9 +44,9 @@
     }
   },
   "hero": {
-    "title_html": {
+    "title": {
       "en": "AI products that<br/><em>move revenue.</em>",
-      "ko": "매출을 움직이는<br/><em>AI 프로덕트</em>를 만듭니다.",
+      "ko": "프로덕트의 A to Z를&nbsp;<br/>경험한 기획자입니다.",
       "ja": "売上を動かす<br/><em>AIプロダクト。</em>",
       "es": "Productos de IA que<br/><em>mueven ingresos.</em>"
     },
@@ -67,9 +67,6 @@
       "ko": "네이버 · 서울",
       "ja": "NAVER · ソウル",
       "es": "NAVER, Seúl"
-    },
-    "title": {
-      "ko": "프로덕트의 A to Z를&nbsp;<div>경험한 기획자입니다.</div>"
     }
   },
   "sidetabs": {
@@ -757,7 +754,7 @@
     }
   },
   "about": {
-    "title_html": {
+    "title": {
       "en": "About me — <em>AI PM with a revenue lens.</em>",
       "ko": "<em>소개</em> — 매출을 보는 AI PM.",
       "ja": "自己紹介 <em>— 売上を見るAI PM。</em>",
