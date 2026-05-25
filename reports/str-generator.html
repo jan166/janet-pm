@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sales Trend Report — STR 자동 생성기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --surface: #1a1f2b;
+    --border: rgba(255,255,255,0.08);
+    --text: #f4f6fa;
+    --text-soft: #a8b0c0;
+    --text-dim: #6a7388;
+    --brand: #00d4ff;
+    --brand-2: #6366f1;
+    --brand-grad: linear-gradient(135deg, #00d4ff 0%, #6366f1 100%);
+    --accent: #00ffa3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-dim); text-decoration: none;
+    font-size: 13px; margin-bottom: 32px; transition: color 0.2s;
+  }
+  .back:hover { color: var(--brand); }
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(34px, 5vw, 52px); font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1.1;
+    background: var(--brand-grad);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 18px;
+  }
+  .lead { font-size: 19px; color: var(--text-soft); margin-bottom: 40px; line-height: 1.55; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 56px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 20px; }
+  .sv { font-size: 28px; font-weight: 600; color: var(--brand); margin-bottom: 4px; }
+  .sl { font-size: 12px; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+  h2 { font-size: 24px; font-weight: 600; margin-top: 48px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  p { color: var(--text-soft); margin-bottom: 14px; font-size: 16px; }
+  ul { color: var(--text-soft); padding-left: 22px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; background: rgba(255,255,255,0.06); padding: 2px 7px; border-radius: 4px; color: var(--accent); }
+  .stamp { margin-top: 56px; padding: 22px 24px; background: rgba(0,212,255,0.08); border-left: 3px solid var(--brand); border-radius: 4px; color: var(--text-soft); font-style: italic; font-size: 15px; }
+  @media (max-width: 600px) { .stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../index.html#/work">← 프로젝트</a>
+    <div class="kicker">Internal automation · 2026 —</div>
+    <h1>Sales Trend Report</h1>
+    <p class="lead">광고 세일즈 조직이 매월 시장을 읽는 도구. 한 장의 Google Sheet에서 토픽 8개를 파싱해, 정적 HTML 허브에 자동 발행하는 월간 리포트 생성기를 직접 설계·운영합니다.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="sv">8</div><div class="sl">Topics / 호</div></div>
+      <div class="stat"><div class="sv">86%</div><div class="sl">First-issue open rate</div></div>
+      <div class="stat"><div class="sv">T/T/E</div><div class="sl">Framework</div></div>
+    </div>
+
+    <h2>왜 만들었나</h2>
+    <p>광고 세일즈 조직 안에서 "이번 달 시장은 어떻게 움직였나"를 묻는 사람은 많지만, 답하는 사람의 시간은 매번 흩어져서 사라졌습니다. 트렌드 분석은 본질적으로 반복되는 작업이라 — 매월 같은 8가지 축을 보고, 같은 형식으로 정리한다면 — 자동화가 가능합니다.</p>
+
+    <h2>T/T/E 프레임워크</h2>
+    <ul>
+      <li><strong>T(rend)</strong>: 시장 전체 흐름 — 광고비, 매체별 성장률, 카테고리 비중</li>
+      <li><strong>T(opic)</strong>: 이번 달 화제 — 신규 상품, 캠페인, 경쟁사 동향</li>
+      <li><strong>E(xception)</strong>: 평소 흐름과 어긋난 신호 — 급증/급감, 신규 진입자, 정책 변화</li>
+    </ul>
+    <p>매 호 8개 토픽이 이 세 축에 골고루 분포하도록 큐레이션합니다.</p>
+
+    <h2>어떻게 만들었나</h2>
+    <ul>
+      <li><strong>입력</strong>: 한 장의 Google Sheet — 호 번호, 토픽 제목, 본문, 출처</li>
+      <li><strong>파싱</strong>: <code>str-report</code> 스킬이 sheets API로 셀을 읽고 토픽을 정규화</li>
+      <li><strong>출력</strong>: 이전 호를 템플릿 삼아 <code>{Month}/index.html</code> 자동 생성, 루트 허브와 지난호 배열 갱신, 커밋·푸시까지</li>
+      <li><strong>운영</strong>: <code>/str-report</code> 슬래시 커맨드 한 번이면 새 호 발행</li>
+    </ul>
+
+    <h2>지표</h2>
+    <p>첫 호 사내 열람률 86%. 이전에 정기적인 트렌드 리포트가 없던 조직에서, "월말이면 자동으로 도착하는 시장 보고서"라는 새로운 디폴트를 만들었습니다.</p>
+
+    <div class="stamp">
+      "반복은 자동화의 신호다. 매달 같은 질문을 받는다면, 그건 시스템으로 답할 수 있는 질문이다." — 운영하면서 배운 것.
+    </div>
+  </div>
+</body>
+</html>

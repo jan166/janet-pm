@@ -123,6 +123,188 @@
 
   .page { max-width: 1320px; margin: 0 auto; padding: 20px 24px 0; }
 
+  /* ============ Page routing ============ */
+  .page-view[hidden] { display: none !important; }
+  .page-view { animation: pageFade 0.32s ease-out; }
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ Page hero (About/Side/Joy share) ============ */
+  .page-hero { text-align: center; padding: 64px 20px 28px; max-width: 720px; margin: 0 auto; }
+  .page-hero-kicker {
+    font-family: var(--serif-alt);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 14px;
+  }
+  .page-hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(38px, 5.6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: var(--coral);
+  }
+  .page-hero h1 em {
+    font-style: italic;
+    color: var(--coral-deep);
+  }
+  .page-hero p {
+    font-family: var(--serif-alt);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    line-height: 1.55;
+  }
+  html[lang="ko"] .page-hero p, html[lang="ja"] .page-hero p { font-style: normal; }
+
+  /* ============ Side Project grid ============ */
+  .side-grid {
+    max-width: 1100px;
+    margin: 24px auto 64px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .side-card {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 26px;
+    display: grid;
+    grid-template-columns: 220px 1fr 36px;
+    gap: 26px;
+    align-items: center;
+    border: 0.5px solid var(--paper-edge);
+    box-shadow: 0 8px 24px rgba(91,63,59,0.08), 0 1px 0 rgba(43,24,22,0.04);
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative;
+  }
+  .side-card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(91,63,59,0.14); }
+  .side-card-ghost { cursor: default; opacity: 0.78; grid-template-columns: 1fr; }
+  .side-card-ghost:hover { transform: none; box-shadow: 0 8px 24px rgba(91,63,59,0.08); }
+  .side-photo {
+    aspect-ratio: 5/4;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px;
+  }
+  .ph-coral { background: linear-gradient(135deg, #F8C9B8 0%, #E48064 100%); }
+  .ph-deep  { background: linear-gradient(180deg, #2F5C73 0%, #0E2B3A 100%); }
+  .ph-azure { background: linear-gradient(135deg, #B6D8E0 0%, #5C8FA6 100%); }
+  .ph-paper { background: linear-gradient(135deg, #F0E5C7 0%, #C9B58B 100%); }
+  .side-emoji { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.18)); }
+  .side-kicker {
+    font-family: var(--serif-alt);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 8px;
+  }
+  .side-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.012em;
+  }
+  .side-title-sm {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .side-lead, .side-body-sm {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .side-stats {
+    display: flex; gap: 22px; margin-top: 14px;
+  }
+  .side-stats .sv {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--coral-deep);
+    font-weight: 500;
+  }
+  .side-stats .sv .su { font-size: 14px; }
+  .side-stats .sl {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  @media (max-width: 760px) {
+    .side-card { grid-template-columns: 1fr; }
+    .side-photo { aspect-ratio: 16/9; }
+  }
+
+  /* ============ Joy grid ============ */
+  .joy-grid {
+    max-width: 1100px;
+    margin: 24px auto 64px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .joy-card {
+    background: var(--paper);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 0.5px solid var(--paper-edge);
+    box-shadow: 0 8px 24px rgba(91,63,59,0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s;
+  }
+  .joy-card:hover { transform: translateY(-3px); }
+  .joy-photo {
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px;
+  }
+  .joy-emoji { filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22)); }
+  .joy-body { padding: 22px 24px 26px; }
+  .joy-kicker {
+    font-family: var(--serif-alt);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 8px;
+  }
+  .joy-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.22;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: -0.012em;
+  }
+  .joy-text {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  @media (max-width: 900px) {
+    .joy-grid { grid-template-columns: 1fr; }
+  }
+
   /* ============ NAV ============ */
   .nav {
     background: var(--paper);
@@ -136,15 +318,29 @@
     border: 0.5px solid rgba(43,24,22,0.06);
   }
   .nav-brand {
-    width: 34px; height: 34px;
-    background: var(--coral);
-    color: var(--paper);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    color: var(--coral);
     font-family: var(--serif);
-    font-weight: 500; font-style: italic;
-    font-size: 18px;
-    letter-spacing: -0.02em;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 19px;
+    letter-spacing: -0.015em;
+    text-decoration: none;
+    padding: 4px 6px 4px 10px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .nav-brand:hover { color: var(--coral-deep); }
+  html[lang="ko"] .nav-brand {
+    font-family: 'BookkMyungjo', 'NanumSquare', -apple-system, 'Apple SD Gothic Neo', Georgia, serif;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.04em;
+  }
+  html[lang="ja"] .nav-brand {
+    font-family: 'Zen Kaku Gothic Antique', 'NanumSquare', 'Hiragino Sans', system-ui, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: -0.005em;
   }
   .nav-links { display: flex; gap: 4px; }
   .nav-link {
@@ -280,34 +476,60 @@
     margin-right: 4px;
   }
 
-  /* ============ FILTER CHIPS ============ */
-  .filters {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 44px;
+  /* ============ WORK LAYOUT (sidetabs + book) ============ */
+  .work-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 28px;
   }
-  .chip {
-    background: var(--cream-soft);
-    border: 0.5px solid rgba(217,75,61,0.2);
-    color: var(--coral-deep);
+  .sidetabs {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: var(--paper);
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(91,63,59,0.06);
+    border: 0.5px solid rgba(43,24,22,0.05);
+  }
+  .sidetab {
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 11px 14px;
+    border-radius: 10px;
     font-family: var(--sans);
     font-size: 13px;
     font-weight: 500;
-    padding: 9px 18px;
-    border-radius: 999px;
+    color: var(--ink);
     cursor: pointer;
-    transition: all 0.25s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.18s, color 0.18s;
   }
-  .chip:hover { background: var(--paper); transform: translateY(-1px); }
-  .chip.active {
-    background: var(--coral);
-    color: var(--paper);
-    border-color: var(--coral);
+  .sidetab:hover { background: rgba(217,75,61,0.08); }
+  .sidetab.active { background: var(--coral); color: var(--paper); }
+  .sidetab .count {
+    font-size: 11px;
+    opacity: 0.55;
+    font-weight: 500;
   }
-  .chip .count { opacity: 0.6; font-size: 11px; margin-left: 4px; }
-  .chip.active .count { opacity: 0.8; }
+  .sidetab.active .count { opacity: 0.8; }
+  @media (max-width: 880px) {
+    .work-layout { grid-template-columns: 1fr; }
+    .sidetabs {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 6px;
+    }
+    .sidetab { flex: 1 1 auto; justify-content: center; padding: 8px 12px; font-size: 12px; }
+  }
 
   /* ============ BOOK SPREAD ============ */
   .book-wrap {
@@ -407,13 +629,14 @@
   }
 
   .book-page {
-    padding: 32px 44px 38px;
+    padding: 28px 36px 36px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px 22px;
+    gap: 16px 20px;
     grid-auto-rows: min-content;
     align-content: start;
     position: relative;
+    min-height: 560px;
   }
 
   .folio {
@@ -465,9 +688,7 @@
   .block:hover .block-title { color: var(--coral); }
   .block:hover .arrow-link { background: var(--coral); color: var(--paper); }
   .block.dim {
-    opacity: 0.28;
-    filter: saturate(0.25);
-    pointer-events: none;
+    display: none;
   }
   .block-kicker {
     font-family: var(--serif-alt);
@@ -709,6 +930,25 @@
   .ph-amber  { background: linear-gradient(135deg, #D7A55E 0%, #8A5A21 100%); }
   .ph-rose   { background: linear-gradient(135deg, #C98296 0%, #7A3F51 100%); }
   .ph-forest { background: linear-gradient(135deg, #8BAE84 0%, #4C6F48 100%); }
+  .ph-tomato { background: linear-gradient(135deg, #E48A6B 0%, #B33527 100%); }
+  .ph-grass  { background: linear-gradient(135deg, #7FAA56 0%, #355F22 100%); }
+  .block-emoji {
+    font-size: 56px;
+    align-self: center;
+    justify-self: center;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.22));
+  }
+  .block-str .photo-ph, .block-wcup .photo-ph {
+    aspect-ratio: 5/3.4;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .block-str, .block-wcup {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 0.45fr 1fr 32px;
+    gap: 18px;
+    align-items: center;
+  }
 
   .block-ad {
     grid-column: span 2;
@@ -1036,14 +1276,12 @@
 
   <!-- ========= NAV ========= -->
   <nav class="nav">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div class="nav-brand">h</div>
-    </div>
+    <a href="#/work" class="nav-brand" data-i18n="nav.brand">Janet Cheong</a>
     <div class="nav-links">
-      <a href="#work" class="nav-link active" data-i18n="nav.work">Work</a>
-      <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
-      <a href="#toolkit" class="nav-link" data-i18n="nav.toolkit">Toolkit</a>
-      <a href="mailto:janettt16@gmail.com" class="nav-link" data-i18n="nav.contact">Contact</a>
+      <a href="#/work" class="nav-link" data-route="work" data-i18n="nav.work">Work</a>
+      <a href="#/about" class="nav-link" data-route="about" data-i18n="nav.about">About</a>
+      <a href="#/side" class="nav-link" data-route="side" data-i18n="nav.side">Side Project</a>
+      <a href="#/joy" class="nav-link" data-route="joy" data-i18n="nav.joy">Joy</a>
     </div>
     <div class="nav-actions">
       <div class="lang-picker">
@@ -1066,6 +1304,9 @@
     </div>
   </nav>
 
+  <!-- ========= PAGE: WORK ========= -->
+  <main class="page-view" id="page-work" data-page="work">
+
   <!-- ========= HERO ========= -->
   <section class="hero">
     <h1 data-i18n-html="hero.title">Read it, <em>see it</em>,<br/>ship it.</h1>
@@ -1079,8 +1320,9 @@
     </div>
   </section>
 
-  <!-- ========= FILTERS ========= -->
-  <div class="filters" id="filters" role="tablist"></div>
+  <!-- ========= WORK LAYOUT (sidetabs + book) ========= -->
+  <div class="work-layout">
+    <aside class="sidetabs" id="sidetabs" role="tablist"></aside>
 
   <!-- ========= BOOK (EDITORIAL OVERVIEW) ========= -->
   <section class="book-wrap" id="work">
@@ -1094,7 +1336,7 @@
         </div>
 
         <!-- MAIN FEATURE: Clova EyeD -->
-        <div class="block block-main" data-category="ai" data-report="reports/clova-eyed.html">
+        <div class="block block-main" data-category="ai" data-highlight="1" data-report="reports/clova-eyed.html">
           <div class="polaroid">
             <div class="photo-ph ph-peach" style="aspect-ratio: 4/3.2;"></div>
             <div class="ph-note" data-i18n="blocks.eyed.caption">Clova EyeD · SDK cover or product demo</div>
@@ -1116,7 +1358,7 @@
         </div>
 
         <!-- RAG PLATFORM -->
-        <div class="block block-rag" data-category="ai" data-report="reports/rag-platform.html">
+        <div class="block block-rag" data-category="ai" data-highlight="1" data-report="reports/rag-platform.html">
           <div class="block-rag-inner">
             <div>
               <div class="block-kicker" data-i18n="blocks.rag.kicker">Also in this issue</div>
@@ -1196,7 +1438,7 @@
         </div>
 
         <!-- MILAN OLYMPICS -->
-        <div class="block block-milan" data-category="sales" data-report="reports/milano-olympics.html">
+        <div class="block block-milan" data-category="sales" data-highlight="1" data-report="reports/milano-olympics.html">
           <div class="polaroid">
             <div class="photo-ph ph-blue" style="aspect-ratio: 4/3.6;"></div>
             <div class="ph-note" data-i18n="blocks.milan.caption">Milano · event venue or inventory mock</div>
@@ -1223,7 +1465,7 @@
         </div>
 
         <!-- SHOPPING SELLER GROWTH -->
-        <div class="block block-shop" data-category="growth" data-report="reports/shopping-seller.html">
+        <div class="block block-shop" data-category="growth" data-highlight="1" data-report="reports/shopping-seller.html">
           <div>
             <div class="block-kicker" data-i18n="blocks.shop.kicker">Field notes</div>
             <div class="block-meta"><b>NAVER Shopping</b><span>·</span><span>2025</span></div>
@@ -1248,6 +1490,38 @@
             <div class="block-meta"><b>NAVER · DAN25</b><span>·</span><span>2025</span></div>
             <h3 class="block-title" data-i18n="blocks.dan.title">DAN25 Biz Lounge — 200 partners, 90 minutes.</h3>
             <p class="block-body" data-i18n="blocks.dan.body">A partner event rebuilt over four months with a 20-person ops crew. Two core messages, three teams, one run of show that held.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- STR — SALES TREND REPORT (internal automation) -->
+        <div class="block block-str" data-category="sales" data-report="reports/str-generator.html">
+          <div class="photo-ph ph-tomato">
+            <span class="block-emoji" aria-hidden="true">📈</span>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.str.kicker">Internal automation</div>
+            <div class="block-meta"><b>NAVER · Sales Planning</b><span>·</span><span>2026 —</span></div>
+            <h3 class="block-title" data-i18n="blocks.str.title">Sales Trend Report — a monthly market read, automated.</h3>
+            <p class="block-body" data-i18n="blocks.str.body">A monthly sales-side intelligence report I lead end-to-end: T/T/E framework, 8 topics per issue, parsed from a single Google Sheet and published to a static hub. First issue hit 86% open rate inside the org.</p>
+          </div>
+          <a class="arrow-link" aria-label="Open report">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <!-- WORLD CUP ALERT SYSTEM (internal automation) -->
+        <div class="block block-wcup" data-category="sales" data-report="reports/worldcup-alert.html">
+          <div class="photo-ph ph-grass">
+            <span class="block-emoji" aria-hidden="true">⚽</span>
+          </div>
+          <div>
+            <div class="block-kicker" data-i18n="blocks.wcup.kicker">Internal automation</div>
+            <div class="block-meta"><b>NAVER · Sales Planning</b><span>·</span><span>2026 —</span></div>
+            <h3 class="block-title" data-i18n="blocks.wcup.title">World Cup alert system — chasing the unanswered, automatically.</h3>
+            <p class="block-body" data-i18n="blocks.wcup.body">A local Mac cron polling NAVER Works mail every 15 minutes, surfacing unanswered World Cup sponsorship threads and pushing catch-up digests via Telegram. Built so a sales lead never loses a thread inside a 400-mail backlog.</p>
           </div>
           <a class="arrow-link" aria-label="Open report">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
@@ -1307,6 +1581,7 @@
 
     </article>
   </section>
+  </div><!-- /work-layout -->
 
   <!-- ========= MAGAZINE NAV BAR ========= -->
   <div class="booknav">
@@ -1326,6 +1601,11 @@
       </button>
     </div>
   </div>
+
+  </main><!-- /page-work -->
+
+  <!-- ========= PAGE: ABOUT ========= -->
+  <main class="page-view" id="page-about" data-page="about" hidden>
 
   <!-- ========= ABOUT ========= -->
   <section class="about-strip" id="about">
@@ -1367,6 +1647,85 @@
       </div>
     </div>
   </section>
+
+  </main><!-- /page-about -->
+
+  <!-- ========= PAGE: SIDE PROJECT ========= -->
+  <main class="page-view" id="page-side" data-page="side" hidden>
+    <section class="page-hero">
+      <div class="page-hero-kicker" data-i18n="side.kicker">— Side Projects —</div>
+      <h1 data-i18n-html="side.title">Tools I built for myself,<br/><em>then for the team.</em></h1>
+      <p data-i18n="side.sub">Lightweight automations and dashboards that started as personal itches and became infrastructure others rely on.</p>
+    </section>
+    <section class="side-grid" id="side-grid">
+      <article class="side-card" data-report="reports/tomato-dashboard.html">
+        <div class="side-photo ph-coral">
+          <span class="side-emoji" aria-hidden="true">🍅</span>
+        </div>
+        <div class="side-body">
+          <div class="side-kicker" data-i18n="side.tomato.kicker">Personal infra · Mac · Python</div>
+          <h2 class="side-title" data-i18n="side.tomato.title">Tomato Dashboard — a window into NAVER Works that actually fits my brain.</h2>
+          <p class="side-lead" data-i18n="side.tomato.lead">A personal dashboard that pulls mail, calendar, tasks, and Wiki into one Pomodoro-paced view — built because the default UI buries what I need to act on.</p>
+          <div class="side-stats">
+            <div><div class="sv">5</div><div class="sl" data-i18n="side.tomato.stat1">Surfaces unified</div></div>
+            <div><div class="sv">15<span class="su">m</span></div><div class="sl" data-i18n="side.tomato.stat2">Polling cadence</div></div>
+            <div><div class="sv">100%</div><div class="sl" data-i18n="side.tomato.stat3">Daily use</div></div>
+          </div>
+        </div>
+        <a class="arrow-link" aria-label="Open report">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a>
+      </article>
+      <article class="side-card side-card-ghost">
+        <div class="side-body">
+          <div class="side-kicker" data-i18n="side.more.kicker">More coming</div>
+          <h3 class="side-title-sm" data-i18n="side.more.title">Telegram voice → Claude bot · World Cup digest · Sales Trend Report generator</h3>
+          <p class="side-body-sm" data-i18n="side.more.body">Several small tools are in flight — write-ups land here as they ship.</p>
+        </div>
+      </article>
+    </section>
+  </main><!-- /page-side -->
+
+  <!-- ========= PAGE: JOY ========= -->
+  <main class="page-view" id="page-joy" data-page="joy" hidden>
+    <section class="page-hero">
+      <div class="page-hero-kicker" data-i18n="joy.kicker">— Off the clock —</div>
+      <h1 data-i18n-html="joy.title">Things that keep me<br/><em>making things.</em></h1>
+      <p data-i18n="joy.sub">A freediver, a journal-keeper since 2016, and a traveler who has stamped passports in 29 countries.</p>
+    </section>
+    <section class="joy-grid">
+      <article class="joy-card joy-freedive">
+        <div class="joy-photo ph-deep">
+          <span class="joy-emoji" aria-hidden="true">🤿</span>
+        </div>
+        <div class="joy-body">
+          <div class="joy-kicker" data-i18n="joy.dive.kicker">Underwater</div>
+          <h2 class="joy-title" data-i18n="joy.dive.title">Freediving — the discipline of staying calm with no air.</h2>
+          <p class="joy-text" data-i18n="joy.dive.text">A practice I keep returning to because it scales the way real product work does: oxygen is finite, panic compounds, and the only way out is steady breath and trust in preparation.</p>
+        </div>
+      </article>
+      <article class="joy-card joy-travel">
+        <div class="joy-photo ph-azure">
+          <span class="joy-emoji" aria-hidden="true">🌍</span>
+        </div>
+        <div class="joy-body">
+          <div class="joy-kicker" data-i18n="joy.travel.kicker">29 countries</div>
+          <h2 class="joy-title" data-i18n="joy.travel.title">Travel — Korea · Japan · Mexico · Spain · DR · 25 more.</h2>
+          <p class="joy-text" data-i18n="joy.travel.text">Long stays in Mexico, Spain, and the Dominican Republic taught me Spanish; shorter trips taught me how much taste depends on context. Both habits feed the work.</p>
+        </div>
+      </article>
+      <article class="joy-card joy-journal">
+        <div class="joy-photo ph-paper">
+          <span class="joy-emoji" aria-hidden="true">📓</span>
+        </div>
+        <div class="joy-body">
+          <div class="joy-kicker" data-i18n="joy.journal.kicker">Since 2016</div>
+          <h2 class="joy-title" data-i18n="joy.journal.title">A daily journal — ten years and counting.</h2>
+          <p class="joy-text" data-i18n="joy.journal.text">A line a day on bad days, a page on good ones. The archive is how I notice patterns in projects, in people, and in myself before they become problems.</p>
+        </div>
+      </article>
+    </section>
+  </main><!-- /page-joy -->
 
   <!-- ========= FOOTER ========= -->
   <footer class="footer">
@@ -1418,38 +1777,42 @@
   let CONTENT = null;
   const SUPPORTED_LANGS = ['en', 'ko', 'ja', 'es'];
 
-  let activeCategory = 'all';
+  let activeTab = 'highlights';
   let activeLang = 'en';
 
-  // ============ Filter categories ============
-  function categoriesFor(lang) {
-    const f = (CONTENT && CONTENT.filters) || {};
-    const get = k => (f[k] && (f[k][lang] || f[k].en)) || k;
-    return [
-      { id: 'all',    label: get('all') },
-      { id: 'ai',     label: get('ai') },
-      { id: 'data',   label: get('data') },
-      { id: 'sales',  label: get('sales') },
-      { id: 'growth', label: get('growth') },
-      { id: 'events', label: get('events') }
-    ];
+  // ============ Side tabs (Highlights / AI Product / AI Data / Ad Sales / Ad Growth) ============
+  // Mapping: tab id → predicate against block dataset
+  const TAB_DEFS = [
+    { id: 'highlights', i18n: 'highlights', match: b => b.dataset.highlight === '1' },
+    { id: 'ai-product', i18n: 'ai_product', match: b => b.dataset.category === 'ai' },
+    { id: 'ai-data',    i18n: 'ai_data',    match: b => b.dataset.category === 'data' },
+    { id: 'ad-sales',   i18n: 'ad_sales',   match: b => b.dataset.category === 'sales' || b.dataset.category === 'events' },
+    { id: 'ad-growth',  i18n: 'ad_growth',  match: b => b.dataset.category === 'growth' }
+  ];
+
+  function tabsFor(lang) {
+    const t = (CONTENT && CONTENT.sidetabs) || {};
+    return TAB_DEFS.map(d => ({
+      id: d.id,
+      label: (t[d.i18n] && (t[d.i18n][lang] || t[d.i18n].en)) || d.id
+    }));
   }
 
   function getBlocks() { return Array.from(document.querySelectorAll('.block')); }
 
-  function renderFilters() {
+  function renderSideTabs() {
     const blocks = getBlocks();
-    const el = document.getElementById('filters');
-    el.innerHTML = categoriesFor(activeLang).map(c => {
-      const count = c.id === 'all'
-        ? blocks.length
-        : blocks.filter(b => b.dataset.category === c.id).length;
-      return '<button class="chip ' + (c.id === activeCategory ? 'active' : '') + '" data-cat="' + c.id + '">' + c.label + ' <span class="count">' + count + '</span></button>';
+    const el = document.getElementById('sidetabs');
+    if (!el) return;
+    el.innerHTML = tabsFor(activeLang).map((c, i) => {
+      const def = TAB_DEFS[i];
+      const count = blocks.filter(def.match).length;
+      return '<button class="sidetab ' + (c.id === activeTab ? 'active' : '') + '" data-tab="' + c.id + '" role="tab">' + c.label + ' <span class="count">' + count + '</span></button>';
     }).join('');
-    el.querySelectorAll('.chip').forEach(btn => {
+    el.querySelectorAll('.sidetab').forEach(btn => {
       btn.addEventListener('click', () => {
-        activeCategory = btn.dataset.cat;
-        renderFilters();
+        activeTab = btn.dataset.tab;
+        renderSideTabs();
         applyFilter();
       });
     });
@@ -1457,12 +1820,26 @@
   }
 
   function applyFilter() {
+    const def = TAB_DEFS.find(d => d.id === activeTab) || TAB_DEFS[0];
     getBlocks().forEach(b => {
-      if (activeCategory === 'all' || b.dataset.category === activeCategory) {
-        b.classList.remove('dim');
-      } else {
-        b.classList.add('dim');
-      }
+      if (def.match(b)) b.classList.remove('dim');
+      else b.classList.add('dim');
+    });
+    fillBook();
+  }
+
+  // Pack visible blocks into the book — left page first, then right.
+  function fillBook() {
+    const visible = getBlocks().filter(b => !b.classList.contains('dim'));
+    const left = document.querySelector('.book-page.left');
+    const right = document.querySelector('.book-page.right');
+    if (!left || !right) return;
+    const folioLeft = left.querySelector('.folio');
+    const folioRight = right.querySelector('.folio');
+    const half = Math.ceil(visible.length / 2);
+    visible.forEach((b, i) => {
+      if (i < half) left.insertBefore(b, folioLeft);
+      else right.insertBefore(b, folioRight);
     });
   }
 
@@ -1512,7 +1889,7 @@
       b.classList.toggle('current', b.dataset.lang === lang);
     });
 
-    renderFilters();
+    renderSideTabs();
   }
 
   // ============ Language picker ============
@@ -1572,20 +1949,41 @@
   const pagePrev = document.getElementById('pagePrev');
   const pageNext = document.getElementById('pageNext');
   function updatePageCounter() {
-    const order = ['all', 'ai', 'data', 'sales', 'growth', 'events'];
-    const idx = order.indexOf(activeCategory);
+    const order = TAB_DEFS.map(d => d.id);
+    const idx = order.indexOf(activeTab);
     const num = String(idx + 1).padStart(2, '0');
     if (pageCurrent) pageCurrent.textContent = num;
+    const totalEl = document.querySelector('.booknav-page .total');
+    if (totalEl) totalEl.textContent = ' / ' + String(order.length).padStart(2, '0');
   }
-  function cycleCategory(dir) {
-    const order = ['all', 'ai', 'data', 'sales', 'growth', 'events'];
-    const idx = order.indexOf(activeCategory);
-    activeCategory = order[(idx + dir + order.length) % order.length];
-    renderFilters();
+  function cycleTab(dir) {
+    const order = TAB_DEFS.map(d => d.id);
+    const idx = order.indexOf(activeTab);
+    activeTab = order[(idx + dir + order.length) % order.length];
+    renderSideTabs();
     applyFilter();
   }
-  if (pagePrev) pagePrev.addEventListener('click', () => cycleCategory(-1));
-  if (pageNext) pageNext.addEventListener('click', () => cycleCategory(1));
+  if (pagePrev) pagePrev.addEventListener('click', () => cycleTab(-1));
+  if (pageNext) pageNext.addEventListener('click', () => cycleTab(1));
+
+  // ============ Hash router (Work / About / Side / Joy) ============
+  const ROUTES = ['work', 'about', 'side', 'joy'];
+  function currentRoute() {
+    const m = (location.hash || '').match(/^#\/([a-z]+)/);
+    const r = m && m[1];
+    return ROUTES.includes(r) ? r : 'work';
+  }
+  function applyRoute() {
+    const r = currentRoute();
+    document.querySelectorAll('.page-view').forEach(el => {
+      el.hidden = (el.dataset.page !== r);
+    });
+    document.querySelectorAll('.nav-link').forEach(a => {
+      a.classList.toggle('active', a.dataset.route === r);
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+  window.addEventListener('hashchange', applyRoute);
 
   // ============ Bootstrap ============
   async function boot() {
@@ -1598,8 +1996,11 @@
       CONTENT = {};
     }
     applyLang('en');
+    renderSideTabs();
     applyFilter();
     updatePageCounter();
+    applyRoute();
+    if (!location.hash) location.hash = '#/work';
     const lang = await detectLanguage();
     if (lang !== activeLang) applyLang(lang);
   }

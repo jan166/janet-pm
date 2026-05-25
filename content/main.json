@@ -1,5 +1,11 @@
 {
   "nav": {
+    "brand": {
+      "en": "Janet Cheong",
+      "ko": "정효주",
+      "ja": "Hyoju Cheong",
+      "es": "Janet Cheong"
+    },
     "work": {
       "en": "Work",
       "ko": "프로젝트",
@@ -11,6 +17,18 @@
       "ko": "소개",
       "ja": "自己紹介",
       "es": "Sobre mí"
+    },
+    "side": {
+      "en": "Side Project",
+      "ko": "사이드 프로젝트",
+      "ja": "サイドプロジェクト",
+      "es": "Proyectos personales"
+    },
+    "joy": {
+      "en": "Joy",
+      "ko": "JOY",
+      "ja": "JOY",
+      "es": "Joy"
     },
     "toolkit": {
       "en": "Toolkit",
@@ -49,6 +67,38 @@
       "ko": "네이버 · 서울",
       "ja": "NAVER · ソウル",
       "es": "NAVER, Seúl"
+    }
+  },
+  "sidetabs": {
+    "highlights": {
+      "en": "Highlights",
+      "ko": "Highlights",
+      "ja": "Highlights",
+      "es": "Highlights"
+    },
+    "ai_product": {
+      "en": "AI Product",
+      "ko": "AI 프로덕트",
+      "ja": "AIプロダクト",
+      "es": "Productos de IA"
+    },
+    "ai_data": {
+      "en": "AI Data",
+      "ko": "AI 데이터",
+      "ja": "AIデータ",
+      "es": "Datos de IA"
+    },
+    "ad_sales": {
+      "en": "Ad Sales",
+      "ko": "광고 세일즈",
+      "ja": "広告セールス",
+      "es": "Ventas de publicidad"
+    },
+    "ad_growth": {
+      "en": "Ad Growth",
+      "ko": "광고 그로스",
+      "ja": "広告グロース",
+      "es": "Crecimiento publicitario"
     }
   },
   "filters": {
@@ -475,6 +525,66 @@
         "ja": "Camera & ISP · 1784 FaceSign 前処理",
         "es": "Cámara e ISP · preprocesamiento 1784 FaceSign"
       }
+    },
+    "milano_contrib": {
+      "kicker": {
+        "en": "Field notes",
+        "ko": "현장 기록",
+        "ja": "現場メモ",
+        "es": "Notas de campo"
+      },
+      "title": {
+        "en": "Milano · individual contribution — the slice I owned end-to-end.",
+        "ko": "밀라노 · 개인 기여 리포트 — 처음부터 끝까지 내가 책임진 영역.",
+        "ja": "ミラノ · 個人貢献レポート — 最初から最後まで自分が担当した領域。",
+        "es": "Milán · contribución individual — la parte que llevé de punta a punta."
+      },
+      "body": {
+        "en": "A focused write-up on what I personally led inside the Milano package: pricing ladders, late-stage edge cases, and the discount logic that closed the last few advertisers.",
+        "ko": "밀라노 패키지 내에서 직접 리드한 가격 사다리, 막판 엣지 케이스, 마지막 광고주를 닫게 한 할인 로직을 정리한 개별 기여 리포트.",
+        "ja": "ミラノパッケージ内で自分が主導した価格ラダー、終盤のエッジケース、最後の広告主を決めた割引ロジックをまとめた個別貢献レポート。",
+        "es": "Un reporte enfocado en lo que lideré dentro del paquete de Milán: escalones de precio, casos límite de última hora y la lógica de descuento que cerró a los últimos anunciantes."
+      }
+    },
+    "str": {
+      "kicker": {
+        "en": "Internal automation",
+        "ko": "사내 자동화",
+        "ja": "社内自動化",
+        "es": "Automatización interna"
+      },
+      "title": {
+        "en": "Sales Trend Report — a monthly market read, automated.",
+        "ko": "Sales Trend Report — 월간 시장 동향 리포트 자동 생성기.",
+        "ja": "Sales Trend Report — 月次マーケット動向レポートを自動生成。",
+        "es": "Sales Trend Report — un informe mensual del mercado, automatizado."
+      },
+      "body": {
+        "en": "A monthly sales-side intelligence report I lead end-to-end: T/T/E framework, 8 topics per issue, parsed from a single Google Sheet and published to a static hub. First issue hit 86% open rate inside the org.",
+        "ko": "T/T/E 프레임워크 기반 월간 세일즈 인텔리전스 리포트. 호당 토픽 8개를 Google Sheet에서 파싱해 정적 허브에 자동 발행하고, 첫 호 사내 열람률 86%를 기록했습니다.",
+        "ja": "T/T/Eフレームに基づく月次セールスインテリジェンスレポート。Google Sheetから8トピックをパースし静的ハブに自動公開、初号で社内開封率86%。",
+        "es": "Un informe mensual de inteligencia de ventas que lidero de punta a punta: marco T/T/E, 8 temas por edición, parseado desde una sola Google Sheet y publicado en un hub estático. La primera edición alcanzó 86% de apertura interna."
+      }
+    },
+    "wcup": {
+      "kicker": {
+        "en": "Internal automation",
+        "ko": "사내 자동화",
+        "ja": "社内自動化",
+        "es": "Automatización interna"
+      },
+      "title": {
+        "en": "World Cup alert system — chasing the unanswered, automatically.",
+        "ko": "월드컵 미회신 알림 시스템 — 답을 기다리지 않고 먼저 챙기는 자동화.",
+        "ja": "ワールドカップ未回答アラート — 待つのではなく、先回りで拾う自動化。",
+        "es": "Sistema de alertas del Mundial — perseguir lo no respondido, automáticamente."
+      },
+      "body": {
+        "en": "A local Mac cron polling NAVER Works mail every 15 minutes, surfacing unanswered World Cup sponsorship threads and pushing catch-up digests via Telegram. Built so a sales lead never loses a thread inside a 400-mail backlog.",
+        "ko": "로컬 Mac cron이 15분마다 네이버웍스 메일을 폴링하면서 미회신된 월드컵 스폰서십 스레드를 찾아내고, 텔레그램으로 캐치업 다이제스트를 보내주는 자동화. 400통이 쌓이는 받은편지함 속에서도 세일즈 리드가 한 건도 놓치지 않도록 설계했습니다.",
+        "ja": "ローカルMacのcronが15分ごとにNAVER Worksメールをポーリング、未回答のワールドカップスポンサーシップスレッドを抽出してTelegramでキャッチアップダイジェストを送信。400通の受信箱の中でもセールスリードが取りこぼさない設計。",
+        "es": "Un cron local en Mac sondea el correo de NAVER Works cada 15 minutos, detecta hilos no respondidos sobre patrocinios del Mundial y envía digests de seguimiento por Telegram. Diseñado para que un sales lead nunca pierda un hilo en una bandeja de 400 correos."
+      }
     }
   },
   "booknav": {
@@ -483,6 +593,164 @@
       "ko": "이력서",
       "ja": "履歴書",
       "es": "CV"
+    }
+  },
+  "side": {
+    "kicker": {
+      "en": "— Side Projects —",
+      "ko": "— 사이드 프로젝트 —",
+      "ja": "— サイドプロジェクト —",
+      "es": "— Proyectos personales —"
+    },
+    "title": {
+      "en": "Tools I built for myself,<br/><em>then for the team.</em>",
+      "ko": "나를 위해 만든 도구,<br/><em>이제 팀이 함께 씁니다.</em>",
+      "ja": "自分のために作った道具が、<br/><em>チームの道具に。</em>",
+      "es": "Herramientas que hice para mí,<br/><em>luego para el equipo.</em>"
+    },
+    "sub": {
+      "en": "Lightweight automations and dashboards that started as personal itches and became infrastructure others rely on.",
+      "ko": "개인적인 불편에서 출발한 자동화와 대시보드가, 어느새 팀의 일상이 된 작은 인프라들.",
+      "ja": "個人的なかゆみから始まった自動化やダッシュボードが、いつしかチームの日常を支える小さなインフラに。",
+      "es": "Pequeñas automatizaciones y dashboards que nacieron de necesidades personales y terminaron siendo infraestructura compartida."
+    },
+    "tomato": {
+      "kicker": {
+        "en": "Personal infra · Mac · Python",
+        "ko": "개인 인프라 · macOS · Python",
+        "ja": "個人インフラ · macOS · Python",
+        "es": "Infra personal · macOS · Python"
+      },
+      "title": {
+        "en": "Tomato Dashboard — a window into NAVER Works that actually fits my brain.",
+        "ko": "토마토 대시보드 — 내 머리 구조에 맞춰 다시 짠 NAVER Works 창.",
+        "ja": "Tomato Dashboard — 自分の頭の構造に合わせて作り直したNAVER Worksビュー。",
+        "es": "Tomato Dashboard — una vista de NAVER Works que sí encaja con mi cabeza."
+      },
+      "lead": {
+        "en": "A personal dashboard that pulls mail, calendar, tasks, and Wiki into one Pomodoro-paced view — built because the default UI buries what I need to act on.",
+        "ko": "메일·캘린더·할 일·위키를 한 화면에 모으고, 뽀모도로 리듬으로 다시 정리한 개인 대시보드. 기본 UI가 묻어버리는 액션 아이템을 다시 끄집어내기 위해 만들었습니다.",
+        "ja": "メール · カレンダー · タスク · Wikiを一画面にまとめ、ポモドーロのリズムで整理した個人ダッシュボード。デフォルトUIに埋もれるアクションを掘り起こすために作りました。",
+        "es": "Un dashboard personal que une correo, calendario, tareas y Wiki en una sola vista al ritmo de Pomodoro. Lo hice porque la UI por defecto sepulta lo que necesito accionar."
+      },
+      "stat1": {
+        "en": "Surfaces unified",
+        "ko": "통합한 화면",
+        "ja": "統合した画面",
+        "es": "Superficies unidas"
+      },
+      "stat2": {
+        "en": "Polling cadence",
+        "ko": "갱신 주기",
+        "ja": "更新間隔",
+        "es": "Intervalo"
+      },
+      "stat3": {
+        "en": "Daily use",
+        "ko": "매일 사용률",
+        "ja": "毎日の使用",
+        "es": "Uso diario"
+      }
+    },
+    "more": {
+      "kicker": {
+        "en": "More coming",
+        "ko": "곧 추가됩니다",
+        "ja": "順次追加",
+        "es": "Más en camino"
+      },
+      "title": {
+        "en": "Telegram voice → Claude bot · World Cup digest · Sales Trend Report generator",
+        "ko": "텔레그램 음성 → Claude 봇 · 월드컵 미회신 알림 · STR 자동 생성기",
+        "ja": "Telegram音声 → Claudeボット · ワールドカップ未回答ダイジェスト · STR自動生成",
+        "es": "Bot de voz Telegram → Claude · Digest del Mundial · Generador de STR"
+      },
+      "body": {
+        "en": "Several small tools are in flight — write-ups land here as they ship.",
+        "ko": "몇 가지 작은 도구를 더 만들고 있습니다. 정리되는 대로 이 자리에 올라옵니다.",
+        "ja": "他にも小さなツールを作成中。まとまり次第ここに追加していきます。",
+        "es": "Hay más herramientas en marcha — irán apareciendo aquí a medida que se publiquen."
+      }
+    }
+  },
+  "joy": {
+    "kicker": {
+      "en": "— Off the clock —",
+      "ko": "— 일 밖에서 —",
+      "ja": "— 仕事の外で —",
+      "es": "— Fuera del trabajo —"
+    },
+    "title": {
+      "en": "Things that keep me<br/><em>making things.</em>",
+      "ko": "계속 무언가 만들게<br/><em>나를 움직이는 것들.</em>",
+      "ja": "私を作りつづけさせる<br/><em>小さな習慣たち。</em>",
+      "es": "Lo que me mantiene<br/><em>haciendo cosas.</em>"
+    },
+    "sub": {
+      "en": "A freediver, a journal-keeper since 2016, and a traveler who has stamped passports in 29 countries.",
+      "ko": "프리다이버, 2016년부터 일기를 써온 사람, 그리고 29개국에 여권을 찍은 여행자.",
+      "ja": "フリーダイバー、2016年から日記を書き続けている人、そしてパスポートに29か国のスタンプを刻んだ旅人。",
+      "es": "Apneísta, diarista desde 2016 y viajera con sellos en 29 países."
+    },
+    "dive": {
+      "kicker": {
+        "en": "Underwater",
+        "ko": "물 속에서",
+        "ja": "水の中で",
+        "es": "Bajo el agua"
+      },
+      "title": {
+        "en": "Freediving — the discipline of staying calm with no air.",
+        "ko": "프리다이빙 — 숨이 없을 때 차분함을 지키는 훈련.",
+        "ja": "フリーダイビング — 息のない状態で落ち着きを保つ訓練。",
+        "es": "Apnea — la disciplina de mantener la calma sin aire."
+      },
+      "text": {
+        "en": "A practice I keep returning to because it scales the way real product work does: oxygen is finite, panic compounds, and the only way out is steady breath and trust in preparation.",
+        "ko": "프로덕트 일과 닮은 점이 많아 계속 돌아오게 됩니다. 산소는 유한하고, 패닉은 빠르게 번지며, 결국 빠져나오는 길은 안정된 호흡과 준비에 대한 신뢰뿐입니다.",
+        "ja": "プロダクトの仕事とよく似ているので、何度でも戻ってきてしまう。酸素は有限で、パニックは連鎖し、最後に頼れるのは整った呼吸と準備への信頼だけ。",
+        "es": "Una práctica a la que vuelvo porque escala como el trabajo real de producto: el oxígeno es finito, el pánico se acumula, y la única salida son la respiración estable y la confianza en la preparación."
+      }
+    },
+    "travel": {
+      "kicker": {
+        "en": "29 countries",
+        "ko": "29개국",
+        "ja": "29か国",
+        "es": "29 países"
+      },
+      "title": {
+        "en": "Travel — Korea · Japan · Mexico · Spain · DR · 25 more.",
+        "ko": "여행 — 한국 · 일본 · 멕시코 · 스페인 · 도미니카 공화국, 그리고 25개국 더.",
+        "ja": "旅 — 韓国 · 日本 · メキシコ · スペイン · ドミニカ共和国、そしてあと25か国。",
+        "es": "Viaje — Corea · Japón · México · España · RD y 25 países más."
+      },
+      "text": {
+        "en": "Long stays in Mexico, Spain, and the Dominican Republic taught me Spanish; shorter trips taught me how much taste depends on context. Both habits feed the work.",
+        "ko": "멕시코·스페인·도미니카 공화국에서의 긴 체류는 스페인어를 가르쳐 주었고, 짧은 여행들은 취향이 얼마나 맥락에 의존하는지를 가르쳐 주었습니다. 두 습관이 모두 일에 흘러 들어옵니다.",
+        "ja": "メキシコ・スペイン・ドミニカ共和国での長期滞在はスペイン語を、短い旅は『感覚はどれだけ文脈に依存するか』を教えてくれました。どちらも仕事につながっています。",
+        "es": "Las estancias largas en México, España y República Dominicana me enseñaron español; los viajes cortos, cuánto depende el gusto del contexto. Ambos hábitos alimentan el trabajo."
+      }
+    },
+    "journal": {
+      "kicker": {
+        "en": "Since 2016",
+        "ko": "2016년부터",
+        "ja": "2016年から",
+        "es": "Desde 2016"
+      },
+      "title": {
+        "en": "A daily journal — ten years and counting.",
+        "ko": "매일의 일기 — 10년 째, 여전히 진행 중.",
+        "ja": "毎日の日記 — 10年目、いまも続いている。",
+        "es": "Un diario diario — diez años y contando."
+      },
+      "text": {
+        "en": "A line a day on bad days, a page on good ones. The archive is how I notice patterns in projects, in people, and in myself before they become problems.",
+        "ko": "안 좋은 날에는 한 줄, 좋은 날에는 한 페이지. 이 기록은 프로젝트와 사람, 그리고 나 자신의 패턴을 문제가 되기 전에 알아채는 방법이 됩니다.",
+        "ja": "悪い日は一行、良い日は一ページ。このアーカイブは、プロジェクト・人・自分自身のパターンが問題になる前に気づくための仕組みになっています。",
+        "es": "Una línea los días malos, una página los buenos. El archivo es como detecto patrones — en proyectos, personas y en mí — antes de que se vuelvan problemas."
+      }
     }
   },
   "about": {
